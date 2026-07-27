@@ -451,6 +451,7 @@
             '<button data-tab="products" class="tab-btn px-4 py-3 text-sm font-semibold whitespace-nowrap border-b-2 text-stone-500 border-transparent hover:text-stone-800">' + t('products') + '</button>' +
             '<button data-tab="purchases" class="tab-btn px-4 py-3 text-sm font-semibold whitespace-nowrap border-b-2 text-stone-500 border-transparent hover:text-stone-800">' + t('purchases') + '</button>' +
             '<button data-tab="orders" class="tab-btn px-4 py-3 text-sm font-semibold whitespace-nowrap border-b-2 text-stone-500 border-transparent hover:text-stone-800">' + t('orders') + '</button>' +
+            '<button data-tab="settings" class="tab-btn px-4 py-3 text-sm font-semibold whitespace-nowrap border-b-2 text-stone-500 border-transparent hover:text-stone-800">' + t('settings') + '</button>' +
             '</div></div></nav>' +
             '<main class="max-w-7xl mx-auto px-4 py-6"><div id="tab-content"></div></main></div>';
 
@@ -485,6 +486,7 @@
             case 'products': c.innerHTML = renderProductsTab(); attachProductEvents(); break;
             case 'purchases': c.innerHTML = renderPurchasesTab(); attachPurchaseEvents(); break;
             case 'orders': c.innerHTML = renderOrdersTab(); attachOrderEvents(); break;
+            case 'settings': c.innerHTML = renderSettingsTab(); attachSettingsEvents(); break;
         }
     }
 
@@ -848,7 +850,39 @@
         if (el) el.textContent = formatPrice(qty * cost);
     }
 
+    // ===================== Settings Tab (PIN Only) =====================
+    function renderSettingsTab() {
+        return '<div class="space-y-6"><h2 class="text-xl font-bold text-gray-800">' + t('settings') + '</h2>' +
+            '<div class="bg-white rounded-xl p-6 border border-gray-200"><h3 class="font-semibold text-gray-800 mb-4">' + t('changePin') + '</h3>' +
+            '<form id="pin-form" class="space-y-4 max-w-md">' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('currentPin') + '</label><input type="password" id="cp-current" maxlength="6" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div>' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('newPin') + '</label><input type="password" id="cp-new" maxlength="6" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div>' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('confirmNewPin') + '</label><input type="password" id="cp-confirm" maxlength="6" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div>' +
+            '<div id="pin-err" class="hidden text-red-500 text-sm"></div>' +
+            '<button type="submit" class="w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 px-4 rounded-xl">' + t('changePin') + '</button></form></div></div>';
+    }
 
+    function attachSettingsEvents() {
+        document.getElementById('pin-form')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            var cur = document.getElementById('cp-current').value;
+            var nw = document.getElementById('cp-new').value;
+            var cf = document.getElementById('cp-confirm').value;
+            var err = document.getElementById('pin-err');
+            if (nw !== cf) { err.textContent = t('pinMismatch'); err.classList.remove('hidden'); return; }
+            if (nw.length < 4 || nw.length > 6) { err.textContent = t('pinTooShort'); err.classList.remove('hidden'); return; }
+            try {
+                await verifyPin(cur);
+                await setPin(nw);
+                alert(t('pinChanged'));
+                document.getElementById('pin-form').reset();
+                err.classList.add('hidden');
+            } catch(e2) {
+                err.textContent = e2.message.includes('invalid') || e2.message.includes('locked') ? t('currentPinWrong') : t('pinInvalid');
+                err.classList.remove('hidden');
+            }
+        });
+    }
 
 })();
 </script>
