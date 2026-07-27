@@ -3,28 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#10b981">
+    <meta name="theme-color" content="#059669">
     <title>Admin Dashboard - Hakeemi Grocery Store</title>
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Nunito+Sans:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            theme: { extend: { fontFamily: { sans: ['Inter', 'Noto Sans Arabic', 'system-ui', 'sans-serif'] } } }
+            theme: {
+                extend: {
+                    fontFamily: {
+                        heading: ['Rubik', 'Noto Sans Arabic', 'system-ui', 'sans-serif'],
+                        body: ['Nunito Sans', 'Noto Sans Arabic', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
         }
     </script>
     <style>
         html { scroll-behavior: smooth; }
+        * { box-sizing: border-box; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-        :root { --font-primary: 'Noto Sans Arabic', 'Inter', system-ui, sans-serif; }
-        body { font-family: var(--font-primary); }
-        [lang="en"] body { font-family: 'Inter', system-ui, sans-serif; }
+        :root {
+            --color-primary: #059669;
+            --color-accent: #D97706;
+            --color-bg: #FEFCE8;
+            --font-heading: 'Rubik', 'Noto Sans Arabic', system-ui, sans-serif;
+            --font-body: 'Nunito Sans', 'Noto Sans Arabic', system-ui, sans-serif;
+        }
+        body { font-family: var(--font-body); background-color: var(--color-bg); -webkit-font-smoothing: antialiased; }
+        .font-heading { font-family: var(--font-heading); }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--color-accent) !important;
+            box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15) !important;
+        }
+        .header-strip { height: 3px; background: linear-gradient(90deg, #059669, #D97706, #059669); }
     </style>
 </head>
-<body class="antialiased bg-gray-50">
+<body class="antialiased" style="background-color: var(--color-bg);">
+
 <div id="app">
     <div class="min-h-screen bg-gray-50 flex items-center justify-center">
         <div class="text-center">
@@ -211,16 +232,17 @@
     function getOrders() { return (get('grocery_orders', [])).sort(function(a, b) { return b.createdAt - a.createdAt; }); }
     function getSettings() { return get('grocery_settings', DEFAULT_SETTINGS); }
     function getShopName(lang) { var s = getSettings(); return (s.shopName && s.shopName[lang]) || s.shopName?.en || 'Hakeemi Grocery Store'; }
-    function saveProduct(p) { var ps = getProducts(); var idx = ps.findIndex(function(x) { return x.id === p.id; }); if (idx >= 0) ps[idx] = p; else ps.push(p); set('grocery_products', ps); }
-    function deleteProduct(id) { set('grocery_products', getProducts().filter(function(p) { return p.id !== id; })); }
-    function toggleVisibility(id) { var ps = getProducts(); var p = ps.find(function(x) { return x.id === id; }); if (p) { p.visible = !p.visible; set('grocery_products', ps); } }
+    function saveProduct(p) { var ps = getProducts(); var idx = ps.findIndex(function(x) { return String(x.id) === String(p.id); }); if (idx >= 0) ps[idx] = p; else ps.push(p); set('grocery_products', ps); }
+    function deleteProduct(id) { set('grocery_products', getProducts().filter(function(p) { return String(p.id) !== String(id); })); }
+    function toggleVisibility(id) { var ps = getProducts(); var p = ps.find(function(x) { return String(x.id) === String(id); }); if (p) { p.visible = !p.visible; set('grocery_products', ps); } }
     function saveOrder(o) { var orders = getOrders(); orders.unshift(o); set('grocery_orders', orders); }
-    function updateOrderStatus(id, st) { var orders = getOrders(); var o = orders.find(function(x) { return x.id === id; }); if (o) { o.status = st; set('grocery_orders', orders); } }
+    function updateOrderStatus(id, st) { var orders = getOrders(); var o = orders.find(function(x) { return String(x.id) === String(id); }); if (o) { o.status = st; set('grocery_orders', orders); } }
     function saveSettings(s) { set('grocery_settings', Object.assign(getSettings(), s)); }
     // Purchases (stock from suppliers)
     function getPurchases() { return (get('grocery_purchases', [])).sort(function(a, b) { return b.createdAt - a.createdAt; }); }
     function savePurchase(p) { var ps = getPurchases(); ps.unshift(p); set('grocery_purchases', ps); }
-    function deletePurchase(id) { set('grocery_purchases', getPurchases().filter(function(p) { return p.id !== id; })); }
+    function deleteOrder(id) { set('grocery_orders', getOrders().filter(function(o) { return String(o.id) !== String(id); })); }
+    function deletePurchase(id) { set('grocery_purchases', getPurchases().filter(function(p) { return String(p.id) !== String(id); })); }
     function exportData() { return { products: getProducts(), orders: getOrders(), purchases: getPurchases(), settings: getSettings(), exportedAt: Date.now(), version: '2.0' }; }
     function importData(d) { if (d.products) set('grocery_products', d.products); if (d.orders) set('grocery_orders', d.orders); if (d.purchases) set('grocery_purchases', d.purchases); if (d.settings) set('grocery_settings', d.settings); }
     function clearAll() { ['grocery_products', 'grocery_orders', 'grocery_purchases', 'grocery_settings', 'grocery_pin_hash', 'grocery_pin_salt', 'grocery_pin_attempts', 'grocery_pin_lockout'].forEach(function(k) { localStorage.removeItem(k); }); initStore(); }
@@ -419,39 +441,38 @@
             '<header class="bg-white border-b border-gray-200 sticky top-0 z-40"><div class="max-w-7xl mx-auto px-4 py-3">' +
             '<div class="flex items-center justify-between"><div class="flex items-center gap-3">' +
             '<div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center"><svg class="w-6 h-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></div>' +
-            '<div><h1 class="text-lg font-bold text-gray-800">' + t('adminTitle') + '</h1><p class="text-xs text-gray-500">' + shopName + '</p></div></div>' +
-            '<div class="flex items-center gap-2">' +
-            '<button id="lang-btn" class="p-2 rounded-lg hover:bg-gray-100"><svg class="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg></button>' +
-            '<button id="logout-btn" class="p-2 rounded-lg hover:bg-gray-100 text-gray-600"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg></button>' +
+            '<div><h1 class="font-heading text-lg font-bold text-stone-800">' + t('adminTitle') + '</h1><p class="text-xs text-stone-500">' + shopName + '</p></div></div>' +
+            '<div class="flex items-center gap-2 relative">' +
+            '<button id="lang-btn" class="flex items-center gap-2 p-2 rounded-xl hover:bg-stone-100 text-stone-600 transition-colors"><svg class="w-5 h-5 text-stone-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg></button>' +
+            '<button id="logout-btn" class="p-2 rounded-xl hover:bg-stone-100 text-stone-600 transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg></button>' +
             '</div></div></div></header>' +
-            '<nav class="bg-white border-b border-gray-200 sticky top-[60px] z-30"><div class="max-w-7xl mx-auto px-4"><div class="flex gap-1 overflow-x-auto scrollbar-hide">' +
-            '<button data-tab="dashboard" class="tab-btn px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 text-emerald-600 border-emerald-600">' + t('dashboard') + '</button>' +
-            '<button data-tab="products" class="tab-btn px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 text-gray-500 border-transparent hover:text-gray-700">' + t('products') + '</button>' +
-            '<button data-tab="purchases" class="tab-btn px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 text-gray-500 border-transparent hover:text-gray-700">' + t('purchases') + '</button>' +
-            '<button data-tab="orders" class="tab-btn px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 text-gray-500 border-transparent hover:text-gray-700">' + t('orders') + '</button>' +
-            '<button data-tab="settings" class="tab-btn px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 text-gray-500 border-transparent hover:text-gray-700">' + t('settings') + '</button>' +
+            '<nav class="bg-white border-b border-stone-200 sticky top-[68px] z-30"><div class="max-w-7xl mx-auto px-4"><div class="flex gap-1 overflow-x-auto scrollbar-hide">' +
+            '<button data-tab="dashboard" class="tab-btn px-4 py-3 text-sm font-semibold whitespace-nowrap border-b-2 text-emerald-600 border-emerald-600">' + t('dashboard') + '</button>' +
+            '<button data-tab="products" class="tab-btn px-4 py-3 text-sm font-semibold whitespace-nowrap border-b-2 text-stone-500 border-transparent hover:text-stone-800">' + t('products') + '</button>' +
+            '<button data-tab="purchases" class="tab-btn px-4 py-3 text-sm font-semibold whitespace-nowrap border-b-2 text-stone-500 border-transparent hover:text-stone-800">' + t('purchases') + '</button>' +
+            '<button data-tab="orders" class="tab-btn px-4 py-3 text-sm font-semibold whitespace-nowrap border-b-2 text-stone-500 border-transparent hover:text-stone-800">' + t('orders') + '</button>' +
             '</div></div></nav>' +
             '<main class="max-w-7xl mx-auto px-4 py-6"><div id="tab-content"></div></main></div>';
 
         document.querySelectorAll('.tab-btn').forEach(function(btn) {
             btn.addEventListener('click', function() {
-                document.querySelectorAll('.tab-btn').forEach(function(b) { b.className = 'tab-btn px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 text-gray-500 border-transparent hover:text-gray-700'; });
-                btn.className = 'tab-btn px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 text-emerald-600 border-emerald-600';
+                document.querySelectorAll('.tab-btn').forEach(function(b) { b.className = 'tab-btn px-4 py-3 text-sm font-semibold whitespace-nowrap border-b-2 text-stone-500 border-transparent hover:text-stone-800'; });
+                btn.className = 'tab-btn px-4 py-3 text-sm font-semibold whitespace-nowrap border-b-2 text-emerald-600 border-emerald-600';
                 currentTab = btn.getAttribute('data-tab');
                 renderTab();
             });
         });
         document.getElementById('logout-btn').addEventListener('click', function() { logout(); isAdmin = false; renderLogin(); });
         document.getElementById('lang-btn').addEventListener('click', function() {
-            var langs = [{c:'en',l:'English'},{c:'fa',l:'دری'},{c:'ps',l:'پښتو'}];
+            var langs = [{c:'en',l:'English',f:'🇬🇧'},{c:'fa',l:'دری',f:'🇦🇫'},{c:'ps',l:'پښتو',f:'🇦🇫'}];
             var dd = document.getElementById('lang-dd');
             if (dd) { dd.remove(); return; }
             var d = document.createElement('div'); d.id = 'lang-dd';
-            d.className = 'absolute right-4 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-200 z-50';
-            d.innerHTML = langs.map(function(o) { return '<button data-lang="' + o.c + '" class="w-full px-4 py-3 text-left hover:bg-emerald-50 text-sm ' + (currentLang === o.c ? 'text-emerald-700 bg-emerald-50' : 'text-gray-700') + '">' + o.l + '</button>'; }).join('');
+            d.className = 'absolute top-full mt-2 w-48 bg-white rounded-2xl shadow-xl border border-stone-100 z-50 ' + (currentLang === 'fa' || currentLang === 'ps' ? 'left-0' : 'right-0');
+            d.innerHTML = langs.map(function(o) { return '<button data-lang="' + o.c + '" class="w-full px-4 py-3 text-left hover:bg-emerald-50 text-sm font-medium flex items-center gap-3 transition-colors ' + (currentLang === o.c ? 'text-emerald-700 bg-emerald-50' : 'text-stone-700') + '"><span>' + o.f + '</span><span>' + o.l + '</span></button>'; }).join('');
             document.getElementById('lang-btn').parentElement.appendChild(d);
             d.querySelectorAll('[data-lang]').forEach(function(b) { b.addEventListener('click', function() { currentLang = b.getAttribute('data-lang'); localStorage.setItem('grocery_lang', currentLang); d.remove(); renderDashboard(); }); });
-            setTimeout(function() { document.addEventListener('click', function h(ev) { if (!d.contains(ev.target) && ev.target !== document.getElementById('lang-btn')) { d.remove(); document.removeEventListener('click', h); } }); }, 10);
+            setTimeout(function() { document.addEventListener('click', function h(ev) { if (!d.contains(ev.target) && ev.target !== document.getElementById('lang-btn') && !document.getElementById('lang-btn').contains(ev.target)) { d.remove(); document.removeEventListener('click', h); } }); }, 10);
         });
         renderTab();
     }
@@ -464,7 +485,6 @@
             case 'products': c.innerHTML = renderProductsTab(); attachProductEvents(); break;
             case 'purchases': c.innerHTML = renderPurchasesTab(); attachPurchaseEvents(); break;
             case 'orders': c.innerHTML = renderOrdersTab(); attachOrderEvents(); break;
-            case 'settings': c.innerHTML = renderSettingsTab(); attachSettingsEvents(); break;
         }
     }
 
@@ -576,8 +596,26 @@
 
     function attachProductEvents() {
         document.getElementById('add-product-btn')?.addEventListener('click', function() { openProductModal(); });
-        document.querySelectorAll('.edit-btn').forEach(function(b) { b.addEventListener('click', function() { var p = getProducts().find(function(x) { return x.id === b.getAttribute('data-id'); }); if (p) openProductModal(p); }); });
-        document.querySelectorAll('.del-btn').forEach(function(b) { b.addEventListener('click', function() { if (confirm(t('confirmDelete'))) { deleteProduct(b.getAttribute('data-id')); renderTab(); } }); });
+        document.querySelectorAll('.edit-btn').forEach(function(b) { b.addEventListener('click', function() { var p = getProducts().find(function(x) { return String(x.id) === String(b.getAttribute('data-id')); }); if (p) openProductModal(p); }); });
+        document.querySelectorAll('.del-btn').forEach(function(b) {
+            b.addEventListener('click', function() {
+                if (b.getAttribute('data-confirm') === '1') {
+                    deleteProduct(b.getAttribute('data-id')); renderTab();
+                } else {
+                    b.setAttribute('data-confirm', '1');
+                    var old = b.innerHTML;
+                    b.innerHTML = t('confirmDelete') || 'Are you sure?';
+                    b.classList.remove('bg-red-50', 'text-red-600', 'hover:bg-red-100');
+                    b.classList.add('bg-red-600', 'text-white', 'hover:bg-red-700');
+                    setTimeout(function() {
+                        b.setAttribute('data-confirm', '0');
+                        b.innerHTML = old;
+                        b.classList.remove('bg-red-600', 'text-white', 'hover:bg-red-700');
+                        b.classList.add('bg-red-50', 'text-red-600', 'hover:bg-red-100');
+                    }, 3000);
+                }
+            });
+        });
         document.querySelectorAll('.toggle-btn').forEach(function(b) { b.addEventListener('click', function() { toggleVisibility(b.getAttribute('data-id')); renderTab(); }); });
         document.getElementById('close-modal')?.addEventListener('click', closeProductModal);
         document.getElementById('cancel-product')?.addEventListener('click', closeProductModal);
@@ -669,15 +707,19 @@
         var rows = orders.map(function(o) {
             var stCols = { pending: 'bg-yellow-100 text-yellow-700', confirmed: 'bg-blue-100 text-blue-700', delivered: 'bg-green-100 text-green-700', cancelled: 'bg-red-100 text-red-700' };
             var itemNames = (o.items || []).map(function(i) { return i.name?.[lang] || i.name?.en || ''; }).join(', ');
-            return '<tr class="hover:bg-gray-50">' +
-                '<td class="px-4 py-3 text-sm text-gray-600">' + formatDate(o.createdAt) + '</td>' +
-                '<td class="px-4 py-3"><p class="text-sm font-medium text-gray-800">' + (o.customerName || 'N/A') + '</p><p class="text-xs text-gray-500">' + (o.customerPhone || '') + '</p></td>' +
-                '<td class="px-4 py-3"><p class="text-sm text-gray-600">' + (o.items?.length || 0) + ' items</p><p class="text-xs text-gray-500 truncate max-w-[150px]">' + itemNames + '</p></td>' +
-                '<td class="px-4 py-3 text-sm font-semibold text-emerald-600">' + formatPrice(o.total) + '</td>' +
-                '<td class="px-4 py-3"><span class="text-xs px-2 py-1 rounded-full ' + (stCols[o.status] || 'bg-gray-100') + '">' + t('status' + o.status.charAt(0).toUpperCase() + o.status.slice(1)) + '</span></td>' +
-                '<td class="px-4 py-3"><select class="status-sel text-xs border border-gray-300 rounded-lg px-2 py-1" data-id="' + o.id + '">' +
+            return '<tr class="hover:bg-stone-50 border-b border-stone-100">' +
+                '<td class="px-4 py-4 text-sm text-stone-600">' + formatDate(o.createdAt) + '</td>' +
+                '<td class="px-4 py-4"><p class="text-sm font-semibold text-stone-800">' + (o.customerName || 'N/A') + '</p><p class="text-xs text-stone-500 mt-0.5">' + (o.customerPhone || '') + '</p></td>' +
+                '<td class="px-4 py-4"><p class="text-sm text-stone-700">' + (o.items?.length || 0) + ' items</p><p class="text-xs text-stone-500 truncate max-w-[150px] mt-0.5">' + itemNames + '</p></td>' +
+                '<td class="px-4 py-4 text-sm font-bold font-heading text-emerald-600">' + formatPrice(o.total) + '</td>' +
+                '<td class="px-4 py-4"><span class="text-xs px-2.5 py-1 rounded-full font-medium ' + (stCols[o.status] || 'bg-stone-100') + '">' + t('status' + o.status.charAt(0).toUpperCase() + o.status.slice(1)) + '</span></td>' +
+                '<td class="px-4 py-4"><div class="flex items-center gap-2">' +
+                '<select class="status-sel text-xs font-medium border-2 border-stone-200 rounded-xl px-2 py-1.5 focus:border-emerald-500 bg-stone-50 outline-none cursor-pointer max-w-[100px]" data-id="' + o.id + '">' +
                 ['pending','confirmed','delivered','cancelled'].map(function(s) { return '<option value="' + s + '"' + (o.status === s ? ' selected' : '') + '>' + t('status' + s.charAt(0).toUpperCase() + s.slice(1)) + '</option>'; }).join('') +
-                '</select></td></tr>';
+                '</select>' +
+                '<button class="del-order-btn p-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg transition-colors ml-2" data-id="' + o.id + '" title="' + t('delete') + '">' +
+                '<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>' +
+                '</button></div></td></tr>';
         }).join('');
         return '<div class="space-y-6"><h2 class="text-xl font-bold text-gray-800">' + t('orders') + '</h2>' +
             '<div class="bg-white rounded-xl border border-gray-200 overflow-hidden"><div class="overflow-x-auto"><table class="w-full"><thead class="bg-gray-50 border-b border-gray-200"><tr>' +
@@ -693,6 +735,25 @@
     function attachOrderEvents() {
         document.querySelectorAll('.status-sel').forEach(function(sel) {
             sel.addEventListener('change', function() { updateOrderStatus(sel.getAttribute('data-id'), sel.value); renderTab(); });
+        });
+        document.querySelectorAll('.del-order-btn').forEach(function(b) {
+            b.addEventListener('click', function() {
+                if (b.getAttribute('data-confirm') === '1') {
+                    deleteOrder(b.getAttribute('data-id')); renderTab();
+                } else {
+                    b.setAttribute('data-confirm', '1');
+                    var old = b.innerHTML;
+                    b.innerHTML = t('confirmDelete') || 'Are you sure?';
+                    b.classList.remove('p-1.5', 'bg-red-50', 'text-red-600', 'hover:bg-red-100');
+                    b.classList.add('px-3', 'py-1.5', 'text-xs', 'font-medium', 'bg-red-600', 'text-white', 'hover:bg-red-700');
+                    setTimeout(function() {
+                        b.setAttribute('data-confirm', '0');
+                        b.innerHTML = old;
+                        b.classList.remove('px-3', 'py-1.5', 'text-xs', 'font-medium', 'bg-red-600', 'text-white', 'hover:bg-red-700');
+                        b.classList.add('p-1.5', 'bg-red-50', 'text-red-600', 'hover:bg-red-100');
+                    }, 3000);
+                }
+            });
         });
     }
 
@@ -761,7 +822,21 @@
         });
         document.querySelectorAll('.del-purchase-btn').forEach(function(b) {
             b.addEventListener('click', function() {
-                if (confirm(t('confirmDeletePurchase'))) { deletePurchase(b.getAttribute('data-id')); renderTab(); }
+                if (b.getAttribute('data-confirm') === '1') {
+                    deletePurchase(b.getAttribute('data-id')); renderTab();
+                } else {
+                    b.setAttribute('data-confirm', '1');
+                    var old = b.innerHTML;
+                    b.innerHTML = t('confirmDeletePurchase') || 'Are you sure?';
+                    b.classList.remove('bg-red-50', 'text-red-600', 'hover:bg-red-100');
+                    b.classList.add('bg-red-600', 'text-white', 'hover:bg-red-700');
+                    setTimeout(function() {
+                        b.setAttribute('data-confirm', '0');
+                        b.innerHTML = old;
+                        b.classList.remove('bg-red-600', 'text-white', 'hover:bg-red-700');
+                        b.classList.add('bg-red-50', 'text-red-600', 'hover:bg-red-100');
+                    }, 3000);
+                }
             });
         });
     }
@@ -773,87 +848,7 @@
         if (el) el.textContent = formatPrice(qty * cost);
     }
 
-    // ===================== Settings Tab =====================
-    function renderSettingsTab() {
-        var s = getSettings();
-        return '<div class="space-y-6"><h2 class="text-xl font-bold text-gray-800">' + t('settings') + '</h2>' +
-            '<div class="bg-white rounded-xl p-6 border border-gray-200"><h3 class="font-semibold text-gray-800 mb-4">' + t('shopSettings') + '</h3>' +
-            '<form id="settings-form" class="space-y-4">' +
-            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('shopNameEn') + '</label><input type="text" id="s-name-en" value="' + (s.shopName?.en || '') + '" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div>' +
-            '<div class="grid grid-cols-2 gap-4">' +
-            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('shopNameFa') + '</label><input type="text" id="s-name-fa" value="' + (s.shopName?.fa || '') + '" dir="rtl" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div>' +
-            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('shopNamePs') + '</label><input type="text" id="s-name-ps" value="' + (s.shopName?.ps || '') + '" dir="rtl" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div></div>' +
-            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('whatsappNumber') + '</label><input type="text" id="s-whatsapp" value="' + (s.whatsappNumber || '') + '" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500" placeholder="' + t('whatsappNumberHint') + '"></div>' +
-            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('defaultLanguage') + '</label>' +
-            '<select id="s-lang" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500">' +
-            '<option value="en"' + (s.defaultLanguage === 'en' ? ' selected' : '') + '>English</option>' +
-            '<option value="fa"' + (s.defaultLanguage === 'fa' ? ' selected' : '') + '>Dari (دری)</option>' +
-            '<option value="ps"' + (s.defaultLanguage === 'ps' ? ' selected' : '') + '>Pashto (پښتو)</option></select></div>' +
-            '<button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 px-4 rounded-xl">' + t('save') + '</button></form></div>' +
-            // Change PIN
-            '<div class="bg-white rounded-xl p-6 border border-gray-200"><h3 class="font-semibold text-gray-800 mb-4">' + t('changePin') + '</h3>' +
-            '<form id="pin-form" class="space-y-4">' +
-            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('currentPin') + '</label><input type="password" id="cp-current" maxlength="6" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div>' +
-            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('newPin') + '</label><input type="password" id="cp-new" maxlength="6" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div>' +
-            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('confirmNewPin') + '</label><input type="password" id="cp-confirm" maxlength="6" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div>' +
-            '<div id="pin-err" class="hidden text-red-500 text-sm"></div>' +
-            '<button type="submit" class="w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 px-4 rounded-xl">' + t('changePin') + '</button></form></div>' +
-            // Data management
-            '<div class="bg-white rounded-xl p-6 border border-gray-200"><h3 class="font-semibold text-gray-800 mb-4">Data Management</h3>' +
-            '<div class="flex gap-4">' +
-            '<button id="export-btn" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2">' +
-            '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>' + t('exportData') + '</button>' +
-            '<label class="flex-1 bg-purple-500 hover:bg-purple-600 text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 cursor-pointer">' +
-            '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>' + t('importData') +
-            '<input type="file" id="import-file" accept=".json" class="hidden"></label></div></div></div>';
-    }
 
-    function attachSettingsEvents() {
-        document.getElementById('settings-form')?.addEventListener('submit', function(e) {
-            e.preventDefault();
-            saveSettings({
-                shopName: { en: document.getElementById('s-name-en').value.trim(), fa: document.getElementById('s-name-fa').value.trim(), ps: document.getElementById('s-name-ps').value.trim() },
-                whatsappNumber: document.getElementById('s-whatsapp').value.trim(),
-                defaultLanguage: document.getElementById('s-lang').value
-            });
-            alert(t('productSaved'));
-        });
-        document.getElementById('pin-form')?.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            var cur = document.getElementById('cp-current').value;
-            var nw = document.getElementById('cp-new').value;
-            var cf = document.getElementById('cp-confirm').value;
-            var err = document.getElementById('pin-err');
-            if (nw !== cf) { err.textContent = t('pinMismatch'); err.classList.remove('hidden'); return; }
-            if (nw.length < 4 || nw.length > 6) { err.textContent = t('pinTooShort'); err.classList.remove('hidden'); return; }
-            try {
-                await verifyPin(cur);
-                await setPin(nw);
-                alert(t('pinChanged'));
-                document.getElementById('pin-form').reset();
-                err.classList.add('hidden');
-            } catch(e2) {
-                err.textContent = e2.message.includes('invalid') || e2.message.includes('locked') ? t('currentPinWrong') : t('pinInvalid');
-                err.classList.remove('hidden');
-            }
-        });
-        document.getElementById('export-btn')?.addEventListener('click', function() {
-            var data = exportData();
-            var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a'); a.href = url; a.download = 'hakeemi-backup-' + new Date().toISOString().split('T')[0] + '.json'; a.click();
-            URL.revokeObjectURL(url);
-        });
-        document.getElementById('import-file')?.addEventListener('change', function(e) {
-            var file = e.target.files?.[0]; if (!file) return;
-            var reader = new FileReader();
-            reader.onload = function(ev) {
-                try { var data = JSON.parse(ev.target.result); importData(data); alert(t('importSuccess')); renderTab(); }
-                catch { alert(t('importError')); }
-            };
-            reader.readAsText(file);
-        });
-    }
 
 })();
 </script>

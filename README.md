@@ -1,5 +1,7 @@
 # Hakeemi Grocery Store - Online Catalog
 
+**Version: 1.1.0** | MIT License
+
 A mobile-first, lightweight web application for a local grocery store in Anaba District, Panjshir Province, Afghanistan.
 
 ## Features
@@ -133,6 +135,32 @@ Drag and drop the folder to [Netlify Drop](https://app.netlify.com/drop).
 - Check that Noto Sans Arabic font is loaded
 - Verify RTL CSS styles are applied
 
+## Design Intelligence (UI/UX Pro Max)
+
+This project includes the [UI/UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) skill (v2.11.0) — an AI-powered design intelligence toolkit providing:
+
+- **84 UI Styles** (glassmorphism, minimalism, brutalism, etc.)
+- **192 Color Palettes** organized by product type
+- **74 Font Pairings** with Google Fonts imports
+- **98 UX Guidelines** and anti-patterns
+- **25 Chart Types** with library recommendations
+- **22 Tech Stacks** supported (including `html-tailwind`)
+
+### Quick Search
+
+```bash
+# Search for grocery-relevant UI styles
+python3 .agents/skills/ui-ux-pro-max/src/ui-ux-pro-max/scripts/search.py "grocery store" --domain product
+
+# Find color palettes for food/shopping apps
+python3 .agents/skills/ui-ux-pro-max/src/ui-ux-pro-max/scripts/search.py "food shopping" --domain color
+
+# Get typography recommendations
+python3 .agents/skills/ui-ux-pro-max/src/ui-ux-pro-max/scripts/search.py "arabic rtl" --domain typography
+```
+
+See [SKILL.md](.agents/skills/ui-ux-pro-max/SKILL.md) for full usage documentation.
+
 ## License
 
 MIT License - Free to use and modify
@@ -142,3 +170,13 @@ MIT License - Free to use and modify
 For issues or questions, please contact:
 - **Store**: Hakeemi Grocery Store, Anaba District, Panjshir Province
 - **WhatsApp**: +93 79 189 7790
+
+## Changelog
+
+### v1.1.0 (2026-07-27)
+- Added version tracking to README and PWA manifest
+- Merged [UI/UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) skill (v2.11.0) for design intelligence
+- Added `.agents/skills/` directory with SKILL.md for AI assistant integration
+
+### v1.0.0
+- Initial release with multilingual catalog, WhatsApp ordering, admin dashboard, and PWA support

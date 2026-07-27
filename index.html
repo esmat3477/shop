@@ -3,20 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#10b981">
-    <meta name="description" content="Hakeemi Grocery Store - Anaba District, Panjshir">
+    <meta name="theme-color" content="#059669">
+    <meta name="description" content="Hakeemi Grocery Store - Fresh groceries delivered from Anaba District, Panjshir Province, Afghanistan">
     <title>Hakeemi Grocery Store</title>
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Nunito+Sans:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'Noto Sans Arabic', 'system-ui', 'sans-serif'],
+                        heading: ['Rubik', 'Noto Sans Arabic', 'system-ui', 'sans-serif'],
+                        body: ['Nunito Sans', 'Noto Sans Arabic', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        cream: { 50: '#FFFBEB', 100: '#FEF3C7', 200: '#FDE68A' },
+                        brand: {
+                            green: '#059669',
+                            'green-light': '#10B981',
+                            amber: '#D97706',
+                            'amber-light': '#F59E0B',
+                        }
                     }
                 }
             }
@@ -24,22 +34,187 @@
     </script>
     <style>
         html { scroll-behavior: smooth; }
+        * { box-sizing: border-box; }
+
+        :root {
+            --color-primary: #059669;
+            --color-primary-light: #10B981;
+            --color-accent: #D97706;
+            --color-accent-light: #F59E0B;
+            --color-bg: #FEFCE8;
+            --color-card: #FFFFFF;
+            --color-text: #1C1917;
+            --color-text-muted: #78716C;
+            --color-border: #E7E5E4;
+            --color-warm-shadow: rgba(120, 113, 108, 0.12);
+            --radius-card: 20px;
+            --radius-button: 14px;
+            --radius-badge: 12px;
+            --font-heading: 'Rubik', 'Noto Sans Arabic', system-ui, sans-serif;
+            --font-body: 'Nunito Sans', 'Noto Sans Arabic', system-ui, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .font-heading { font-family: var(--font-heading); }
+
+        /* Scrollbar hide */
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        :root { --font-primary: 'Noto Sans Arabic', 'Inter', system-ui, sans-serif; }
-        body { font-family: var(--font-primary); }
-        [lang="en"] body { font-family: 'Inter', system-ui, sans-serif; }
+
+        /* Line clamp */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Warm card shadow */
+        .card-shadow {
+            box-shadow: 0 2px 8px var(--color-warm-shadow), 0 1px 3px rgba(120, 113, 108, 0.06);
+        }
+        .card-shadow-hover {
+            box-shadow: 0 8px 24px rgba(120, 113, 108, 0.16), 0 2px 6px rgba(120, 113, 108, 0.08);
+        }
+
+        /* Product card hover */
+        .product-card {
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .product-card:hover {
+            transform: translateY(-3px);
+        }
+        .product-card:hover .product-image {
+            transform: scale(1.03);
+        }
+
+        /* Product image */
+        .product-image {
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* Price badge pulse on hover */
+        .price-badge {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .product-card:hover .price-badge {
+            transform: scale(1.05);
+        }
+
+        /* Order button */
+        .order-btn {
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .order-btn:active {
+            transform: scale(0.97);
+        }
+        .order-btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s;
+        }
+        .order-btn:hover::after {
+            transform: translateX(100%);
+        }
+
+        /* Modal overlay */
+        .modal-overlay {
+            background: rgba(28, 25, 23, 0.4);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        /* Modal enter animation */
+        .modal-content {
+            animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes modalSlideUp {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Focus states - warm amber */
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--color-accent) !important;
+            box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15) !important;
+        }
+
+        /* Header accent strip */
+        .header-strip {
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent), var(--color-primary));
+        }
+
+        /* Language dropdown */
+        .lang-option {
+            transition: background-color 0.15s ease;
+        }
+        .lang-option:hover {
+            background-color: #FEF3C7;
+        }
+        .lang-option.active {
+            background-color: #ECFDF5;
+        }
+
+        /* Offline banner */
+        .offline-banner {
+            background: linear-gradient(90deg, #D97706, #F59E0B);
+        }
+
+        /* Footer subtle pattern */
+        .footer-pattern {
+            background-color: #292524;
+            background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.03) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+
+        /* Smooth page load */
+        .fade-in {
+            animation: fadeIn 0.4s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Empty state illustration */
+        .empty-illustration {
+            opacity: 0.6;
+        }
+
+        /* WhatsApp icon bounce on card hover */
+        .product-card:hover .wa-icon {
+            animation: gentleBounce 0.4s ease;
+        }
+        @keyframes gentleBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-2px); }
+        }
     </style>
 </head>
-<body class="antialiased">
+<body>
 <div id="app">
-    <div class="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50 flex items-center justify-center">
+    <!-- Loading state -->
+    <div class="min-h-screen flex items-center justify-center" style="background-color: var(--color-bg);">
         <div class="text-center">
-            <div class="w-16 h-16 bg-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4 animate-pulse">
-                <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4" style="background-color: var(--color-primary);">
+                <svg class="w-7 h-7 text-white animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
             </div>
-            <p class="text-gray-600 font-medium">Loading...</p>
+            <p class="text-stone-500 font-medium font-heading text-sm">Loading...</p>
         </div>
     </div>
 </div>
@@ -54,45 +229,66 @@
             dir: 'ltr', lang: 'en',
             labels: {
                 appName: 'Hakeemi Grocery Store', shopName: 'Hakeemi Grocery Store',
-                offline: "You're offline. Showing cached products.", noResults: 'No products found',
-                noProducts: 'No products added yet', orderWhatsApp: 'Order via WhatsApp',
-                orderTitle: 'Place Order via WhatsApp', customerName: 'Your Name',
-                customerPhone: 'Phone Number (optional)', customerNotes: 'Notes (optional)',
+                offline: "You're offline — showing saved products.",
+                noResults: 'No products found',
+                noProducts: 'No products added yet',
+                noProductsDesc: 'Products will appear here once the shopkeeper adds them.',
+                orderWhatsApp: 'Order via WhatsApp',
+                orderTitle: 'Place Your Order', customerName: 'Your Name',
+                customerPhone: 'Phone Number (optional)', customerNotes: 'Any special requests?',
                 placeOrder: 'Send Order', nameRequired: 'Please enter your name',
                 phoneInvalid: 'Please enter a valid phone number', cancel: 'Cancel', close: 'Close',
-                adminTitle: 'Admin Panel', priceAFN: 'AFN',
+                adminTitle: 'Admin', priceAFN: 'AFN',
                 langEnglish: 'English', langDari: 'Dari (دری)', langPashto: 'Pashto (پښتو)',
                 currencyAFN: 'AFN',
+                tagline: 'Fresh groceries from Panjshir',
+                footerLocation: 'Anaba District, Panjshir Province',
+                footerMadeWith: 'Made with',
+                footerForCommunity: 'for our community',
             }
         },
         fa: {
             dir: 'rtl', lang: 'fa',
             labels: {
                 appName: 'فروشگاه مواد غذایی حکیمی', shopName: 'فروشگاه مواد غذایی حکیمی',
-                offline: 'شما آفلاین هستید. محصولات ذخیره شده نمایش داده می‌شوند.', noResults: 'محصولی یافت نشد',
-                noProducts: 'هنوز محصولی اضافه نشده', orderWhatsApp: 'سفارش از طریق واتس‌اپ',
-                orderTitle: 'ثبت سفارش از طریق واتس‌اپ', customerName: 'نام شما',
-                customerPhone: 'شماره تلفن (اختیاری)', customerNotes: 'یادداشت (اختیاری)',
+                offline: 'شما آفلاین هستید — محصولات ذخیره شده نمایش داده می‌شوند.',
+                noResults: 'محصولی یافت نشد',
+                noProducts: 'هنوز محصولی اضافه نشده',
+                noProductsDesc: 'محصولات پس از اضافه شدن توسط فروشنده در اینجا نمایش داده می‌شوند.',
+                orderWhatsApp: 'سفارش از طریق واتس‌اپ',
+                orderTitle: 'ثبت سفارش شما', customerName: 'نام شما',
+                customerPhone: 'شماره تلفن (اختیاری)', customerNotes: 'درخواست خاصی دارید؟',
                 placeOrder: 'ارسال سفارش', nameRequired: 'لطفاً نام خود را وارد کنید',
                 phoneInvalid: 'لطفاً شماره تلفن معتبر وارد کنید', cancel: 'لغو', close: 'بستن',
                 adminTitle: 'پنل مدیریت', priceAFN: 'افغانی',
                 langEnglish: 'English', langDari: 'دری', langPashto: 'پښتو',
                 currencyAFN: 'افغانی',
+                tagline: 'مواد غذایی تازه از پنجشیر',
+                footerLocation: 'ولسوالی اناب، پنجشیر',
+                footerMadeWith: 'ساخته شده با',
+                footerForCommunity: 'برای جامعه ما',
             }
         },
         ps: {
             dir: 'rtl', lang: 'ps',
             labels: {
                 appName: 'د حکیمي خوراکه فروشۍ', shopName: 'د حکیمي خوراکه فروشۍ',
-                offline: 'تاسو آفلاین یاست. کچې محصولات ښکاره کېدلی.', noResults: 'هیچ محصول نه موندل شوه',
-                noProducts: 'هیڅ محصول اضافه نه شوی', orderWhatsApp: 'د واتس‌اپ له لارې ار ګونه کول',
-                orderTitle: 'د واتس‌اپ له لارې ار ګونه کول', customerName: 'ستاسو نوم',
-                customerPhone: 'تلیفون نومر (اختیاري)', customerNotes: 'یادداشتونه (اختیاري)',
-                placeOrder: 'ارګونه ولکول', nameRequired: 'مهرباني وکړئ ستاسو نوم وکړئ',
-                phoneInvalid: 'مهرباني وکړئ معتبر تلیفون نومر وکړئ', cancel: 'لغو کول', close: 'بند کول',
-                adminTitle: 'پنل مدیریت', priceAFN: 'افغانی',
+                offline: 'تاسو آفلاین یاست — کچې محصولات ښکاره کېدلی.',
+                noResults: 'هیچ محصول نه موندل شوه',
+                noProducts: 'هیڅ محصول اضافه نه شوی',
+                noProductsDesc: 'محصولات به دلته ښکاره شي کله چې فروشنده یې اضافه کړي.',
+                orderWhatsApp: 'د واتس‌اپ له لارې سفارش',
+                orderTitle: 'ستاسو سفارش ثبت کول', customerName: 'ستاسو نوم',
+                customerPhone: 'تلیفون نومر (اختیاري)', customerNotes: 'خاص غوښتنې لرئ؟',
+                placeOrder: 'سفارش ولېږئ', nameRequired: 'مهرباني وکړئ خپل نوم ولیکئ',
+                phoneInvalid: 'مهرباني وکړئ معتبر تلیفون نومر ولیکئ', cancel: 'لغو کول', close: 'بند کول',
+                adminTitle: 'مدیریت', priceAFN: 'افغانی',
                 langEnglish: 'English', langDari: 'دری', langPashto: 'پښتو',
                 currencyAFN: 'افغانی',
+                tagline: 'د پنجشیر تازه خوراکي توکي',
+                footerLocation: 'د اناب ولسوالۍ، پنجشیر',
+                footerMadeWith: 'جوړ شوی د',
+                footerForCommunity: 'سره زموږ ټولنې لپاره',
             }
         }
     };
@@ -115,7 +311,7 @@
 
     function formatPrice(amount) {
         const num = Number(amount).toLocaleString('en-US');
-        return currentLang === 'en' ? `${t('priceAFN')} ${num}` : `${num} ${t('priceAFN')}`;
+        return currentLang === 'en' ? t('priceAFN') + ' ' + num : num + ' ' + t('priceAFN');
     }
 
     // ===================== Store =====================
@@ -185,7 +381,7 @@
 
     // ===================== App State =====================
     var selectedProduct = null;
-    var placeholderSvg = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f3f4f6'/%3E%3Crect x='55' y='45' width='90' height='70' rx='8' stroke='%239ca3af' stroke-width='2' fill='none'/%3E%3Cpath d='M75 90l15-15 15 15 15-30 20 40' stroke='%239ca3af' stroke-width='2' fill='none'/%3E%3Ccircle cx='70' cy='62' r='6' stroke='%239ca3af' stroke-width='2' fill='none'/%3E%3Crect x='50' y='130' width='100' height='6' rx='3' fill='%23d1d5db'/%3E%3Crect x='65' y='145' width='70' height='6' rx='3' fill='%23d1d5db'/%3E%3C/svg%3E";
+    var placeholderSvg = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23FEF3C7'/%3E%3Cg transform='translate(100,85)' fill='none' stroke='%23D97706' stroke-width='1.5' opacity='0.5'%3E%3Ccircle r='28'/%3E%3Cpath d='M-12-8h24v16c0 6-4 10-12 10s-12-4-12-10z'/%3E%3Cpath d='M-8-8c0-6 3-10 8-10s8 4 8 10'/%3E%3C/g%3E%3Crect x='50' y='140' width='100' height='5' rx='2.5' fill='%23D97706' opacity='0.15'/%3E%3Crect x='65' y='152' width='70' height='5' rx='2.5' fill='%23D97706' opacity='0.1'/%3E%3C/svg%3E";
 
     // ===================== Render =====================
     function renderApp() {
@@ -196,81 +392,146 @@
         document.title = shopName;
 
         var langButtons = [
-            { code: 'en', label: 'English', native: 'EN' },
-            { code: 'fa', label: 'دری', native: 'FA' },
-            { code: 'ps', label: 'پښتو', native: 'PS' }
+            { code: 'en', label: 'English', flag: '🇬🇧' },
+            { code: 'fa', label: 'دری', flag: '🇦🇫' },
+            { code: 'ps', label: 'پښتو', flag: '🇦🇫' }
         ];
 
-        var langDropdownHTML = langButtons.map(function(o) {
-            return '<button data-lang="' + o.code + '" class="w-full px-4 py-3 text-left hover:bg-emerald-50 transition-colors flex items-center gap-3 ' + (lang === o.code ? 'bg-emerald-50 text-emerald-700' : 'text-gray-700') + '">' +
-                '<span class="w-2 h-2 rounded-full ' + (lang === o.code ? 'bg-emerald-500' : 'bg-gray-300') + '"></span>' +
-                '<span class="text-sm font-medium">' + o.label + ' (' + o.native + ')</span></button>';
-        }).join('');
+        // Language selector in header
+        var langSelectorHTML = '<div class="relative">' +
+            '<button id="lang-toggle" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 transition-colors text-sm font-medium text-stone-700" aria-label="Language">' +
+            '<svg class="w-4 h-4 text-stone-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>' +
+            '<span>' + langButtons.find(function(b) { return b.code === lang; }).flag + ' ' + lang.toUpperCase() + '</span>' +
+            '<svg class="w-3 h-3 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>' +
+            '</button>' +
+            '<div id="lang-dropdown" class="hidden absolute top-full mt-2 ' + (isRTL ? 'left-0' : 'right-0') + ' bg-white rounded-2xl card-shadow border border-stone-100 overflow-hidden min-w-[170px] z-50">' +
+            langButtons.map(function(o) {
+                var isActive = lang === o.code;
+                return '<button data-lang="' + o.code + '" class="lang-option w-full px-4 py-3 flex items-center gap-3 ' + (isActive ? 'active' : '') + '">' +
+                    '<span class="text-base">' + o.flag + '</span>' +
+                    '<span class="text-sm font-medium ' + (isActive ? 'text-emerald-700' : 'text-stone-700') + '">' + o.label + '</span>' +
+                    (isActive ? '<svg class="w-4 h-4 text-emerald-500 ' + (isRTL ? 'mr-auto' : 'ml-auto') + '" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>' : '') +
+                    '</button>';
+            }).join('') +
+            '</div></div>';
 
+        // Product cards
         var productCards = products.length > 0 ? products.map(function(product) {
             var name = product.name[lang] || product.name.en || 'Product';
             var price = formatPrice(product.price);
             var img = product.image || placeholderSvg;
-            return '<div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group">' +
-                '<div class="relative aspect-square bg-gray-50 overflow-hidden">' +
-                '<img src="' + img + '" alt="' + name + '" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.src=\'' + placeholderSvg + '\'">' +
-                '<div class="absolute top-3 ' + (isRTL ? 'left-3' : 'right-3') + ' bg-emerald-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-md">' + price + '</div>' +
+            return '<div class="product-card bg-white rounded-[20px] card-shadow overflow-hidden border border-stone-100 hover:card-shadow-hover">' +
+                '<div class="relative overflow-hidden bg-amber-50" style="padding-top:85%;">' +
+                '<img src="' + img + '" alt="' + name + '" loading="lazy" decoding="async" class="product-image absolute inset-0 w-full h-full object-cover" onerror="this.src=\'' + placeholderSvg + '\'">' +
+                '<div class="price-badge absolute top-3 ' + (isRTL ? 'left-3' : 'right-3') + ' bg-amber-500 text-white px-3 py-1.5 rounded-xl text-sm font-bold font-heading shadow-sm">' + price + '</div>' +
                 '</div>' +
-                '<div class="p-4">' +
-                '<h3 class="font-semibold text-gray-800 text-base mb-3 line-clamp-2 min-h-[2.5rem]">' + name + '</h3>' +
-                '<button class="order-btn w-full bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-md hover:shadow-lg active:scale-95" data-id="' + product.id + '">' +
-                '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>' +
+                '<div class="p-4 pt-3">' +
+                '<h3 class="font-heading font-semibold text-stone-800 text-[15px] leading-snug mb-3 line-clamp-2 min-h-[2.5rem]">' + name + '</h3>' +
+                '<button class="order-btn w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-[14px] flex items-center justify-center gap-2 text-sm" data-id="' + product.id + '">' +
+                '<svg class="wa-icon w-[18px] h-[18px]" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>' +
                 t('orderWhatsApp') + '</button></div></div>';
-        }).join('') : '<div class="col-span-full text-center py-12">' +
-            '<div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">' +
-            '<svg class="w-12 h-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg></div>' +
-            '<h2 class="text-xl font-semibold text-gray-600 mb-2">' + t('noProducts') + '</h2></div>';
+        }).join('') :
+            '<div class="col-span-full text-center py-16 px-6">' +
+            '<div class="empty-illustration w-20 h-20 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-5">' +
+            '<svg class="w-10 h-10 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>' +
+            '</div>' +
+            '<h2 class="font-heading text-lg font-semibold text-stone-600 mb-2">' + t('noProducts') + '</h2>' +
+            '<p class="text-sm text-stone-400 max-w-xs mx-auto">' + t('noProductsDesc') + '</p></div>';
 
+        // Build full page
         document.getElementById('app').innerHTML =
-            '<div class="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50">' +
+            '<div class="min-h-screen fade-in" style="background-color: var(--color-bg);">' +
+
+            // Accent strip
+            '<div class="header-strip"></div>' +
+
             // Offline banner
-            '<div id="offline-banner" class="hidden bg-amber-500 text-white text-center py-2 px-4 text-sm font-medium sticky top-0 z-50">' + t('offline') + '</div>' +
+            '<div id="offline-banner" class="hidden offline-banner text-white text-center py-2.5 px-4 text-sm font-medium sticky top-0 z-50">' +
+            '<span class="inline-flex items-center gap-2">' +
+            '<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636a9 9 0 010 12.728m-2.829-2.829a5 5 0 000-7.07m-4.243 4.243a1 1 0 010-1.414"/></svg>' +
+            t('offline') + '</span></div>' +
+
             // Header
-            '<header class="bg-gradient-to-r from-emerald-600 to-green-600 text-white shadow-lg sticky top-0 z-40"><div class="max-w-7xl mx-auto px-4 py-4">' +
-            '<div class="flex items-center justify-between"><div class="flex items-center gap-3">' +
-            '<div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center"><svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg></div>' +
-            '<div><h1 class="text-lg md:text-xl font-bold leading-tight">' + shopName + '</h1></div></div>' +
-            '<a href="admin.html" class="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg text-xs font-medium transition-colors">' + t('adminTitle') + '</a>' +
-            '</div></div></header>' +
-            // Products grid
-            '<main class="max-w-7xl mx-auto px-4 py-6 pb-24">' +
-            '<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">' + productCards + '</div></main>' +
-            // Language selector
-            '<div class="fixed bottom-4 ' + (isRTL ? 'left-4' : 'right-4') + ' z-50"><div class="relative">' +
-            '<button id="lang-toggle" class="bg-white shadow-lg rounded-full p-3 hover:shadow-xl transition-all duration-200 border border-gray-200 flex items-center gap-2" aria-label="Language">' +
-            '<svg class="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg>' +
-            '<span class="text-sm font-medium text-gray-700">' + currentLang.toUpperCase() + '</span></button>' +
-            '<div id="lang-dropdown" class="hidden absolute bottom-14 ' + (isRTL ? 'left-0' : 'right-0') + ' bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden min-w-[180px]">' + langDropdownHTML + '</div>' +
+            '<header class="bg-white border-b border-stone-200 sticky top-0 z-40">' +
+            '<div class="max-w-6xl mx-auto px-4 sm:px-6">' +
+            '<div class="flex items-center justify-between py-4">' +
+
+            // Logo + shop name
+            '<div class="flex items-center gap-3">' +
+            '<div class="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0" style="background-color: var(--color-primary);">' +
+            '<svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>' +
+            '</div>' +
+            '<div>' +
+            '<h1 class="font-heading text-base sm:text-lg font-bold text-stone-800 leading-tight">' + shopName + '</h1>' +
+            '<p class="text-xs text-stone-400 hidden sm:block">' + t('tagline') + '</p>' +
             '</div></div>' +
+
+            // Header actions
+            '<div class="flex items-center gap-2 sm:gap-3">' +
+            langSelectorHTML +
+            '<a href="admin.html" class="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-stone-200 hover:bg-stone-50 transition-colors text-sm font-medium text-stone-600">' +
+            '<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>' +
+            '<span class="hidden sm:inline">' + t('adminTitle') + '</span></a>' +
+            '</div></div></div></header>' +
+
+            // Main content
+            '<main class="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-12">' +
+            '<div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">' + productCards + '</div></main>' +
+
             // Order modal
-            '<div id="order-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4"><div class="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto">' +
-            '<div class="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 rounded-t-2xl flex items-center justify-between">' +
-            '<h2 class="text-lg font-bold text-gray-800">' + t('orderTitle') + '</h2>' +
-            '<button id="close-modal" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">' +
-            '<svg class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button></div>' +
+            '<div id="order-modal" class="fixed inset-0 modal-overlay z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">' +
+            '<div class="modal-content bg-white rounded-t-3xl sm:rounded-3xl card-shadow-hover w-full max-w-md max-h-[92vh] sm:max-h-[85vh] overflow-y-auto">' +
+
+            // Modal header
+            '<div class="sticky top-0 bg-white border-b border-stone-100 px-6 py-4 rounded-t-3xl sm:rounded-t-3xl flex items-center justify-between">' +
+            '<h2 class="font-heading text-lg font-bold text-stone-800">' + t('orderTitle') + '</h2>' +
+            '<button id="close-modal" class="w-9 h-9 rounded-full bg-stone-100 hover:bg-stone-200 flex items-center justify-center transition-colors">' +
+            '<svg class="w-5 h-5 text-stone-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>' +
+            '</button></div>' +
+
+            // Modal body
             '<div class="p-6">' +
-            '<div id="order-product-info" class="bg-gray-50 rounded-xl p-4 mb-6"></div>' +
+            '<div id="order-product-info" class="bg-amber-50 rounded-2xl p-4 mb-6 border border-amber-100"></div>' +
             '<form id="order-form" class="space-y-4">' +
-            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('customerName') + ' *</label>' +
-            '<input type="text" id="customer-name" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"></div>' +
-            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('customerPhone') + '</label>' +
-            '<input type="tel" id="customer-phone" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="0791897790"></div>' +
-            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('customerNotes') + '</label>' +
-            '<textarea id="customer-notes" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none"></textarea></div>' +
-            '<div class="flex gap-3 pt-2">' +
-            '<button type="button" id="cancel-order" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-4 rounded-xl transition-colors">' + t('cancel') + '</button>' +
-            '<button type="submit" class="flex-1 bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-semibold py-3 px-4 rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2">' +
+
+            // Name field
+            '<div>' +
+            '<label class="block text-sm font-semibold text-stone-700 mb-1.5">' + t('customerName') + ' <span class="text-amber-500">*</span></label>' +
+            '<input type="text" id="customer-name" required class="w-full px-4 py-3 border-2 border-stone-200 rounded-2xl bg-stone-50 text-stone-800 placeholder-stone-400 text-sm" autocomplete="name">' +
+            '</div>' +
+
+            // Phone field
+            '<div>' +
+            '<label class="block text-sm font-semibold text-stone-700 mb-1.5">' + t('customerPhone') + '</label>' +
+            '<input type="tel" id="customer-phone" inputmode="numeric" class="w-full px-4 py-3 border-2 border-stone-200 rounded-2xl bg-stone-50 text-stone-800 placeholder-stone-400 text-sm" placeholder="0791897790" autocomplete="tel">' +
+            '</div>' +
+
+            // Notes field
+            '<div>' +
+            '<label class="block text-sm font-semibold text-stone-700 mb-1.5">' + t('customerNotes') + '</label>' +
+            '<textarea id="customer-notes" rows="3" class="w-full px-4 py-3 border-2 border-stone-200 rounded-2xl bg-stone-50 text-stone-800 placeholder-stone-400 text-sm resize-none"></textarea>' +
+            '</div>' +
+
+            // Action buttons
+            '<div class="flex gap-3 pt-3">' +
+            '<button type="button" id="cancel-order" class="flex-1 bg-stone-100 hover:bg-stone-200 text-stone-600 font-semibold py-3.5 px-4 rounded-2xl transition-colors text-sm">' + t('cancel') + '</button>' +
+            '<button type="submit" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3.5 px-4 rounded-2xl transition-all flex items-center justify-center gap-2 text-sm">' +
             '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>' +
             t('placeOrder') + '</button></div></form></div></div></div>' +
+
             // Footer
-            '<footer class="bg-gray-800 text-white py-6"><div class="max-w-7xl mx-auto px-4 text-center">' +
-            '<p class="text-sm text-gray-400">&copy; ' + new Date().getFullYear() + ' ' + shopName + '</p>' +
-            '<p class="text-xs text-gray-500 mt-1">Anaba District, Panjshir Province, Afghanistan</p></div></footer>' +
+            '<footer class="footer-pattern text-stone-300 py-8">' +
+            '<div class="max-w-6xl mx-auto px-4 sm:px-6 text-center">' +
+            '<div class="flex items-center justify-center gap-2 mb-3">' +
+            '<div class="w-8 h-8 rounded-xl flex items-center justify-center" style="background-color: var(--color-primary);">' +
+            '<svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>' +
+            '</div>' +
+            '<span class="font-heading font-semibold text-sm text-stone-400">' + shopName + '</span></div>' +
+            '<p class="text-xs text-stone-500 mb-1">📍 ' + t('footerLocation') + '</p>' +
+            '<p class="text-xs text-stone-600">' + t('footerMadeWith') + ' ❤️ ' + t('footerForCommunity') + '</p>' +
+            '<p class="text-xs text-stone-600 mt-3">&copy; ' + new Date().getFullYear() + '</p>' +
+            '</div></footer>' +
+
             '</div>';
 
         // Update offline banner
@@ -286,7 +547,12 @@
             document.getElementById('lang-dropdown').classList.toggle('hidden');
             return;
         }
-        document.getElementById('lang-dropdown')?.classList.add('hidden');
+
+        // Close dropdown when clicking elsewhere
+        var dropdown = document.getElementById('lang-dropdown');
+        if (dropdown && !e.target.closest('#lang-dropdown')) {
+            dropdown.classList.add('hidden');
+        }
 
         // Language selection
         var langBtn = e.target.closest('[data-lang]');
@@ -334,13 +600,17 @@
 
         document.getElementById('order-product-info').innerHTML =
             '<div class="flex items-center gap-4">' +
-            '<img src="' + img + '" alt="' + name + '" class="w-16 h-16 rounded-xl object-cover bg-gray-200" onerror="this.src=\'' + placeholderSvg + '\'">' +
-            '<div><h3 class="font-semibold text-gray-800">' + name + '</h3>' +
-            '<p class="text-emerald-600 font-bold">' + price + '</p></div></div>';
+            '<img src="' + img + '" alt="' + name + '" class="w-14 h-14 rounded-xl object-cover bg-amber-100 flex-shrink-0" onerror="this.src=\'' + placeholderSvg + '\'">' +
+            '<div class="min-w-0">' +
+            '<h3 class="font-heading font-semibold text-stone-800 text-sm leading-snug">' + name + '</h3>' +
+            '<p class="text-amber-600 font-bold font-heading text-sm mt-0.5">' + price + '</p>' +
+            '</div></div>';
 
         document.getElementById('order-modal').classList.remove('hidden');
         document.body.style.overflow = 'hidden';
-        document.getElementById('customer-name').focus();
+        setTimeout(function() {
+            document.getElementById('customer-name').focus();
+        }, 100);
     }
 
     function closeOrderModal() {
