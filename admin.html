@@ -71,7 +71,20 @@
                 pinChanged: 'PIN changed successfully', currentPinWrong: 'Current PIN is incorrect',
                 exportData: 'Export Data', importData: 'Import Data', importSuccess: 'Data imported', importError: 'Invalid data',
                 save: 'Save', cancel: 'Cancel', yes: 'Yes', no: 'No',
-                currencyAFN: 'AFN', priceAFN: 'AFN'
+                currencyAFN: 'AFN', priceAFN: 'AFN',
+                costPrice: 'Cost Price (Buy)', sellingPrice: 'Selling Price',
+                purchases: 'Stock Purchases', addPurchase: 'Add Purchase',
+                supplier: 'Supplier Name', supplierHint: 'e.g. Khan Wholesale',
+                purchaseDate: 'Date', purchaseQty: 'Quantity', purchaseCost: 'Total Cost',
+                purchasePerUnit: 'Cost per Unit (AFN)',
+                noPurchases: 'No purchases recorded yet',
+                totalSpent: 'Total Spent', totalProfit: 'Profit', totalLoss: 'Loss',
+                revenue: 'Revenue (Sold)', costOfGoods: 'Cost (Bought)',
+                profitMargin: 'Profit Margin', inventoryValue: 'Inventory Value',
+                todayProfit: "Today's Profit", weekProfit: 'This Week Profit', monthProfit: 'This Month Profit',
+                todaySpent: "Today's Spending", weekSpent: 'This Week Spent', monthSpent: 'This Month Spent',
+                confirmDeletePurchase: 'Delete this purchase record?',
+                profit: 'Profit', loss: 'Loss',
             }
         },
         fa: {
@@ -103,7 +116,20 @@
                 pinChanged: 'رمز تغییر کرد', currentPinWrong: 'رمز فعلی نادرست است',
                 exportData: 'صادر کردن داده‌ها', importData: 'وارد کردن داده‌ها', importSuccess: 'داده‌ها وارد شد', importError: 'فایل نامعتبر',
                 save: 'ذخیره', cancel: 'لغو', yes: 'بله', no: 'نه',
-                currencyAFN: 'افغانی', priceAFN: 'افغانی'
+                currencyAFN: 'افغانی', priceAFN: 'افغانی',
+                costPrice: 'قیمت خرید', sellingPrice: 'قیمت فروش',
+                purchases: 'خرید انبار', addPurchase: 'افزودن خرید',
+                supplier: 'نام تأمین کننده', supplierHint: 'مثلاً عمده فروشی خان',
+                purchaseDate: 'تاریخ', purchaseQty: 'تعداد', purchaseCost: 'هزینه کل',
+                purchasePerUnit: 'قیمت هر واحد (افغانی)',
+                noPurchases: 'هنوز خریدی ثبت نشده',
+                totalSpent: 'کل هزینه', totalProfit: 'سود', totalLoss: 'ضرر',
+                revenue: 'درآمد (فروش)', costOfGoods: 'هزینه (خرید)',
+                profitMargin: 'حاشیه سود', inventoryValue: 'ارزش انبار',
+                todayProfit: 'سود امروز', weekProfit: 'سود این هفته', monthProfit: 'سود این ماه',
+                todaySpent: 'هزینه امروز', weekSpent: 'هزینه این هفته', monthSpent: 'هزینه این ماه',
+                confirmDeletePurchase: 'آیا این رکورد خرید حذف شود؟',
+                profit: 'سود', loss: 'ضرر',
             }
         },
         ps: {
@@ -135,7 +161,20 @@
                 pinChanged: 'PIN بدل شو', currentPinWrong: 'اوسنی PIN ناکام',
                 exportData: 'داتا برونtákول', importData: 'داتا درونtákول', importSuccess: 'داتا درونtákل شو', importError: 'فایل نامعتبر',
                 save: 'ساتل', cancel: 'لغو', yes: 'هو', no: 'نه',
-                currencyAFN: 'افغانی', priceAFN: 'افغانی'
+                currencyAFN: 'افغانی', priceAFN: 'افغانی',
+                costPrice: 'د پسیو قیمت', sellingPrice: 'د خرڅو قیمت',
+                purchases: 'د انبار پسیو', addPurchase: 'د پسیو اضافه',
+                supplier: 'د عرضه کوونکی نوم', supplierHint: 'لکه: خان ټولګه',
+                purchaseDate: 'نیته', purchaseQty: 'تعداد', purchaseCost: 'ټول لګښت',
+                purchasePerUnit: 'هر یونٹ لګښت (افغانی)',
+                noPurchases: 'هیڅ پسیو ثبت نه شوی',
+                totalSpent: 'ټول لګښت', totalProfit: 'منفعت', totalLoss: 'زیان',
+                revenue: ' عاید (خرڅ)', costOfGoods: 'لګښت (پسیو)',
+                profitMargin: 'د منفعت حاشیه', inventoryValue: 'د انبار ارزښت',
+                todayProfit: 'نن يو منفعت', weekProfit: 'د اوسني ہفتې منفعت', monthProfit: 'د اوسني مېشتې منفعت',
+                todaySpent: 'نن يو لګښت', weekSpent: 'د اوسني ہفتې لګښت', monthSpent: 'د اوسني مېشتې لګښت',
+                confirmDeletePurchase: 'د دې پسیو ریکارډ واړو؟',
+                profit: 'منفعت', loss: 'زیان',
             }
         }
     };
@@ -156,14 +195,15 @@
     function set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) { console.error(e); } }
     function initStore() {
         if (!localStorage.getItem('grocery_products')) set('grocery_products', [
-            { id: 'prod_1', name: { en: 'Premium Wheat Flour (10kg)', fa: 'آرد گندم ممتاز (۱۰ کیلو)', ps: 'لوی ګندم آرد (۱۰ کګ)' }, price: 450, image: null, visible: true },
-            { id: 'prod_2', name: { en: 'Sunflower Oil (5L)', fa: 'روغن آفتابگردان (۵ لیتر)', ps: 'د لمری روغن (۵ لتر)' }, price: 680, image: null, visible: true },
-            { id: 'prod_3', name: { en: 'Red Kidney Beans (1kg)', fa: 'لوبیا قرمز (۱ کیلو)', ps: 'سور لوبیا (۱ کګ)' }, price: 320, image: null, visible: true },
-            { id: 'prod_4', name: { en: 'Basmati Rice (10kg)', fa: 'برنج بسمتی (۱۰ کیلو)', ps: 'بسمتي برنج (۱۰ کګ)' }, price: 1200, image: null, visible: true },
-            { id: 'prod_5', name: { en: 'Granulated Sugar (1kg)', fa: 'شکر قندی (۱ کیلو)', ps: 'شکر (۱ کګ)' }, price: 95, image: null, visible: true },
-            { id: 'prod_6', name: { en: 'Green Tea Box (250g)', fa: 'چای سبز جعبه‌دار (۲۵۰ گرم)', ps: 'سبز چای بکس (۲۵۰ ګرام)' }, price: 280, image: null, visible: true },
+            { id: 'prod_1', name: { en: 'Premium Wheat Flour (10kg)', fa: 'آرد گندم ممتاز (۱۰ کیلو)', ps: 'لوی ګندم آرد (۱۰ کګ)' }, price: 450, costPrice: 380, image: null, visible: true },
+            { id: 'prod_2', name: { en: 'Sunflower Oil (5L)', fa: 'روغن آفتابگردان (۵ لیتر)', ps: 'د لمری روغن (۵ لتر)' }, price: 680, costPrice: 580, image: null, visible: true },
+            { id: 'prod_3', name: { en: 'Red Kidney Beans (1kg)', fa: 'لوبیا قرمز (۱ کیلو)', ps: 'سور لوبیا (۱ کګ)' }, price: 320, costPrice: 250, image: null, visible: true },
+            { id: 'prod_4', name: { en: 'Basmati Rice (10kg)', fa: 'برنج بسمتی (۱۰ کیلو)', ps: 'بسمتي برنج (۱۰ کګ)' }, price: 1200, costPrice: 1000, image: null, visible: true },
+            { id: 'prod_5', name: { en: 'Granulated Sugar (1kg)', fa: 'شکر قندی (۱ کیلو)', ps: 'شکر (۱ کګ)' }, price: 95, costPrice: 75, image: null, visible: true },
+            { id: 'prod_6', name: { en: 'Green Tea Box (250g)', fa: 'چای سبز جعبه‌دار (۲۵۰ گرم)', ps: 'سبز چای بکس (۲۵۰ ګرام)' }, price: 280, costPrice: 200, image: null, visible: true },
         ]);
         if (!localStorage.getItem('grocery_orders')) set('grocery_orders', []);
+        if (!localStorage.getItem('grocery_purchases')) set('grocery_purchases', []);
         if (!localStorage.getItem('grocery_settings')) set('grocery_settings', DEFAULT_SETTINGS);
     }
 
@@ -177,27 +217,57 @@
     function saveOrder(o) { var orders = getOrders(); orders.unshift(o); set('grocery_orders', orders); }
     function updateOrderStatus(id, st) { var orders = getOrders(); var o = orders.find(function(x) { return x.id === id; }); if (o) { o.status = st; set('grocery_orders', orders); } }
     function saveSettings(s) { set('grocery_settings', Object.assign(getSettings(), s)); }
-    function exportData() { return { products: getProducts(), orders: getOrders(), settings: getSettings(), exportedAt: Date.now(), version: '1.0' }; }
-    function importData(d) { if (d.products) set('grocery_products', d.products); if (d.orders) set('grocery_orders', d.orders); if (d.settings) set('grocery_settings', d.settings); }
-    function clearAll() { ['grocery_products', 'grocery_orders', 'grocery_settings', 'grocery_pin_hash', 'grocery_pin_salt', 'grocery_pin_attempts', 'grocery_pin_lockout'].forEach(function(k) { localStorage.removeItem(k); }); initStore(); }
+    // Purchases (stock from suppliers)
+    function getPurchases() { return (get('grocery_purchases', [])).sort(function(a, b) { return b.createdAt - a.createdAt; }); }
+    function savePurchase(p) { var ps = getPurchases(); ps.unshift(p); set('grocery_purchases', ps); }
+    function deletePurchase(id) { set('grocery_purchases', getPurchases().filter(function(p) { return p.id !== id; })); }
+    function exportData() { return { products: getProducts(), orders: getOrders(), purchases: getPurchases(), settings: getSettings(), exportedAt: Date.now(), version: '2.0' }; }
+    function importData(d) { if (d.products) set('grocery_products', d.products); if (d.orders) set('grocery_orders', d.orders); if (d.purchases) set('grocery_purchases', d.purchases); if (d.settings) set('grocery_settings', d.settings); }
+    function clearAll() { ['grocery_products', 'grocery_orders', 'grocery_purchases', 'grocery_settings', 'grocery_pin_hash', 'grocery_pin_salt', 'grocery_pin_attempts', 'grocery_pin_lockout'].forEach(function(k) { localStorage.removeItem(k); }); initStore(); }
     function getStats() {
-        var orders = getOrders(), now = Date.now(), day = 86400000;
+        var orders = getOrders(), purchases = getPurchases(), products = getProducts();
+        var now = Date.now(), day = 86400000;
         var todayStart = new Date(); todayStart.setHours(0,0,0,0);
         var weekStart = new Date(); weekStart.setDate(weekStart.getDate() - weekStart.getDay()); weekStart.setHours(0,0,0,0);
         var monthStart = new Date(); monthStart.setDate(1); monthStart.setHours(0,0,0,0);
         var todayOrders = orders.filter(function(o) { return o.createdAt >= todayStart.getTime(); });
         var weekOrders = orders.filter(function(o) { return o.createdAt >= weekStart.getTime(); });
         var monthOrders = orders.filter(function(o) { return o.createdAt >= monthStart.getTime(); });
-        var sum = function(arr) { return arr.reduce(function(s, o) { return s + (o.total || 0); }, 0); };
+        var todayPurchases = purchases.filter(function(p) { return p.createdAt >= todayStart.getTime(); });
+        var weekPurchases = purchases.filter(function(p) { return p.createdAt >= weekStart.getTime(); });
+        var monthPurchases = purchases.filter(function(p) { return p.createdAt >= monthStart.getTime(); });
+        var sumRevenue = function(arr) { return arr.reduce(function(s, o) { return s + (o.total || 0); }, 0); };
+        var sumCost = function(arr) { return arr.reduce(function(s, p) { return s + (p.totalCost || 0); }, 0); };
         var prodSales = {};
         orders.forEach(function(o) { (o.items || []).forEach(function(item) {
-            if (!prodSales[item.id]) prodSales[item.id] = { id: item.id, name: item.name, count: 0, revenue: 0 };
+            if (!prodSales[item.id]) prodSales[item.id] = { id: item.id, name: item.name, count: 0, revenue: 0, cost: 0 };
             prodSales[item.id].count += (item.quantity || 1);
             prodSales[item.id].revenue += (item.price || 0) * (item.quantity || 1);
+            var prod = products.find(function(x) { return x.id === item.id; });
+            if (prod && prod.costPrice) prodSales[item.id].cost += prod.costPrice * (item.quantity || 1);
         }); });
         var topProducts = Object.values(prodSales).sort(function(a, b) { return b.count - a.count; }).slice(0, 5);
-        return { totalOrders: orders.length, todayRevenue: sum(todayOrders), weekRevenue: sum(weekOrders), monthRevenue: sum(monthOrders),
-            todayCount: todayOrders.length, weekCount: weekOrders.length, monthCount: monthOrders.length, topProducts: topProducts };
+        var todayRevenue = sumRevenue(todayOrders), todaySpent = sumCost(todayPurchases);
+        var weekRevenue = sumRevenue(weekOrders), weekSpent = sumCost(weekPurchases);
+        var monthRevenue = sumRevenue(monthOrders), monthSpent = sumCost(monthPurchases);
+        var totalRevenue = sumRevenue(orders), totalSpent = sumCost(purchases);
+        var totalCostOfGoods = orders.reduce(function(s, o) {
+            return s + (o.items || []).reduce(function(is2, item) {
+                var prod = products.find(function(x) { return x.id === item.id; });
+                return is2 + (prod && prod.costPrice ? prod.costPrice * (item.quantity || 1) : 0);
+            }, 0);
+        }, 0);
+        return {
+            totalOrders: orders.length,
+            todayRevenue: todayRevenue, weekRevenue: weekRevenue, monthRevenue: monthRevenue,
+            todayCount: todayOrders.length, weekCount: weekOrders.length, monthCount: monthOrders.length,
+            todaySpent: todaySpent, weekSpent: weekSpent, monthSpent: monthSpent,
+            todayProfit: todayRevenue - todaySpent, weekProfit: weekRevenue - weekSpent, monthProfit: monthRevenue - monthSpent,
+            totalRevenue: totalRevenue, totalSpent: totalSpent, totalProfit: totalRevenue - totalSpent,
+            totalCostOfGoods: totalCostOfGoods, grossProfit: totalRevenue - totalCostOfGoods,
+            topProducts: topProducts,
+            totalPurchases: purchases.length, todayPurchasesCount: todayPurchases.length
+        };
     }
 
     // ===================== Auth =====================
@@ -357,6 +427,7 @@
             '<nav class="bg-white border-b border-gray-200 sticky top-[60px] z-30"><div class="max-w-7xl mx-auto px-4"><div class="flex gap-1 overflow-x-auto scrollbar-hide">' +
             '<button data-tab="dashboard" class="tab-btn px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 text-emerald-600 border-emerald-600">' + t('dashboard') + '</button>' +
             '<button data-tab="products" class="tab-btn px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 text-gray-500 border-transparent hover:text-gray-700">' + t('products') + '</button>' +
+            '<button data-tab="purchases" class="tab-btn px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 text-gray-500 border-transparent hover:text-gray-700">' + t('purchases') + '</button>' +
             '<button data-tab="orders" class="tab-btn px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 text-gray-500 border-transparent hover:text-gray-700">' + t('orders') + '</button>' +
             '<button data-tab="settings" class="tab-btn px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 text-gray-500 border-transparent hover:text-gray-700">' + t('settings') + '</button>' +
             '</div></div></nav>' +
@@ -391,6 +462,7 @@
         switch(currentTab) {
             case 'dashboard': c.innerHTML = renderDashboardTab(); break;
             case 'products': c.innerHTML = renderProductsTab(); attachProductEvents(); break;
+            case 'purchases': c.innerHTML = renderPurchasesTab(); attachPurchaseEvents(); break;
             case 'orders': c.innerHTML = renderOrdersTab(); attachOrderEvents(); break;
             case 'settings': c.innerHTML = renderSettingsTab(); attachSettingsEvents(); break;
         }
@@ -400,29 +472,50 @@
     function renderDashboardTab() {
         var stats = getStats();
         var lang = currentLang;
+        var profitColor = function(v) { return v >= 0 ? 'text-emerald-600' : 'text-red-500'; };
+        var profitBg = function(v) { return v >= 0 ? 'bg-emerald-50' : 'bg-red-50'; };
         var topHTML = stats.topProducts.length > 0 ? stats.topProducts.map(function(p, i) {
+            var margin = p.revenue > 0 ? Math.round(((p.revenue - p.cost) / p.revenue) * 100) : 0;
             return '<div class="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">' +
                 '<div class="flex items-center gap-3"><span class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 font-bold text-sm">' + (i + 1) + '</span>' +
-                '<div><p class="font-medium text-gray-800">' + (p.name?.[lang] || p.name?.en || 'Product') + '</p><p class="text-xs text-gray-500">' + p.count + ' orders</p></div></div>' +
-                '<p class="font-semibold text-emerald-600">' + formatPrice(p.revenue) + '</p></div>';
+                '<div><p class="font-medium text-gray-800">' + (p.name?.[lang] || p.name?.en || 'Product') + '</p><p class="text-xs text-gray-500">' + p.count + ' sold · margin ' + margin + '%</p></div></div>' +
+                '<div class="text-right"><p class="font-semibold text-emerald-600">' + formatPrice(p.revenue) + '</p>' +
+                '<p class="text-xs text-gray-400">' + (currentLang === 'fa' ? 'هزینه:' : 'cost:') + ' ' + formatPrice(p.cost) + '</p></div></div>';
         }).join('') : '<p class="text-gray-500 text-center py-4">' + t('noOrders') + '</p>';
 
         var orders = getOrders();
         var recentHTML = orders.length > 0 ? orders.slice(0, 5).map(function(o) {
-            var statusColors = { pending: 'bg-yellow-100 text-yellow-700', confirmed: 'bg-blue-100 text-blue-700', delivered: 'bg-green-100 text-green-700', cancelled: 'bg-red-100 text-red-700' };
+            var stCols = { pending: 'bg-yellow-100 text-yellow-700', confirmed: 'bg-blue-100 text-blue-700', delivered: 'bg-green-100 text-green-700', cancelled: 'bg-red-100 text-red-700' };
             return '<div class="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">' +
                 '<div><p class="font-medium text-gray-800">' + (o.customerName || 'N/A') + '</p><p class="text-xs text-gray-500">' + formatDate(o.createdAt) + '</p></div>' +
                 '<div class="text-right"><p class="font-semibold text-emerald-600">' + formatPrice(o.total) + '</p>' +
-                '<span class="text-xs px-2 py-1 rounded-full ' + (statusColors[o.status] || 'bg-gray-100') + '">' + t('status' + o.status.charAt(0).toUpperCase() + o.status.slice(1)) + '</span></div></div>';
+                '<span class="text-xs px-2 py-1 rounded-full ' + (stCols[o.status] || 'bg-gray-100') + '">' + t('status' + o.status.charAt(0).toUpperCase() + o.status.slice(1)) + '</span></div></div>';
         }).join('') : '<p class="text-gray-500 text-center py-4">' + t('noOrders') + '</p>';
 
         return '<div class="space-y-6">' +
+            // Revenue cards
             '<div class="grid grid-cols-1 md:grid-cols-3 gap-4">' +
-            '<div class="bg-white rounded-xl p-4 border border-gray-200"><p class="text-sm text-gray-500">' + t('todayRevenue') + '</p><p class="text-2xl font-bold text-emerald-600 mt-1">' + formatPrice(stats.todayRevenue) + '</p><p class="text-xs text-gray-400 mt-2">' + stats.todayCount + ' orders</p></div>' +
-            '<div class="bg-white rounded-xl p-4 border border-gray-200"><p class="text-sm text-gray-500">' + t('weekRevenue') + '</p><p class="text-2xl font-bold text-blue-600 mt-1">' + formatPrice(stats.weekRevenue) + '</p><p class="text-xs text-gray-400 mt-2">' + stats.weekCount + ' orders</p></div>' +
-            '<div class="bg-white rounded-xl p-4 border border-gray-200"><p class="text-sm text-gray-500">' + t('monthRevenue') + '</p><p class="text-2xl font-bold text-purple-600 mt-1">' + formatPrice(stats.monthRevenue) + '</p><p class="text-xs text-gray-400 mt-2">' + stats.monthCount + ' orders</p></div>' +
+            '<div class="bg-white rounded-xl p-4 border border-gray-200"><p class="text-sm text-gray-500">' + t('todayRevenue') + '</p><p class="text-2xl font-bold text-emerald-600 mt-1">' + formatPrice(stats.todayRevenue) + '</p><p class="text-xs text-gray-400 mt-1">' + stats.todayCount + ' orders</p>' +
+            '<div class="flex items-center gap-1 mt-2"><span class="text-xs text-gray-400">' + t('todaySpent') + ':</span><span class="text-xs font-medium text-orange-600">' + formatPrice(stats.todaySpent) + '</span></div>' +
+            '<div class="flex items-center gap-1"><span class="text-xs text-gray-400">' + t('todayProfit') + ':</span><span class="text-xs font-bold ' + profitColor(stats.todayProfit) + '">' + formatPrice(stats.todayProfit) + '</span></div></div>' +
+            '<div class="bg-white rounded-xl p-4 border border-gray-200"><p class="text-sm text-gray-500">' + t('weekRevenue') + '</p><p class="text-2xl font-bold text-blue-600 mt-1">' + formatPrice(stats.weekRevenue) + '</p><p class="text-xs text-gray-400 mt-1">' + stats.weekCount + ' orders</p>' +
+            '<div class="flex items-center gap-1 mt-2"><span class="text-xs text-gray-400">' + t('weekSpent') + ':</span><span class="text-xs font-medium text-orange-600">' + formatPrice(stats.weekSpent) + '</span></div>' +
+            '<div class="flex items-center gap-1"><span class="text-xs text-gray-400">' + t('weekProfit') + ':</span><span class="text-xs font-bold ' + profitColor(stats.weekProfit) + '">' + formatPrice(stats.weekProfit) + '</span></div></div>' +
+            '<div class="bg-white rounded-xl p-4 border border-gray-200"><p class="text-sm text-gray-500">' + t('monthRevenue') + '</p><p class="text-2xl font-bold text-purple-600 mt-1">' + formatPrice(stats.monthRevenue) + '</p><p class="text-xs text-gray-400 mt-1">' + stats.monthCount + ' orders</p>' +
+            '<div class="flex items-center gap-1 mt-2"><span class="text-xs text-gray-400">' + t('monthSpent') + ':</span><span class="text-xs font-medium text-orange-600">' + formatPrice(stats.monthSpent) + '</span></div>' +
+            '<div class="flex items-center gap-1"><span class="text-xs text-gray-400">' + t('monthProfit') + ':</span><span class="text-xs font-bold ' + profitColor(stats.monthProfit) + '">' + formatPrice(stats.monthProfit) + '</span></div></div>' +
             '</div>' +
+            // Total summary card
+            '<div class="bg-gradient-to-r from-emerald-600 to-green-600 rounded-xl p-5 text-white">' +
+            '<div class="grid grid-cols-2 md:grid-cols-4 gap-4">' +
+            '<div><p class="text-emerald-100 text-sm">' + (currentLang === 'fa' ? 'کل درآمد' : currentLang === 'ps' ? 'ټول عاید' : 'Total Revenue') + '</p><p class="text-xl font-bold mt-1">' + formatPrice(stats.totalRevenue) + '</p></div>' +
+            '<div><p class="text-emerald-100 text-sm">' + (currentLang === 'fa' ? 'کل هزینه خرید' : currentLang === 'ps' ? 'ټول د پسیو لګښت' : 'Total Purchase Cost') + '</p><p class="text-xl font-bold mt-1">' + formatPrice(stats.totalSpent) + '</p></div>' +
+            '<div><p class="text-emerald-100 text-sm">' + t('costOfGoods') + '</p><p class="text-xl font-bold mt-1">' + formatPrice(stats.totalCostOfGoods) + '</p></div>' +
+            '<div><p class="text-emerald-100 text-sm">' + t('profit') + '</p><p class="text-xl font-bold mt-1">' + formatPrice(stats.grossProfit) + '</p></div>' +
+            '</div></div>' +
+            // Top products
             '<div class="bg-white rounded-xl p-4 border border-gray-200"><h3 class="font-semibold text-gray-800 mb-4">' + t('topProducts') + '</h3>' + topHTML + '</div>' +
+            // Recent orders
             '<div class="bg-white rounded-xl p-4 border border-gray-200"><h3 class="font-semibold text-gray-800 mb-4">' + t('orders') + '</h3>' + recentHTML + '</div></div>';
     }
 
@@ -435,9 +528,13 @@
         var cards = ps.length > 0 ? ps.map(function(p) {
             var name = p.name[lang] || p.name.en || 'Product';
             var img = p.image || placeholderSvg;
+            var margin = p.price && p.costPrice ? Math.round(((p.price - p.costPrice) / p.price) * 100) : 0;
             return '<div class="bg-white rounded-xl p-4 border border-gray-200 ' + (!p.visible ? 'opacity-60' : '') + '">' +
                 '<div class="flex items-start gap-4"><img src="' + img + '" class="w-16 h-16 rounded-lg object-cover bg-gray-100" onerror="this.src=\'' + placeholderSvg + '\'">' +
-                '<div class="flex-1 min-w-0"><h3 class="font-semibold text-gray-800 truncate">' + name + '</h3><p class="text-emerald-600 font-bold">' + formatPrice(p.price) + '</p>' +
+                '<div class="flex-1 min-w-0"><h3 class="font-semibold text-gray-800 truncate">' + name + '</h3>' +
+                '<div class="flex items-center gap-2 mt-1"><p class="text-emerald-600 font-bold">' + formatPrice(p.price) + '</p>' +
+                (p.costPrice ? '<span class="text-xs text-orange-500">' + (currentLang === 'fa' ? 'خرید:' : currentLang === 'ps' ? 'پسیو:' : 'cost:') + ' ' + formatPrice(p.costPrice) + '</span>' : '') + '</div>' +
+                (p.costPrice ? '<div class="flex items-center gap-2 mt-1"><span class="text-xs px-2 py-0.5 rounded-full ' + (margin > 0 ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700') + '">' + t('profitMargin') + ': ' + margin + '%</span></div>' : '') +
                 '<span class="text-xs px-2 py-1 rounded-full mt-2 inline-block ' + (p.visible ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 text-gray-500') + '">' + (p.visible ? 'Active' : 'Hidden') + '</span></div></div>' +
                 '<div class="flex gap-2 mt-4">' +
                 '<button class="edit-btn flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-3 rounded-lg text-sm transition-colors" data-id="' + p.id + '">' + t('edit') + '</button>' +
@@ -463,6 +560,8 @@
             '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('productNameFa') + '</label><input type="text" id="p-name-fa" required dir="rtl" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div>' +
             '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('productNamePs') + '</label><input type="text" id="p-name-ps" required dir="rtl" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div></div>' +
             '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('productPrice') + '</label><div class="relative"><input type="number" id="p-price" required min="1" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 pr-16"><span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium">AFN</span></div></div>' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('costPrice') + '</label><div class="relative"><input type="number" id="p-cost-price" min="0" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 pr-16" placeholder="0"><span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium">AFN</span></div><p class="text-xs text-gray-400 mt-1">' + (currentLang === 'fa' ? 'هزینه خرید هر واحد از تأمین‌کننده' : currentLang === 'ps' ? 'د هر یونټ د تأمین کوونکی لګښت' : 'Cost per unit from supplier') + '</p></div>' +
+            '<div id="p-margin-line" class="hidden"><div class="flex items-center gap-2 bg-gray-50 rounded-xl px-4 py-3"><span class="text-sm text-gray-500">' + t('profitMargin') + ':</span><span id="p-margin-val" class="font-bold"></span></div></div>' +
             '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('productImage') + '</label>' +
             '<label class="cursor-pointer"><div id="upload-area" class="border-2 border-dashed border-gray-300 rounded-xl p-4 text-center hover:border-emerald-400 transition-colors">' +
             '<svg class="w-8 h-8 text-gray-400 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>' +
@@ -485,6 +584,7 @@
         document.getElementById('p-image')?.addEventListener('change', handleImageUpload);
         document.getElementById('remove-img')?.addEventListener('click', function() { document.getElementById('img-preview').classList.add('hidden'); document.getElementById('preview-img').src = ''; document.getElementById('p-image').value = ''; });
         document.getElementById('product-form')?.addEventListener('submit', handleProductSave);
+        attachMarginListeners();
     }
 
     var currentProductImage = '';
@@ -496,14 +596,37 @@
         document.getElementById('p-name-fa').value = p?.name?.fa || '';
         document.getElementById('p-name-ps').value = p?.name?.ps || '';
         document.getElementById('p-price').value = p?.price || '';
+        document.getElementById('p-cost-price').value = p?.costPrice || '';
         document.getElementById('p-visible').checked = p ? p.visible !== false : true;
         currentProductImage = p?.image || '';
+        updateMarginPreview();
         if (p?.image) { document.getElementById('img-preview').classList.remove('hidden'); document.getElementById('preview-img').src = p.image; }
         else { document.getElementById('img-preview').classList.add('hidden'); }
         document.getElementById('product-modal').classList.remove('hidden');
         document.body.style.overflow = 'hidden';
     }
     function closeProductModal() { document.getElementById('product-modal').classList.add('hidden'); document.body.style.overflow = ''; editingProduct = null; currentProductImage = ''; }
+
+    function updateMarginPreview() {
+        var price = parseFloat(document.getElementById('p-price')?.value) || 0;
+        var cost = parseFloat(document.getElementById('p-cost-price')?.value) || 0;
+        var line = document.getElementById('p-margin-line');
+        var val = document.getElementById('p-margin-val');
+        if (!line || !val) return;
+        if (price > 0 && cost > 0) {
+            var margin = Math.round(((price - cost) / price) * 100);
+            val.textContent = margin + '%';
+            val.className = 'font-bold ' + (margin >= 0 ? 'text-emerald-600' : 'text-red-500');
+            line.classList.remove('hidden');
+        } else { line.classList.add('hidden'); }
+    }
+
+    function attachMarginListeners() {
+        var pi = document.getElementById('p-price');
+        var ci = document.getElementById('p-cost-price');
+        if (pi) pi.addEventListener('input', updateMarginPreview);
+        if (ci) ci.addEventListener('input', updateMarginPreview);
+    }
 
     function handleImageUpload(e) {
         var file = e.target.files?.[0]; if (!file || !file.type.startsWith('image/')) return;
@@ -531,6 +654,7 @@
             id: document.getElementById('p-id').value,
             name: { en: document.getElementById('p-name-en').value.trim(), fa: document.getElementById('p-name-fa').value.trim(), ps: document.getElementById('p-name-ps').value.trim() },
             price: parseInt(document.getElementById('p-price').value, 10),
+            costPrice: parseInt(document.getElementById('p-cost-price').value, 10) || 0,
             image: currentProductImage || null,
             visible: document.getElementById('p-visible').checked
         };
@@ -570,6 +694,83 @@
         document.querySelectorAll('.status-sel').forEach(function(sel) {
             sel.addEventListener('change', function() { updateOrderStatus(sel.getAttribute('data-id'), sel.value); renderTab(); });
         });
+    }
+
+    // ===================== Purchases Tab =====================
+    function renderPurchasesTab() {
+        var purchases = getPurchases();
+        var products = getProducts();
+        var lang = currentLang;
+        var cards = purchases.length > 0 ? purchases.map(function(p) {
+            return '<div class="bg-white rounded-xl p-4 border border-gray-200">' +
+                '<div class="flex items-start justify-between"><div class="flex-1">' +
+                '<h3 class="font-semibold text-gray-800">' + (p.supplier || '-') + '</h3>' +
+                '<p class="text-sm text-gray-500 mt-1">' + formatDate(p.createdAt) + ' · ' + (p.quantity || 0) + ' units</p>' +
+                '<p class="text-xs text-gray-400 mt-1">' + t('costPrice') + ': ' + formatPrice(p.perUnitCost || 0) + ' / unit</p></div>' +
+                '<div class="text-right"><p class="text-lg font-bold text-orange-600">' + formatPrice(p.totalCost || 0) + '</p></div></div>' +
+                '<div class="flex justify-end mt-3"><button class="del-purchase-btn bg-red-50 hover:bg-red-100 text-red-600 font-medium py-1 px-3 rounded-lg text-sm transition-colors" data-id="' + p.id + '">' + t('delete') + '</button></div></div>';
+        }).join('') : '<div class="bg-white rounded-xl p-8 border border-gray-200 text-center"><h3 class="text-lg font-semibold text-gray-600">' + t('noPurchases') + '</h3></div>';
+
+        var productOpts = products.map(function(p) { return '<option value="' + p.id + '">' + (p.name[lang] || p.name.en || 'Product') + '</option>'; }).join('');
+
+        return '<div class="space-y-6">' +
+            '<div class="flex items-center justify-between"><h2 class="text-xl font-bold text-gray-800">' + t('purchases') + '</h2>' +
+            '<button id="add-purchase-btn" class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center gap-2">' +
+            '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>' + t('addPurchase') + '</button></div>' +
+            // Purchase form
+            '<div id="purchase-form-wrap" class="hidden bg-white rounded-xl p-6 border border-gray-200"><form id="purchase-form" class="space-y-4">' +
+            '<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('supplier') + '</label><input type="text" id="pu-supplier" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500" placeholder="' + t('supplierHint') + '"></div>' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('purchaseDate') + '</label><input type="date" id="pu-date" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500"></div>' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('purchaseQty') + '</label><input type="number" id="pu-qty" min="1" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500" placeholder="10"></div>' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('purchasePerUnit') + '</label><div class="relative"><input type="number" id="pu-cost" min="0" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 pr-16" placeholder="0"><span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium">AFN</span></div></div>' +
+            '</div>' +
+            '<div class="flex items-center gap-2 bg-orange-50 rounded-xl px-4 py-3"><span class="text-sm text-gray-600">' + t('purchaseCost') + ':</span><span id="pu-total" class="font-bold text-orange-600 text-lg">0 ' + t('currencyAFN') + '</span></div>' +
+            '<div class="flex gap-3">' +
+            '<button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-xl">' + t('save') + '</button>' +
+            '<button type="button" id="cancel-purchase" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-4 rounded-xl">' + t('cancel') + '</button></div></form></div>' +
+            cards + '</div>';
+    }
+
+    function attachPurchaseEvents() {
+        document.getElementById('add-purchase-btn')?.addEventListener('click', function() {
+            var wrap = document.getElementById('purchase-form-wrap');
+            wrap.classList.toggle('hidden');
+            if (!wrap.classList.contains('hidden')) {
+                document.getElementById('pu-date').value = new Date().toISOString().split('T')[0];
+                document.getElementById('pu-qty').addEventListener('input', calcPurchaseTotal);
+                document.getElementById('pu-cost').addEventListener('input', calcPurchaseTotal);
+            }
+        });
+        document.getElementById('cancel-purchase')?.addEventListener('click', function() { document.getElementById('purchase-form-wrap')?.classList.add('hidden'); });
+        document.getElementById('purchase-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            var qty = parseInt(document.getElementById('pu-qty').value, 10) || 0;
+            var cost = parseFloat(document.getElementById('pu-cost').value) || 0;
+            savePurchase({
+                id: 'pu_' + Date.now(),
+                supplier: document.getElementById('pu-supplier').value.trim(),
+                date: document.getElementById('pu-date').value,
+                quantity: qty,
+                perUnitCost: cost,
+                totalCost: qty * cost,
+                createdAt: Date.now()
+            });
+            document.getElementById('purchase-form-wrap').classList.add('hidden');
+            renderTab();
+        });
+        document.querySelectorAll('.del-purchase-btn').forEach(function(b) {
+            b.addEventListener('click', function() {
+                if (confirm(t('confirmDeletePurchase'))) { deletePurchase(b.getAttribute('data-id')); renderTab(); }
+            });
+        });
+    }
+
+    function calcPurchaseTotal() {
+        var qty = parseInt(document.getElementById('pu-qty')?.value, 10) || 0;
+        var cost = parseFloat(document.getElementById('pu-cost')?.value) || 0;
+        var el = document.getElementById('pu-total');
+        if (el) el.textContent = formatPrice(qty * cost);
     }
 
     // ===================== Settings Tab =====================
