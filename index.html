@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="#10b981">
+    <meta name="description" content="فروشگاه مواد غذایی حکیمی - Anaba District, Panjshir Province, Afghanistan">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <title>فروشگاه مواد غذایی حکیمی</title>
+    
+    <!-- Preconnect to CDNs for faster loading -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Google Fonts - Noto Sans Arabic for RTL languages, Inter for English -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'Noto Sans Arabic', 'system-ui', 'sans-serif'],
+                        'arabic': ['Noto Sans Arabic', 'Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        emerald: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            200: '#a7f3d0',
+                            300: '#6ee7b7',
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* RTL-specific styles */
+        [dir="rtl"] .rtl\:text-right {
+            text-align: right;
+        }
+        [dir="rtl"] .rtl\:text-left {
+            text-align: left;
+        }
+        [dir="rtl"] .rtl\:mr-auto {
+            margin-right: auto;
+        }
+        [dir="rtl"] .rtl\:ml-auto {
+            margin-left: auto;
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a1a1a1;
+        }
+        
+        /* Hide scrollbar for tab navigation */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Line clamp for text truncation */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        /* Font family based on language */
+        :root {
+            --font-primary: 'Noto Sans Arabic', 'Inter', system-ui, sans-serif;
+        }
+        
+        body {
+            font-family: var(--font-primary);
+        }
+        
+        [lang="en"] body,
+        [lang="en"] h1,
+        [lang="en"] h2,
+        [lang="en"] h3,
+        [lang="en"] p,
+        [lang="en"] span {
+            font-family: 'Inter', 'Noto Sans Arabic', system-ui, sans-serif;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- App Root -->
+    <div id="app">
+        <!-- Loading State -->
+        <div class="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 flex items-center justify-center">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4 animate-pulse">
+                    <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                </div>
+                <p class="text-gray-600 font-medium">Loading...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Script -->
+    <script type="module" src="assets/app.js"></script>
+</body>
+</html>

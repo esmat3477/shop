@@ -1,0 +1,29 @@
+{
+    "name": "Hakeemi Grocery Store",
+    "short_name": "Hakeemi",
+    "description": "Online grocery shopping for Anaba District, Panjshir Province, Afghanistan",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#f0fdf4",
+    "theme_color": "#10b981",
+    "orientation": "portrait-primary",
+    "lang": "fa",
+    "dir": "rtl",
+    "icons": [
+        {
+            "src": "/assets/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/assets/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": ["shopping", "food"],
+    "scope": "/",
+    "lang": ["en", "fa", "ps"]
+}
