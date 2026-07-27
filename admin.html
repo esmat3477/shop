@@ -234,36 +234,87 @@
     function renderLogin() {
         var pinExists = isPinSet();
         var locked = isLocked();
+        var pinLabel = currentLang === 'fa' ? 'رمز عبور (PIN)' : currentLang === 'ps' ? 'رمز (PIN)' : 'Password (PIN)';
+        var confirmLabel = currentLang === 'fa' ? 'تکرار رمز' : currentLang === 'ps' ? 'تکرار رمز' : 'Confirm Password';
+        var hint = currentLang === 'fa' ? 'رمز را با اعداد انگلیسی وارد کنید (۴ تا ۶ رقم)' :
+                   currentLang === 'ps' ? 'رمز په انګلیسي شمېرو ورکړئ (۴ تا ۶ رقم)' : 'Enter 4-6 digits (English numbers)';
+        var setupHint = currentLang === 'fa' ? 'برای اولین بار یک رمز ۴ تا ۶ رقمی انتخاب کنید و آن را به خاطر بسپارید' :
+                        currentLang === 'ps' ? 'لومړی ځل ۴ تا ۶ رقمی رمز غوره کړئ او هغه یاد ورکړئ' : 'Choose a 4-6 digit PIN you will remember';
+        var loginHint = currentLang === 'fa' ? 'برای ورود به پنل مدیریت، رمز خود را وارد کنید' :
+                        currentLang === 'ps' ? 'د پنل ته د داخلیدو لپاره خپله PIN ورکړئ' : 'Enter your PIN to access the admin dashboard';
+
         document.getElementById('app').innerHTML =
             '<div class="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 flex items-center justify-center p-4">' +
-            '<div class="w-full max-w-md"><div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">' +
-            '<div class="text-center mb-8"><div class="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center mx-auto mb-4">' +
-            '<svg class="w-8 h-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg></div>' +
+            '<div class="w-full max-w-md">' +
+            // Logo and title
+            '<div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">' +
+            '<div class="text-center mb-6">' +
+            '<div class="w-20 h-20 bg-gradient-to-br from-emerald-500 to-green-600 rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-lg">' +
+            '<svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg></div>' +
             '<h1 class="text-2xl font-bold text-gray-800">' + (pinExists ? t('enterPinTitle') : t('setPinTitle')) + '</h1>' +
-            '<p class="text-gray-500 mt-2">' + (pinExists ? t('enterPinDesc') : t('setPinDesc')) + '</p></div>' +
-            (locked ? '<div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-6"><p class="text-red-600 text-sm text-center">' + t('pinLocked') + '</p></div>' : '') +
+            '<p class="text-gray-500 mt-2 text-sm">' + (pinExists ? loginHint : setupHint) + '</p></div>' +
+            // Status badge
+            '<div class="text-center mb-6">' +
+            '<span class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium ' + (pinExists ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700') + '">' +
+            '<span class="w-2 h-2 rounded-full ' + (pinExists ? 'bg-blue-500' : 'bg-amber-500') + '"></span>' +
+            (pinExists ? (currentLang === 'fa' ? 'ورود به پنل' : currentLang === 'ps' ? 'د پنل ته ننوتل' : 'Login to Panel') :
+                         (currentLang === 'fa' ? 'تنظیم اولیه' : currentLang === 'ps' ? 'لومړی تنظیم' : 'First Time Setup')) +
+            '</span></div>' +
+            // Error
+            (locked ? '<div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 flex items-center gap-3">' +
+            '<svg class="w-5 h-5 text-red-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>' +
+            '<p class="text-red-600 text-sm">' + t('pinLocked') + '</p></div>' : '') +
+            // Form
             '<form id="pin-form" class="space-y-4">' +
-            '<div><input type="password" id="pin-input" maxlength="6" pattern="[0-9]{4,6}" required class="w-full px-4 py-4 text-center text-2xl tracking-[0.5em] border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="' + t('pinPlaceholder') + '"' + (locked ? ' disabled' : '') + '></div>' +
-            (!pinExists ? '<div><input type="password" id="pin-confirm" maxlength="6" pattern="[0-9]{4,6}" required class="w-full px-4 py-4 text-center text-2xl tracking-[0.5em] border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="' + t('confirmPinPlaceholder') + '"' + (locked ? ' disabled' : '') + '></div>' : '') +
-            '<div id="pin-error" class="hidden text-red-500 text-sm text-center"></div>' +
-            '<button type="submit" class="w-full bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-semibold py-4 rounded-xl transition-all shadow-md hover:shadow-lg disabled:opacity-50"' + (locked ? ' disabled' : '') + '>' +
-            (pinExists ? t('loginBtn') : t('setPinBtn')) + '</button></form>' +
-            (pinExists ? '<div class="mt-6 text-center"><button id="reset-pin-btn" class="text-red-500 hover:text-red-600 text-sm font-medium">' + t('forgotPin') + '</button></div>' : '') +
-            '</div><div class="text-center mt-6"><a href="index.html" class="text-gray-500 hover:text-gray-700 text-sm">&larr; Back to Store</a></div></div></div>';
+            // PIN field
+            '<div><label class="block text-sm font-semibold text-gray-700 mb-2">' + pinLabel + '</label>' +
+            '<input type="tel" inputmode="numeric" id="pin-input" maxlength="6" autocomplete="off" required ' +
+            'class="w-full px-4 py-4 text-center text-3xl tracking-[0.3em] border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all bg-gray-50 focus:bg-white" ' +
+            'placeholder="••••"' + (locked ? ' disabled' : '') + '></div>' +
+            // Confirm PIN (first time only)
+            (!pinExists ? '<div><label class="block text-sm font-semibold text-gray-700 mb-2">' + confirmLabel + '</label>' +
+            '<input type="tel" inputmode="numeric" id="pin-confirm" maxlength="6" autocomplete="off" required ' +
+            'class="w-full px-4 py-4 text-center text-3xl tracking-[0.3em] border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all bg-gray-50 focus:bg-white" ' +
+            'placeholder="••••"' + (locked ? ' disabled' : '') + '></div>' : '') +
+            // Hint
+            '<p class="text-xs text-gray-400 text-center">' + hint + '</p>' +
+            // Error
+            '<div id="pin-error" class="hidden bg-red-50 border border-red-200 rounded-xl p-3 text-red-600 text-sm text-center"></div>' +
+            // Submit button
+            '<button type="submit" class="w-full bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-bold py-4 rounded-xl transition-all shadow-md hover:shadow-lg text-lg disabled:opacity-50"' + (locked ? ' disabled' : '') + '>' +
+            (pinExists ?
+                '<span class="flex items-center justify-center gap-2"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>' + t('loginBtn') + '</span>' :
+                '<span class="flex items-center justify-center gap-2"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>' + t('setPinBtn') + '</span>') +
+            '</button></form>' +
+            // Forgot PIN
+            (pinExists ? '<div class="mt-4 text-center"><button id="reset-pin-btn" class="text-red-500 hover:text-red-600 text-sm font-medium hover:underline">' + t('forgotPin') + '</button></div>' : '') +
+            '</div>' +
+            // Back to store
+            '<div class="text-center mt-4"><a href="index.html" class="inline-flex items-center gap-2 text-gray-500 hover:text-gray-700 text-sm font-medium">' +
+            (currentLang === 'fa' ? '← بازگشت به فروشگاه' : currentLang === 'ps' ? '← پخپله دوکان ته' : '← Back to Store') + '</a></div></div></div>';
 
         document.getElementById('pin-form').addEventListener('submit', handlePinSubmit);
         if (document.getElementById('reset-pin-btn')) document.getElementById('reset-pin-btn').addEventListener('click', handleResetPin);
+        // Auto-focus PIN input
+        setTimeout(function() { document.getElementById('pin-input').focus(); }, 100);
+    }
+
+    function showLoginError(msg) {
+        var el = document.getElementById('pin-error');
+        if (el) { el.textContent = msg; el.classList.remove('hidden'); }
+        // Shake animation on PIN input
+        var input = document.getElementById('pin-input');
+        if (input) { input.classList.add('border-red-400', 'animate-pulse'); input.value = ''; input.focus(); setTimeout(function() { input.classList.remove('border-red-400', 'animate-pulse'); }, 1500); }
     }
 
     async function handlePinSubmit(e) {
         e.preventDefault();
-        var pin = document.getElementById('pin-input').value;
-        var errEl = document.getElementById('pin-error');
-        if (!pin || pin.length < 4 || pin.length > 6) { errEl.textContent = t('pinTooShort'); errEl.classList.remove('hidden'); return; }
+        var pin = document.getElementById('pin-input').value.replace(/[^0-9]/g, '');
+        if (!pin || pin.length < 4 || pin.length > 6) { showLoginError(t('pinTooShort')); return; }
         try {
             if (!isPinSet()) {
-                var confirm = document.getElementById('pin-confirm').value;
-                if (pin !== confirm) { errEl.textContent = t('pinMismatch'); errEl.classList.remove('hidden'); return; }
+                var confirm = (document.getElementById('pin-confirm')?.value || '').replace(/[^0-9]/g, '');
+                if (pin !== confirm) { showLoginError(t('pinMismatch')); return; }
                 await setPin(pin);
                 sessionStorage.setItem('admin_session', 'true');
                 isAdmin = true; renderDashboard();
@@ -273,10 +324,9 @@
             }
         } catch(err) {
             var msg = err.message;
-            if (msg.startsWith('locked:')) errEl.textContent = t('pinLocked');
-            else if (msg.startsWith('invalid:')) errEl.textContent = t('pinInvalid') + ' (' + msg.split(':')[1] + ')';
-            else errEl.textContent = t('pinInvalid');
-            errEl.classList.remove('hidden');
+            if (msg.startsWith('locked:')) { showLoginError(t('pinLocked')); renderLogin(); }
+            else if (msg.startsWith('invalid:')) showLoginError(t('pinInvalid') + ' — ' + msg.split(':')[1]);
+            else showLoginError(t('pinInvalid'));
         }
     }
 
