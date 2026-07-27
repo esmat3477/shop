@@ -1,142 +1,401 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl" class="rtl">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#10b981">
-    <meta name="description" content="فروشگاه مواد غذایی حکیمی - Anaba District, Panjshir Province, Afghanistan">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
-    <title>فروشگاه مواد غذایی حکیمی</title>
-    
-    <!-- Preconnect to CDNs for faster loading -->
-    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <meta name="description" content="Hakeemi Grocery Store - Anaba District, Panjshir">
+    <title>Hakeemi Grocery Store</title>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <!-- Google Fonts - Noto Sans Arabic for RTL languages, Inter for English -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Tailwind Config -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        'sans': ['Inter', 'Noto Sans Arabic', 'system-ui', 'sans-serif'],
-                        'arabic': ['Noto Sans Arabic', 'Inter', 'system-ui', 'sans-serif'],
-                    },
-                    colors: {
-                        emerald: {
-                            50: '#ecfdf5',
-                            100: '#d1fae5',
-                            200: '#a7f3d0',
-                            300: '#6ee7b7',
-                            400: '#34d399',
-                            500: '#10b981',
-                            600: '#059669',
-                            700: '#047857',
-                            800: '#065f46',
-                            900: '#064e3b',
-                        }
+                        sans: ['Inter', 'Noto Sans Arabic', 'system-ui', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
-    
     <style>
-        /* RTL-specific styles */
-        [dir="rtl"] .rtl\:text-right {
-            text-align: right;
-        }
-        [dir="rtl"] .rtl\:text-left {
-            text-align: left;
-        }
-        [dir="rtl"] .rtl\:mr-auto {
-            margin-right: auto;
-        }
-        [dir="rtl"] .rtl\:ml-auto {
-            margin-left: auto;
-        }
-        
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #a1a1a1;
-        }
-        
-        /* Hide scrollbar for tab navigation */
-        .scrollbar-hide::-webkit-scrollbar {
-            display: none;
-        }
-        .scrollbar-hide {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        
-        /* Line clamp for text truncation */
-        .line-clamp-2 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        
-        /* Font family based on language */
-        :root {
-            --font-primary: 'Noto Sans Arabic', 'Inter', system-ui, sans-serif;
-        }
-        
-        body {
-            font-family: var(--font-primary);
-        }
-        
-        [lang="en"] body,
-        [lang="en"] h1,
-        [lang="en"] h2,
-        [lang="en"] h3,
-        [lang="en"] p,
-        [lang="en"] span {
-            font-family: 'Inter', 'Noto Sans Arabic', system-ui, sans-serif;
-        }
+        html { scroll-behavior: smooth; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        :root { --font-primary: 'Noto Sans Arabic', 'Inter', system-ui, sans-serif; }
+        body { font-family: var(--font-primary); }
+        [lang="en"] body { font-family: 'Inter', system-ui, sans-serif; }
     </style>
 </head>
 <body class="antialiased">
-    <!-- App Root -->
-    <div id="app">
-        <!-- Loading State -->
-        <div class="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 flex items-center justify-center">
-            <div class="text-center">
-                <div class="w-16 h-16 bg-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4 animate-pulse">
-                    <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-                    </svg>
-                </div>
-                <p class="text-gray-600 font-medium">Loading...</p>
+<div id="app">
+    <div class="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50 flex items-center justify-center">
+        <div class="text-center">
+            <div class="w-16 h-16 bg-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4 animate-pulse">
+                <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
             </div>
+            <p class="text-gray-600 font-medium">Loading...</p>
         </div>
     </div>
+</div>
 
-    <!-- Main App Script -->
-    <script type="module" src="assets/app.js"></script>
+<script>
+(function() {
+    'use strict';
+
+    // ===================== i18n =====================
+    const I18N = {
+        en: {
+            dir: 'ltr', lang: 'en',
+            labels: {
+                appName: 'Hakeemi Grocery Store', shopName: 'Hakeemi Grocery Store',
+                offline: "You're offline. Showing cached products.", noResults: 'No products found',
+                noProducts: 'No products added yet', orderWhatsApp: 'Order via WhatsApp',
+                orderTitle: 'Place Order via WhatsApp', customerName: 'Your Name',
+                customerPhone: 'Phone Number (optional)', customerNotes: 'Notes (optional)',
+                placeOrder: 'Send Order', nameRequired: 'Please enter your name',
+                phoneInvalid: 'Please enter a valid phone number', cancel: 'Cancel', close: 'Close',
+                adminTitle: 'Admin Panel', priceAFN: 'AFN',
+                langEnglish: 'English', langDari: 'Dari (دری)', langPashto: 'Pashto (پښتو)',
+                currencyAFN: 'AFN',
+            }
+        },
+        fa: {
+            dir: 'rtl', lang: 'fa',
+            labels: {
+                appName: 'فروشگاه مواد غذایی حکیمی', shopName: 'فروشگاه مواد غذایی حکیمی',
+                offline: 'شما آفلاین هستید. محصولات ذخیره شده نمایش داده می‌شوند.', noResults: 'محصولی یافت نشد',
+                noProducts: 'هنوز محصولی اضافه نشده', orderWhatsApp: 'سفارش از طریق واتس‌اپ',
+                orderTitle: 'ثبت سفارش از طریق واتس‌اپ', customerName: 'نام شما',
+                customerPhone: 'شماره تلفن (اختیاری)', customerNotes: 'یادداشت (اختیاری)',
+                placeOrder: 'ارسال سفارش', nameRequired: 'لطفاً نام خود را وارد کنید',
+                phoneInvalid: 'لطفاً شماره تلفن معتبر وارد کنید', cancel: 'لغو', close: 'بستن',
+                adminTitle: 'پنل مدیریت', priceAFN: 'افغانی',
+                langEnglish: 'English', langDari: 'دری', langPashto: 'پښتو',
+                currencyAFN: 'افغانی',
+            }
+        },
+        ps: {
+            dir: 'rtl', lang: 'ps',
+            labels: {
+                appName: 'د حکیمي خوراکه فروشۍ', shopName: 'د حکیمي خوراکه فروشۍ',
+                offline: 'تاسو آفلاین یاست. کچې محصولات ښکاره کېدلی.', noResults: 'هیچ محصول نه موندل شوه',
+                noProducts: 'هیڅ محصول اضافه نه شوی', orderWhatsApp: 'د واتس‌اپ له لارې ار ګونه کول',
+                orderTitle: 'د واتس‌اپ له لارې ار ګونه کول', customerName: 'ستاسو نوم',
+                customerPhone: 'تلیفون نومر (اختیاري)', customerNotes: 'یادداشتونه (اختیاري)',
+                placeOrder: 'ارګونه ولکول', nameRequired: 'مهرباني وکړئ ستاسو نوم وکړئ',
+                phoneInvalid: 'مهرباني وکړئ معتبر تلیفون نومر وکړئ', cancel: 'لغو کول', close: 'بند کول',
+                adminTitle: 'پنل مدیریت', priceAFN: 'افغانی',
+                langEnglish: 'English', langDari: 'دری', langPashto: 'پښتو',
+                currencyAFN: 'افغانی',
+            }
+        }
+    };
+
+    let currentLang = localStorage.getItem('grocery_lang') || 'fa';
+
+    function t(key) {
+        const labels = I18N[currentLang]?.labels || I18N.fa.labels;
+        return labels[key] || I18N.en.labels[key] || key;
+    }
+
+    function applyLanguage(lang) {
+        if (!I18N[lang]) lang = 'fa';
+        currentLang = lang;
+        document.documentElement.setAttribute('dir', I18N[lang].dir);
+        document.documentElement.setAttribute('lang', lang);
+        localStorage.setItem('grocery_lang', lang);
+        renderApp();
+    }
+
+    function formatPrice(amount) {
+        const num = Number(amount).toLocaleString('en-US');
+        return currentLang === 'en' ? `${t('priceAFN')} ${num}` : `${num} ${t('priceAFN')}`;
+    }
+
+    // ===================== Store =====================
+    const DEFAULT_SETTINGS = {
+        shopName: { en: 'Hakeemi Grocery Store', fa: 'فروشگاه مواد غذایی حکیمی', ps: 'د حکیمي خوراکه فروشۍ' },
+        whatsappNumber: '93791897790',
+        defaultLanguage: 'fa',
+        currencySymbol: 'AFN',
+        orderMessageTemplate: '🛒 *New Order from {{shopName}}*\n\n📦 *Order Details:*\n{{items}}\n\n💰 *Total: {{total}} {{currency}}*\n📍 *Delivery: Anaba District, Panjshir*\n📞 *Customer: {{customerName}}*\n📱 *Phone: {{customerPhone}}*\n\n_Order placed via {{shopName}}_'
+    };
+
+    const DEFAULT_PRODUCTS = [
+        { id: 'prod_1', name: { en: 'Premium Wheat Flour (10kg)', fa: 'آرد گندم ممتاز (۱۰ کیلو)', ps: 'لوی ګندم آرد (۱۰ کګ)' }, price: 450, image: null, visible: true },
+        { id: 'prod_2', name: { en: 'Sunflower Oil (5L)', fa: 'روغن آفتابگردان (۵ لیتر)', ps: 'د لمری روغن (۵ لتر)' }, price: 680, image: null, visible: true },
+        { id: 'prod_3', name: { en: 'Red Kidney Beans (1kg)', fa: 'لوبیا قرمز (۱ کیلو)', ps: 'سور لوبیا (۱ کګ)' }, price: 320, image: null, visible: true },
+        { id: 'prod_4', name: { en: 'Basmati Rice (10kg)', fa: 'برنج بسمتی (۱۰ کیلو)', ps: 'بسمتي برنج (۱۰ کګ)' }, price: 1200, image: null, visible: true },
+        { id: 'prod_5', name: { en: 'Granulated Sugar (1kg)', fa: 'شکر قندی (۱ کیلو)', ps: 'شکر (۱ کګ)' }, price: 95, image: null, visible: true },
+        { id: 'prod_6', name: { en: 'Green Tea Box (250g)', fa: 'چای سبز جعبه‌دار (۲۵۰ گرم)', ps: 'سبز چای بکس (۲۵۰ ګرام)' }, price: 280, image: null, visible: true },
+        { id: 'prod_7', name: { en: 'Chickpeas (1kg)', fa: 'نخود (۱ کیلو)', ps: 'نخود (۱ کګ)' }, price: 140, image: null, visible: true },
+        { id: 'prod_8', name: { en: 'White Lentils (1kg)', fa: 'عدس سفید (۱ کیلو)', ps: 'سپین عدس (۱ کګ)' }, price: 180, image: null, visible: true },
+    ];
+
+    function get(key, def) {
+        try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : def; } catch { return def; }
+    }
+    function set(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) { console.error(e); } }
+
+    function initStore() {
+        if (!localStorage.getItem('grocery_products')) set('grocery_products', DEFAULT_PRODUCTS);
+        if (!localStorage.getItem('grocery_orders')) set('grocery_orders', []);
+        if (!localStorage.getItem('grocery_settings')) set('grocery_settings', DEFAULT_SETTINGS);
+    }
+
+    function getVisibleProducts() { return (get('grocery_products', [])).filter(function(p) { return p.visible !== false; }); }
+    function getShopName(lang) { var s = get('grocery_settings', DEFAULT_SETTINGS); return (s.shopName && s.shopName[lang]) || s.shopName?.en || 'Hakeemi Grocery Store'; }
+    function getWhatsAppNumber() { return get('grocery_settings', DEFAULT_SETTINGS).whatsappNumber || '93791897790'; }
+    function getOrderTemplate() { return get('grocery_settings', DEFAULT_SETTINGS).orderMessageTemplate || DEFAULT_SETTINGS.orderMessageTemplate; }
+    function saveOrder(order) { var orders = get('grocery_orders', []); orders.unshift(order); set('grocery_orders', orders); }
+
+    // ===================== WhatsApp =====================
+    function buildOrderMessage(order) {
+        var shopName = getShopName(currentLang);
+        var itemsText = order.items.map(function(item, i) {
+            var name = item.name[currentLang] || item.name.en || '';
+            return (i + 1) + '. ' + name + ' = ' + formatPrice(item.price);
+        }).join('\n');
+        var tpl = getOrderTemplate();
+        return tpl.replace(/\{\{shopName\}\}/g, shopName)
+            .replace(/\{\{items\}\}/g, itemsText)
+            .replace(/\{\{total\}\}/g, formatPrice(order.total))
+            .replace(/\{\{currency\}\}/g, 'AFN')
+            .replace(/\{\{customerName\}\}/g, order.customerName || '')
+            .replace(/\{\{customerPhone\}\}/g, order.customerPhone || 'N/A');
+    }
+
+    function openWhatsApp(order) {
+        var phone = getWhatsAppNumber().replace(/\D/g, '');
+        var msg = buildOrderMessage(order);
+        var url = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
+        window.open(url, '_blank', 'noopener,noreferrer');
+    }
+
+    function validatePhone(phone) {
+        if (!phone) return true;
+        return /^93[0-9]{9}$/.test(phone.replace(/\D/g, ''));
+    }
+
+    // ===================== App State =====================
+    var selectedProduct = null;
+    var placeholderSvg = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f3f4f6'/%3E%3Crect x='55' y='45' width='90' height='70' rx='8' stroke='%239ca3af' stroke-width='2' fill='none'/%3E%3Cpath d='M75 90l15-15 15 15 15-30 20 40' stroke='%239ca3af' stroke-width='2' fill='none'/%3E%3Ccircle cx='70' cy='62' r='6' stroke='%239ca3af' stroke-width='2' fill='none'/%3E%3Crect x='50' y='130' width='100' height='6' rx='3' fill='%23d1d5db'/%3E%3Crect x='65' y='145' width='70' height='6' rx='3' fill='%23d1d5db'/%3E%3C/svg%3E";
+
+    // ===================== Render =====================
+    function renderApp() {
+        var lang = currentLang;
+        var products = getVisibleProducts();
+        var shopName = getShopName(lang);
+        var isRTL = I18N[lang].dir === 'rtl';
+        document.title = shopName;
+
+        var langButtons = [
+            { code: 'en', label: 'English', native: 'EN' },
+            { code: 'fa', label: 'دری', native: 'FA' },
+            { code: 'ps', label: 'پښتو', native: 'PS' }
+        ];
+
+        var langDropdownHTML = langButtons.map(function(o) {
+            return '<button data-lang="' + o.code + '" class="w-full px-4 py-3 text-left hover:bg-emerald-50 transition-colors flex items-center gap-3 ' + (lang === o.code ? 'bg-emerald-50 text-emerald-700' : 'text-gray-700') + '">' +
+                '<span class="w-2 h-2 rounded-full ' + (lang === o.code ? 'bg-emerald-500' : 'bg-gray-300') + '"></span>' +
+                '<span class="text-sm font-medium">' + o.label + ' (' + o.native + ')</span></button>';
+        }).join('');
+
+        var productCards = products.length > 0 ? products.map(function(product) {
+            var name = product.name[lang] || product.name.en || 'Product';
+            var price = formatPrice(product.price);
+            var img = product.image || placeholderSvg;
+            return '<div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group">' +
+                '<div class="relative aspect-square bg-gray-50 overflow-hidden">' +
+                '<img src="' + img + '" alt="' + name + '" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.src=\'' + placeholderSvg + '\'">' +
+                '<div class="absolute top-3 ' + (isRTL ? 'left-3' : 'right-3') + ' bg-emerald-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-md">' + price + '</div>' +
+                '</div>' +
+                '<div class="p-4">' +
+                '<h3 class="font-semibold text-gray-800 text-base mb-3 line-clamp-2 min-h-[2.5rem]">' + name + '</h3>' +
+                '<button class="order-btn w-full bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-md hover:shadow-lg active:scale-95" data-id="' + product.id + '">' +
+                '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>' +
+                t('orderWhatsApp') + '</button></div></div>';
+        }).join('') : '<div class="col-span-full text-center py-12">' +
+            '<div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">' +
+            '<svg class="w-12 h-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg></div>' +
+            '<h2 class="text-xl font-semibold text-gray-600 mb-2">' + t('noProducts') + '</h2></div>';
+
+        document.getElementById('app').innerHTML =
+            '<div class="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50">' +
+            // Offline banner
+            '<div id="offline-banner" class="hidden bg-amber-500 text-white text-center py-2 px-4 text-sm font-medium sticky top-0 z-50">' + t('offline') + '</div>' +
+            // Header
+            '<header class="bg-gradient-to-r from-emerald-600 to-green-600 text-white shadow-lg sticky top-0 z-40"><div class="max-w-7xl mx-auto px-4 py-4">' +
+            '<div class="flex items-center justify-between"><div class="flex items-center gap-3">' +
+            '<div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center"><svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg></div>' +
+            '<div><h1 class="text-lg md:text-xl font-bold leading-tight">' + shopName + '</h1></div></div>' +
+            '<a href="admin.html" class="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg text-xs font-medium transition-colors">' + t('adminTitle') + '</a>' +
+            '</div></div></header>' +
+            // Products grid
+            '<main class="max-w-7xl mx-auto px-4 py-6 pb-24">' +
+            '<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">' + productCards + '</div></main>' +
+            // Language selector
+            '<div class="fixed bottom-4 ' + (isRTL ? 'left-4' : 'right-4') + ' z-50"><div class="relative">' +
+            '<button id="lang-toggle" class="bg-white shadow-lg rounded-full p-3 hover:shadow-xl transition-all duration-200 border border-gray-200 flex items-center gap-2" aria-label="Language">' +
+            '<svg class="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg>' +
+            '<span class="text-sm font-medium text-gray-700">' + currentLang.toUpperCase() + '</span></button>' +
+            '<div id="lang-dropdown" class="hidden absolute bottom-14 ' + (isRTL ? 'left-0' : 'right-0') + ' bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden min-w-[180px]">' + langDropdownHTML + '</div>' +
+            '</div></div>' +
+            // Order modal
+            '<div id="order-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4"><div class="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto">' +
+            '<div class="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 rounded-t-2xl flex items-center justify-between">' +
+            '<h2 class="text-lg font-bold text-gray-800">' + t('orderTitle') + '</h2>' +
+            '<button id="close-modal" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">' +
+            '<svg class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button></div>' +
+            '<div class="p-6">' +
+            '<div id="order-product-info" class="bg-gray-50 rounded-xl p-4 mb-6"></div>' +
+            '<form id="order-form" class="space-y-4">' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('customerName') + ' *</label>' +
+            '<input type="text" id="customer-name" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"></div>' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('customerPhone') + '</label>' +
+            '<input type="tel" id="customer-phone" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="0791897790"></div>' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('customerNotes') + '</label>' +
+            '<textarea id="customer-notes" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none"></textarea></div>' +
+            '<div class="flex gap-3 pt-2">' +
+            '<button type="button" id="cancel-order" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-4 rounded-xl transition-colors">' + t('cancel') + '</button>' +
+            '<button type="submit" class="flex-1 bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-semibold py-3 px-4 rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2">' +
+            '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>' +
+            t('placeOrder') + '</button></div></form></div></div></div>' +
+            // Footer
+            '<footer class="bg-gray-800 text-white py-6"><div class="max-w-7xl mx-auto px-4 text-center">' +
+            '<p class="text-sm text-gray-400">&copy; ' + new Date().getFullYear() + ' ' + shopName + '</p>' +
+            '<p class="text-xs text-gray-500 mt-1">Anaba District, Panjshir Province, Afghanistan</p></div></footer>' +
+            '</div>';
+
+        // Update offline banner
+        var banner = document.getElementById('offline-banner');
+        if (banner) banner.classList.toggle('hidden', navigator.onLine);
+    }
+
+    // ===================== Events =====================
+    document.addEventListener('click', function(e) {
+        // Language toggle
+        if (e.target.closest('#lang-toggle')) {
+            e.stopPropagation();
+            document.getElementById('lang-dropdown').classList.toggle('hidden');
+            return;
+        }
+        document.getElementById('lang-dropdown')?.classList.add('hidden');
+
+        // Language selection
+        var langBtn = e.target.closest('[data-lang]');
+        if (langBtn) {
+            applyLanguage(langBtn.getAttribute('data-lang'));
+            return;
+        }
+
+        // Order button
+        var orderBtn = e.target.closest('.order-btn');
+        if (orderBtn) {
+            var productId = orderBtn.getAttribute('data-id');
+            var products = getVisibleProducts();
+            var product = products.find(function(p) { return p.id === productId; });
+            if (product) openOrderModal(product);
+            return;
+        }
+
+        // Close modal
+        if (e.target.closest('#close-modal') || e.target.closest('#cancel-order')) {
+            closeOrderModal();
+            return;
+        }
+    });
+
+    // Click outside modal
+    document.addEventListener('click', function(e) {
+        if (e.target && e.target.id === 'order-modal') closeOrderModal();
+    });
+
+    // Form submit
+    document.addEventListener('submit', function(e) {
+        if (e.target.id === 'order-form') {
+            e.preventDefault();
+            handleOrder();
+        }
+    });
+
+    function openOrderModal(product) {
+        selectedProduct = product;
+        var lang = currentLang;
+        var name = product.name[lang] || product.name.en;
+        var price = formatPrice(product.price);
+        var img = product.image || placeholderSvg;
+
+        document.getElementById('order-product-info').innerHTML =
+            '<div class="flex items-center gap-4">' +
+            '<img src="' + img + '" alt="' + name + '" class="w-16 h-16 rounded-xl object-cover bg-gray-200" onerror="this.src=\'' + placeholderSvg + '\'">' +
+            '<div><h3 class="font-semibold text-gray-800">' + name + '</h3>' +
+            '<p class="text-emerald-600 font-bold">' + price + '</p></div></div>';
+
+        document.getElementById('order-modal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        document.getElementById('customer-name').focus();
+    }
+
+    function closeOrderModal() {
+        document.getElementById('order-modal').classList.add('hidden');
+        document.body.style.overflow = '';
+        selectedProduct = null;
+        document.getElementById('order-form').reset();
+    }
+
+    function handleOrder() {
+        if (!selectedProduct) return;
+        var name = document.getElementById('customer-name').value.trim();
+        var phone = document.getElementById('customer-phone').value.trim();
+        var notes = document.getElementById('customer-notes').value.trim();
+
+        if (!name) { alert(t('nameRequired')); return; }
+        if (phone && !validatePhone(phone)) { alert(t('phoneInvalid')); return; }
+
+        var order = {
+            id: 'order_' + Date.now(),
+            items: [{ id: selectedProduct.id, name: selectedProduct.name, price: selectedProduct.price, quantity: 1 }],
+            total: selectedProduct.price,
+            customerName: name,
+            customerPhone: phone,
+            customerNotes: notes,
+            status: 'pending',
+            createdAt: Date.now()
+        };
+
+        saveOrder(order);
+        openWhatsApp(order);
+        closeOrderModal();
+    }
+
+    // Offline detection
+    window.addEventListener('online', function() {
+        var b = document.getElementById('offline-banner');
+        if (b) b.classList.add('hidden');
+    });
+    window.addEventListener('offline', function() {
+        var b = document.getElementById('offline-banner');
+        if (b) b.classList.remove('hidden');
+    });
+
+    // ===================== Init =====================
+    initStore();
+    renderApp();
+
+    // Service Worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('sw.js').catch(function() {});
+        });
+    }
+})();
+</script>
 </body>
 </html>

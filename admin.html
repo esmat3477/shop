@@ -1,134 +1,610 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl" class="rtl">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#10b981">
-    <meta name="description" content="Admin Dashboard - Hakeemi Grocery Store">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
     <title>Admin Dashboard - Hakeemi Grocery Store</title>
-    
-    <!-- Preconnect to CDNs for faster loading -->
-    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <!-- Google Fonts - Noto Sans Arabic for RTL languages, Inter for English -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Tailwind Config -->
     <script>
         tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'sans': ['Inter', 'Noto Sans Arabic', 'system-ui', 'sans-serif'],
-                        'arabic': ['Noto Sans Arabic', 'Inter', 'system-ui', 'sans-serif'],
-                    },
-                    colors: {
-                        emerald: {
-                            50: '#ecfdf5',
-                            100: '#d1fae5',
-                            200: '#a7f3d0',
-                            300: '#6ee7b7',
-                            400: '#34d399',
-                            500: '#10b981',
-                            600: '#059669',
-                            700: '#047857',
-                            800: '#065f46',
-                            900: '#064e3b',
-                        }
-                    }
-                }
-            }
+            theme: { extend: { fontFamily: { sans: ['Inter', 'Noto Sans Arabic', 'system-ui', 'sans-serif'] } } }
         }
     </script>
-    
     <style>
-        /* RTL-specific styles */
-        [dir="rtl"] .rtl\:text-right {
-            text-align: right;
-        }
-        [dir="rtl"] .rtl\:text-left {
-            text-align: left;
-        }
-        [dir="rtl"] .rtl\:mr-auto {
-            margin-right: auto;
-        }
-        [dir="rtl"] .rtl\:ml-auto {
-            margin-left: auto;
-        }
-        
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #a1a1a1;
-        }
-        
-        /* Hide scrollbar for tab navigation */
-        .scrollbar-hide::-webkit-scrollbar {
-            display: none;
-        }
-        .scrollbar-hide {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        
-        /* Font family based on language */
-        :root {
-            --font-primary: 'Noto Sans Arabic', 'Inter', system-ui, sans-serif;
-        }
-        
-        body {
-            font-family: var(--font-primary);
-        }
-        
-        [lang="en"] body,
-        [lang="en"] h1,
-        [lang="en"] h2,
-        [lang="en"] h3,
-        [lang="en"] p,
-        [lang="en"] span {
-            font-family: 'Inter', 'Noto Sans Arabic', system-ui, sans-serif;
-        }
+        html { scroll-behavior: smooth; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        :root { --font-primary: 'Noto Sans Arabic', 'Inter', system-ui, sans-serif; }
+        body { font-family: var(--font-primary); }
+        [lang="en"] body { font-family: 'Inter', system-ui, sans-serif; }
     </style>
 </head>
 <body class="antialiased bg-gray-50">
-    <!-- App Root -->
-    <div id="app">
-        <!-- Loading State -->
-        <div class="min-h-screen bg-gray-50 flex items-center justify-center">
-            <div class="text-center">
-                <div class="w-16 h-16 bg-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4 animate-pulse">
-                    <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                    </svg>
-                </div>
-                <p class="text-gray-600 font-medium">Loading...</p>
+<div id="app">
+    <div class="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div class="text-center">
+            <div class="w-16 h-16 bg-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4 animate-pulse">
+                <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
             </div>
+            <p class="text-gray-600 font-medium">Loading...</p>
         </div>
     </div>
+</div>
 
-    <!-- Main App Script -->
-    <script type="module" src="assets/admin.js"></script>
+<script>
+(function() {
+    'use strict';
+
+    // ===================== i18n =====================
+    var I18N = {
+        en: {
+            dir: 'ltr', lang: 'en',
+            labels: {
+                adminTitle: 'Admin Dashboard', shopName: 'Hakeemi Grocery Store',
+                setPinTitle: 'Set Admin PIN', setPinDesc: 'Create a 4-6 digit PIN',
+                enterPinTitle: 'Enter Admin PIN', enterPinDesc: 'Enter your PIN to access dashboard',
+                pinPlaceholder: 'Enter PIN', confirmPinPlaceholder: 'Confirm PIN',
+                setPinBtn: 'Set PIN', loginBtn: 'Login', pinMismatch: 'PINs do not match',
+                pinTooShort: 'PIN must be 4-6 digits', pinInvalid: 'Invalid PIN',
+                pinLocked: 'Too many attempts. Try again in 5 minutes.',
+                forgotPin: 'Forgot PIN?', resetPin: 'Reset PIN',
+                resetConfirm: 'This will delete ALL data. Are you sure?',
+                dashboard: 'Dashboard', products: 'Products', orders: 'Orders', settings: 'Settings', logout: 'Logout',
+                todayRevenue: "Today's Revenue", weekRevenue: 'This Week', monthRevenue: 'This Month',
+                totalOrders: 'Total Orders', topProducts: 'Top Products', noOrders: 'No orders yet', noProducts: 'No products added yet',
+                addProduct: 'Add Product', editProduct: 'Edit Product', productNameEn: 'Name (English)',
+                productNameFa: 'Name (Dari)', productNamePs: 'Name (Pashto)', productPrice: 'Price (AFN)',
+                productImage: 'Product Image', uploadImage: 'Upload Image', removeImage: 'Remove Image',
+                productVisible: 'Visible in Catalog', saving: 'Saving...', productSaved: 'Product saved successfully',
+                confirmDelete: 'Are you sure you want to delete this item?', delete: 'Delete', edit: 'Edit',
+                orderDate: 'Date', orderCustomer: 'Customer', orderTotal: 'Total', orderStatus: 'Status',
+                statusPending: 'Pending', statusConfirmed: 'Confirmed', statusDelivered: 'Delivered', statusCancelled: 'Cancelled',
+                shopSettings: 'Shop Settings', shopNameEn: 'Shop Name (English)', shopNameFa: 'Shop Name (Dari)',
+                shopNamePs: 'Shop Name (Pashto)', whatsappNumber: 'WhatsApp Number',
+                whatsappNumberHint: 'Format: 937xxxxxxxxx', defaultLanguage: 'Default Language',
+                changePin: 'Change PIN', currentPin: 'Current PIN', newPin: 'New PIN', confirmNewPin: 'Confirm New PIN',
+                pinChanged: 'PIN changed successfully', currentPinWrong: 'Current PIN is incorrect',
+                exportData: 'Export Data', importData: 'Import Data', importSuccess: 'Data imported', importError: 'Invalid data',
+                save: 'Save', cancel: 'Cancel', yes: 'Yes', no: 'No',
+                currencyAFN: 'AFN', priceAFN: 'AFN'
+            }
+        },
+        fa: {
+            dir: 'rtl', lang: 'fa',
+            labels: {
+                adminTitle: 'پنل مدیریت', shopName: 'فروشگاه مواد غذایی حکیمی',
+                setPinTitle: 'تنظیم رمز مدیریت', setPinDesc: 'یک رمز ۴ تا ۶ رقمی تعیین کنید',
+                enterPinTitle: 'ورود رمز مدیریت', enterPinDesc: 'رمز خود را وارد کنید',
+                pinPlaceholder: 'رمز را وارد کنید', confirmPinPlaceholder: 'تأیید رمز',
+                setPinBtn: 'تنظیم رمز', loginBtn: 'ورود', pinMismatch: 'رمزها مطابقت ندارند',
+                pinTooShort: 'رمز باید ۴ تا ۶ رقمی باشد', pinInvalid: 'رمز نادرست است',
+                pinLocked: 'تعداد تلاش‌های بیش از حد. ۵ دقیقه دیگر تلاش کنید.',
+                forgotPin: 'رمز را فراموش کرده‌ام؟', resetPin: 'بازنشانی رمز',
+                resetConfirm: 'این کار تمام داده‌ها را حذف می‌کند. مطمئن هستید؟',
+                dashboard: 'داشبورد', products: 'محصولات', orders: 'سفارشات', settings: 'تنظیمات', logout: 'خروج',
+                todayRevenue: 'درآمد امروز', weekRevenue: 'این هفته', monthRevenue: 'این ماه',
+                totalOrders: 'کل سفارشات', topProducts: 'پرفروش‌ترین محصولات', noOrders: 'هنوز سفارشی ثبت نشده', noProducts: 'هنوز محصولی اضافه نشده',
+                addProduct: 'افزودن محصول', editProduct: 'ویرایش محصول', productNameEn: 'نام (انگلیسی)',
+                productNameFa: 'نام (دری)', productNamePs: 'نام (پښتو)', productPrice: 'قیمت (افغانی)',
+                productImage: 'تصویر محصول', uploadImage: 'آپلود تصویر', removeImage: 'حذف تصویر',
+                productVisible: 'نمایش در کاتالوگ', saving: 'در حال ذخیره...', productSaved: 'محصول ذخیره شد',
+                confirmDelete: 'آیا از حذف این مورد مطمئن هستید؟', delete: 'حذف', edit: 'ویرایش',
+                orderDate: 'تاریخ', orderCustomer: 'مشتری', orderTotal: 'مجموع', orderStatus: 'وضعیت',
+                statusPending: 'در انتظار', statusConfirmed: 'تأیید شده', statusDelivered: 'تحویل شده', statusCancelled: 'لغو شده',
+                shopSettings: 'تنظیمات فروشگاه', shopNameEn: 'نام فروشگاه (انگلیسی)', shopNameFa: 'نام فروشگاه (دری)',
+                shopNamePs: 'نام فروشگاه (پښتو)', whatsappNumber: 'شماره واتس‌اپ',
+                whatsappNumberHint: 'فرمت: 937xxxxxxxxx', defaultLanguage: 'زبان پیش‌فرض',
+                changePin: 'تغییر رمز', currentPin: 'رمز فعلی', newPin: 'رمز جدید', confirmNewPin: 'تأیید رمز جدید',
+                pinChanged: 'رمز تغییر کرد', currentPinWrong: 'رمز فعلی نادرست است',
+                exportData: 'صادر کردن داده‌ها', importData: 'وارد کردن داده‌ها', importSuccess: 'داده‌ها وارد شد', importError: 'فایل نامعتبر',
+                save: 'ذخیره', cancel: 'لغو', yes: 'بله', no: 'نه',
+                currencyAFN: 'افغانی', priceAFN: 'افغانی'
+            }
+        },
+        ps: {
+            dir: 'rtl', lang: 'ps',
+            labels: {
+                adminTitle: 'پنل مدیریت', shopName: 'د حکیمي خوراکه فروشۍ',
+                setPinTitle: 'د مدیریت PIN تنظیم', setPinDesc: '۴ تا ۶ رقمی PIN جوړه کړئ',
+                enterPinTitle: 'د مدیریت PIN ورکول', enterPinDesc: 'خپله PIN ورکړئ',
+                pinPlaceholder: 'PIN ورکړئ', confirmPinPlaceholder: 'PIN تایید',
+                setPinBtn: 'PIN تنظیم', loginBtn: 'ورځئ', pinMismatch: 'PINونه نه سمې',
+                pinTooShort: 'PIN ۴ تا ۶ رقمی وي', pinInvalid: 'PIN ناکام',
+                pinLocked: 'ډیر هڅه. ۵ دقیقه مخ کښه وهښته.',
+                forgotPin: 'PIN یادم نه غوږ؟', resetPin: 'PIN تازه',
+                resetConfirm: 'دا ټول داتا په انحطاط کېږي. یقین یاست؟',
+                dashboard: 'ډیشبورډ', products: 'محصولات', orders: 'ارګونه', settings: 'تنظیمات', logout: 'خروج',
+                todayRevenue: 'نن يو ايصال', weekRevenue: 'د اوسني ہفتې', monthRevenue: 'د اوسني مېشتې',
+                totalOrders: 'ټول ارګونه', topProducts: 'سړی محصولات', noOrders: 'هیڅ ارګونې نه شتون لري', noProducts: 'هیڅ محصول اضافه نه شوی',
+                addProduct: 'محصول اضافه', editProduct: 'محصول سم', productNameEn: 'نوم (انګلیسي)',
+                productNameFa: 'نوم (دری)', productNamePs: 'نوم (پښتو)', productPrice: 'قیمت (افغانی)',
+                productImage: 'د محصول انځور', uploadImage: 'انځور اپ لوډ', removeImage: 'انځور وا نیول',
+                productVisible: 'د کاتالوګ کې ښکاره', saving: 'ساتل کیږي...', productSaved: 'محصول ساتل شو',
+                confirmDelete: 'ایا تاسو یقین لارئ؟', delete: 'وا نیول', edit: 'سم کول',
+                orderDate: 'نیته', orderCustomer: 'ست编者', orderTotal: 'ټول', orderStatus: 'סטатוס',
+                statusPending: 'چېکات', statusConfirmed: 'تایید', statusDelivered: 'ورسول', statusCancelled: 'منسوخ',
+                shopSettings: 'د دوکان تنظیمات', shopNameEn: 'د دوکان نوم (انګلیسي)', shopNameFa: 'د دوکان نوم (دری)',
+                shopNamePs: 'د دوکان نوم (پښتو)', whatsappNumber: 'واتس‌اپ نومر',
+                whatsappNumberHint: 'فورمټ: 937xxxxxxxxx', defaultLanguage: 'د ژبه پیش‌فرض',
+                changePin: 'PIN بدل', currentPin: 'اوسنی PIN', newPin: 'نوی PIN', confirmNewPin: 'نوی PIN تایید',
+                pinChanged: 'PIN بدل شو', currentPinWrong: 'اوسنی PIN ناکام',
+                exportData: 'داتا برونtákول', importData: 'داتا درونtákول', importSuccess: 'داتا درونtákل شو', importError: 'فایل نامعتبر',
+                save: 'ساتل', cancel: 'لغو', yes: 'هو', no: 'نه',
+                currencyAFN: 'افغانی', priceAFN: 'افغانی'
+            }
+        }
+    };
+
+    var currentLang = localStorage.getItem('grocery_lang') || 'fa';
+    function t(key) { var l = I18N[currentLang]?.labels || I18N.fa.labels; return l[key] || I18N.en.labels[key] || key; }
+    function formatPrice(a) { var n = Number(a).toLocaleString('en-US'); return currentLang === 'en' ? t('priceAFN') + ' ' + n : n + ' ' + t('priceAFN'); }
+    function formatDate(d) { return new Date(d).toLocaleDateString(currentLang === 'fa' ? 'fa-AF' : currentLang === 'ps' ? 'ps-AF' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' }); }
+
+    // ===================== Store =====================
+    var DEFAULT_SETTINGS = {
+        shopName: { en: 'Hakeemi Grocery Store', fa: 'فروشگاه مواد غذایی حکیمی', ps: 'د حکیمي خوراکه فروشۍ' },
+        whatsappNumber: '93791897790', defaultLanguage: 'fa', currencySymbol: 'AFN',
+        orderMessageTemplate: '🛒 *New Order from {{shopName}}*\n\n📦 *Order Details:*\n{{items}}\n\n💰 *Total: {{total}} {{currency}}*\n📍 *Delivery: Anaba District, Panjshir*\n📞 *Customer: {{customerName}}*\n📱 *Phone: {{customerPhone}}*\n\n_Order placed via {{shopName}}_'
+    };
+
+    function get(k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } }
+    function set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) { console.error(e); } }
+    function initStore() {
+        if (!localStorage.getItem('grocery_products')) set('grocery_products', [
+            { id: 'prod_1', name: { en: 'Premium Wheat Flour (10kg)', fa: 'آرد گندم ممتاز (۱۰ کیلو)', ps: 'لوی ګندم آرد (۱۰ کګ)' }, price: 450, image: null, visible: true },
+            { id: 'prod_2', name: { en: 'Sunflower Oil (5L)', fa: 'روغن آفتابگردان (۵ لیتر)', ps: 'د لمری روغن (۵ لتر)' }, price: 680, image: null, visible: true },
+            { id: 'prod_3', name: { en: 'Red Kidney Beans (1kg)', fa: 'لوبیا قرمز (۱ کیلو)', ps: 'سور لوبیا (۱ کګ)' }, price: 320, image: null, visible: true },
+            { id: 'prod_4', name: { en: 'Basmati Rice (10kg)', fa: 'برنج بسمتی (۱۰ کیلو)', ps: 'بسمتي برنج (۱۰ کګ)' }, price: 1200, image: null, visible: true },
+            { id: 'prod_5', name: { en: 'Granulated Sugar (1kg)', fa: 'شکر قندی (۱ کیلو)', ps: 'شکر (۱ کګ)' }, price: 95, image: null, visible: true },
+            { id: 'prod_6', name: { en: 'Green Tea Box (250g)', fa: 'چای سبز جعبه‌دار (۲۵۰ گرم)', ps: 'سبز چای بکس (۲۵۰ ګرام)' }, price: 280, image: null, visible: true },
+        ]);
+        if (!localStorage.getItem('grocery_orders')) set('grocery_orders', []);
+        if (!localStorage.getItem('grocery_settings')) set('grocery_settings', DEFAULT_SETTINGS);
+    }
+
+    function getProducts() { return get('grocery_products', []); }
+    function getOrders() { return (get('grocery_orders', [])).sort(function(a, b) { return b.createdAt - a.createdAt; }); }
+    function getSettings() { return get('grocery_settings', DEFAULT_SETTINGS); }
+    function getShopName(lang) { var s = getSettings(); return (s.shopName && s.shopName[lang]) || s.shopName?.en || 'Hakeemi Grocery Store'; }
+    function saveProduct(p) { var ps = getProducts(); var idx = ps.findIndex(function(x) { return x.id === p.id; }); if (idx >= 0) ps[idx] = p; else ps.push(p); set('grocery_products', ps); }
+    function deleteProduct(id) { set('grocery_products', getProducts().filter(function(p) { return p.id !== id; })); }
+    function toggleVisibility(id) { var ps = getProducts(); var p = ps.find(function(x) { return x.id === id; }); if (p) { p.visible = !p.visible; set('grocery_products', ps); } }
+    function saveOrder(o) { var orders = getOrders(); orders.unshift(o); set('grocery_orders', orders); }
+    function updateOrderStatus(id, st) { var orders = getOrders(); var o = orders.find(function(x) { return x.id === id; }); if (o) { o.status = st; set('grocery_orders', orders); } }
+    function saveSettings(s) { set('grocery_settings', Object.assign(getSettings(), s)); }
+    function exportData() { return { products: getProducts(), orders: getOrders(), settings: getSettings(), exportedAt: Date.now(), version: '1.0' }; }
+    function importData(d) { if (d.products) set('grocery_products', d.products); if (d.orders) set('grocery_orders', d.orders); if (d.settings) set('grocery_settings', d.settings); }
+    function clearAll() { ['grocery_products', 'grocery_orders', 'grocery_settings', 'grocery_pin_hash', 'grocery_pin_salt', 'grocery_pin_attempts', 'grocery_pin_lockout'].forEach(function(k) { localStorage.removeItem(k); }); initStore(); }
+    function getStats() {
+        var orders = getOrders(), now = Date.now(), day = 86400000;
+        var todayStart = new Date(); todayStart.setHours(0,0,0,0);
+        var weekStart = new Date(); weekStart.setDate(weekStart.getDate() - weekStart.getDay()); weekStart.setHours(0,0,0,0);
+        var monthStart = new Date(); monthStart.setDate(1); monthStart.setHours(0,0,0,0);
+        var todayOrders = orders.filter(function(o) { return o.createdAt >= todayStart.getTime(); });
+        var weekOrders = orders.filter(function(o) { return o.createdAt >= weekStart.getTime(); });
+        var monthOrders = orders.filter(function(o) { return o.createdAt >= monthStart.getTime(); });
+        var sum = function(arr) { return arr.reduce(function(s, o) { return s + (o.total || 0); }, 0); };
+        var prodSales = {};
+        orders.forEach(function(o) { (o.items || []).forEach(function(item) {
+            if (!prodSales[item.id]) prodSales[item.id] = { id: item.id, name: item.name, count: 0, revenue: 0 };
+            prodSales[item.id].count += (item.quantity || 1);
+            prodSales[item.id].revenue += (item.price || 0) * (item.quantity || 1);
+        }); });
+        var topProducts = Object.values(prodSales).sort(function(a, b) { return b.count - a.count; }).slice(0, 5);
+        return { totalOrders: orders.length, todayRevenue: sum(todayOrders), weekRevenue: sum(weekOrders), monthRevenue: sum(monthOrders),
+            todayCount: todayOrders.length, weekCount: weekOrders.length, monthCount: monthOrders.length, topProducts: topProducts };
+    }
+
+    // ===================== Auth =====================
+    var MAX_ATTEMPTS = 5;
+    function isPinSet() { return !!localStorage.getItem('grocery_pin_hash'); }
+    function isLocked() { var l = parseInt(localStorage.getItem('grocery_pin_lockout') || '0'); if (l && Date.now() < l) return true; if (l) { localStorage.removeItem('grocery_pin_lockout'); localStorage.removeItem('grocery_pin_attempts'); } return false; }
+    function getRemainingMinutes() { var l = parseInt(localStorage.getItem('grocery_pin_lockout') || '0'); return l && Date.now() < l ? Math.ceil((l - Date.now()) / 60000) : 0; }
+    async function hashPin(pin, salt) { var enc = new TextEncoder(); var data = enc.encode(pin + salt); var buf = await crypto.subtle.digest('SHA-256', data); return Array.from(new Uint8Array(buf)).map(function(b) { return b.toString(16).padStart(2, '0'); }).join(''); }
+    function genSalt() { var a = new Uint8Array(16); crypto.getRandomValues(a); return Array.from(a, function(b) { return b.toString(16).padStart(2, '0'); }).join(''); }
+    async function setPin(pin) { var salt = genSalt(); localStorage.setItem('grocery_pin_hash', await hashPin(pin, salt)); localStorage.setItem('grocery_pin_salt', salt); localStorage.removeItem('grocery_pin_attempts'); localStorage.removeItem('grocery_pin_lockout'); }
+    async function verifyPin(pin) {
+        if (isLocked()) throw new Error('locked:' + getRemainingMinutes());
+        var hash = localStorage.getItem('grocery_pin_hash'), salt = localStorage.getItem('grocery_pin_salt');
+        if (!hash || !salt) throw new Error('not_set');
+        if (await hashPin(pin, salt) === hash) { localStorage.removeItem('grocery_pin_attempts'); sessionStorage.setItem('admin_session', 'true'); return true; }
+        var att = parseInt(localStorage.getItem('grocery_pin_attempts') || '0') + 1;
+        localStorage.setItem('grocery_pin_attempts', att.toString());
+        if (att >= MAX_ATTEMPTS) localStorage.setItem('grocery_pin_lockout', (Date.now() + 300000).toString());
+        throw new Error('invalid:' + Math.max(0, MAX_ATTEMPTS - att));
+    }
+    function checkSession() { return sessionStorage.getItem('admin_session') === 'true'; }
+    function logout() { sessionStorage.removeItem('admin_session'); }
+
+    // ===================== App State =====================
+    var currentTab = 'dashboard';
+    var editingProduct = null;
+    var isAdmin = false;
+
+    // ===================== Init =====================
+    initStore();
+    if (checkSession()) { isAdmin = true; renderDashboard(); } else { renderLogin(); }
+
+    // ===================== Login =====================
+    function renderLogin() {
+        var pinExists = isPinSet();
+        var locked = isLocked();
+        document.getElementById('app').innerHTML =
+            '<div class="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 flex items-center justify-center p-4">' +
+            '<div class="w-full max-w-md"><div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">' +
+            '<div class="text-center mb-8"><div class="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center mx-auto mb-4">' +
+            '<svg class="w-8 h-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg></div>' +
+            '<h1 class="text-2xl font-bold text-gray-800">' + (pinExists ? t('enterPinTitle') : t('setPinTitle')) + '</h1>' +
+            '<p class="text-gray-500 mt-2">' + (pinExists ? t('enterPinDesc') : t('setPinDesc')) + '</p></div>' +
+            (locked ? '<div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-6"><p class="text-red-600 text-sm text-center">' + t('pinLocked') + '</p></div>' : '') +
+            '<form id="pin-form" class="space-y-4">' +
+            '<div><input type="password" id="pin-input" maxlength="6" pattern="[0-9]{4,6}" required class="w-full px-4 py-4 text-center text-2xl tracking-[0.5em] border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="' + t('pinPlaceholder') + '"' + (locked ? ' disabled' : '') + '></div>' +
+            (!pinExists ? '<div><input type="password" id="pin-confirm" maxlength="6" pattern="[0-9]{4,6}" required class="w-full px-4 py-4 text-center text-2xl tracking-[0.5em] border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="' + t('confirmPinPlaceholder') + '"' + (locked ? ' disabled' : '') + '></div>' : '') +
+            '<div id="pin-error" class="hidden text-red-500 text-sm text-center"></div>' +
+            '<button type="submit" class="w-full bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-semibold py-4 rounded-xl transition-all shadow-md hover:shadow-lg disabled:opacity-50"' + (locked ? ' disabled' : '') + '>' +
+            (pinExists ? t('loginBtn') : t('setPinBtn')) + '</button></form>' +
+            (pinExists ? '<div class="mt-6 text-center"><button id="reset-pin-btn" class="text-red-500 hover:text-red-600 text-sm font-medium">' + t('forgotPin') + '</button></div>' : '') +
+            '</div><div class="text-center mt-6"><a href="index.html" class="text-gray-500 hover:text-gray-700 text-sm">&larr; Back to Store</a></div></div></div>';
+
+        document.getElementById('pin-form').addEventListener('submit', handlePinSubmit);
+        if (document.getElementById('reset-pin-btn')) document.getElementById('reset-pin-btn').addEventListener('click', handleResetPin);
+    }
+
+    async function handlePinSubmit(e) {
+        e.preventDefault();
+        var pin = document.getElementById('pin-input').value;
+        var errEl = document.getElementById('pin-error');
+        if (!pin || pin.length < 4 || pin.length > 6) { errEl.textContent = t('pinTooShort'); errEl.classList.remove('hidden'); return; }
+        try {
+            if (!isPinSet()) {
+                var confirm = document.getElementById('pin-confirm').value;
+                if (pin !== confirm) { errEl.textContent = t('pinMismatch'); errEl.classList.remove('hidden'); return; }
+                await setPin(pin);
+                sessionStorage.setItem('admin_session', 'true');
+                isAdmin = true; renderDashboard();
+            } else {
+                await verifyPin(pin);
+                isAdmin = true; renderDashboard();
+            }
+        } catch(err) {
+            var msg = err.message;
+            if (msg.startsWith('locked:')) errEl.textContent = t('pinLocked');
+            else if (msg.startsWith('invalid:')) errEl.textContent = t('pinInvalid') + ' (' + msg.split(':')[1] + ')';
+            else errEl.textContent = t('pinInvalid');
+            errEl.classList.remove('hidden');
+        }
+    }
+
+    function handleResetPin() {
+        if (confirm(t('resetConfirm'))) {
+            var newPin = prompt(t('setPinDesc'));
+            if (newPin && newPin.length >= 4 && newPin.length <= 6) {
+                clearAll();
+                setPin(newPin).then(function() { sessionStorage.setItem('admin_session', 'true'); isAdmin = true; renderDashboard(); });
+            }
+        }
+    }
+
+    // ===================== Dashboard =====================
+    function renderDashboard() {
+        var lang = currentLang;
+        var shopName = getShopName(lang);
+        document.getElementById('app').innerHTML =
+            '<div class="min-h-screen bg-gray-50">' +
+            '<header class="bg-white border-b border-gray-200 sticky top-0 z-40"><div class="max-w-7xl mx-auto px-4 py-3">' +
+            '<div class="flex items-center justify-between"><div class="flex items-center gap-3">' +
+            '<div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center"><svg class="w-6 h-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></div>' +
+            '<div><h1 class="text-lg font-bold text-gray-800">' + t('adminTitle') + '</h1><p class="text-xs text-gray-500">' + shopName + '</p></div></div>' +
+            '<div class="flex items-center gap-2">' +
+            '<button id="lang-btn" class="p-2 rounded-lg hover:bg-gray-100"><svg class="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg></button>' +
+            '<button id="logout-btn" class="p-2 rounded-lg hover:bg-gray-100 text-gray-600"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg></button>' +
+            '</div></div></div></header>' +
+            '<nav class="bg-white border-b border-gray-200 sticky top-[60px] z-30"><div class="max-w-7xl mx-auto px-4"><div class="flex gap-1 overflow-x-auto scrollbar-hide">' +
+            '<button data-tab="dashboard" class="tab-btn px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 text-emerald-600 border-emerald-600">' + t('dashboard') + '</button>' +
+            '<button data-tab="products" class="tab-btn px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 text-gray-500 border-transparent hover:text-gray-700">' + t('products') + '</button>' +
+            '<button data-tab="orders" class="tab-btn px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 text-gray-500 border-transparent hover:text-gray-700">' + t('orders') + '</button>' +
+            '<button data-tab="settings" class="tab-btn px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 text-gray-500 border-transparent hover:text-gray-700">' + t('settings') + '</button>' +
+            '</div></div></nav>' +
+            '<main class="max-w-7xl mx-auto px-4 py-6"><div id="tab-content"></div></main></div>';
+
+        document.querySelectorAll('.tab-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(function(b) { b.className = 'tab-btn px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 text-gray-500 border-transparent hover:text-gray-700'; });
+                btn.className = 'tab-btn px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 text-emerald-600 border-emerald-600';
+                currentTab = btn.getAttribute('data-tab');
+                renderTab();
+            });
+        });
+        document.getElementById('logout-btn').addEventListener('click', function() { logout(); isAdmin = false; renderLogin(); });
+        document.getElementById('lang-btn').addEventListener('click', function() {
+            var langs = [{c:'en',l:'English'},{c:'fa',l:'دری'},{c:'ps',l:'پښتو'}];
+            var dd = document.getElementById('lang-dd');
+            if (dd) { dd.remove(); return; }
+            var d = document.createElement('div'); d.id = 'lang-dd';
+            d.className = 'absolute right-4 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-200 z-50';
+            d.innerHTML = langs.map(function(o) { return '<button data-lang="' + o.c + '" class="w-full px-4 py-3 text-left hover:bg-emerald-50 text-sm ' + (currentLang === o.c ? 'text-emerald-700 bg-emerald-50' : 'text-gray-700') + '">' + o.l + '</button>'; }).join('');
+            document.getElementById('lang-btn').parentElement.appendChild(d);
+            d.querySelectorAll('[data-lang]').forEach(function(b) { b.addEventListener('click', function() { currentLang = b.getAttribute('data-lang'); localStorage.setItem('grocery_lang', currentLang); d.remove(); renderDashboard(); }); });
+            setTimeout(function() { document.addEventListener('click', function h(ev) { if (!d.contains(ev.target) && ev.target !== document.getElementById('lang-btn')) { d.remove(); document.removeEventListener('click', h); } }); }, 10);
+        });
+        renderTab();
+    }
+
+    function renderTab() {
+        var c = document.getElementById('tab-content');
+        if (!c) return;
+        switch(currentTab) {
+            case 'dashboard': c.innerHTML = renderDashboardTab(); break;
+            case 'products': c.innerHTML = renderProductsTab(); attachProductEvents(); break;
+            case 'orders': c.innerHTML = renderOrdersTab(); attachOrderEvents(); break;
+            case 'settings': c.innerHTML = renderSettingsTab(); attachSettingsEvents(); break;
+        }
+    }
+
+    // ===================== Dashboard Tab =====================
+    function renderDashboardTab() {
+        var stats = getStats();
+        var lang = currentLang;
+        var topHTML = stats.topProducts.length > 0 ? stats.topProducts.map(function(p, i) {
+            return '<div class="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">' +
+                '<div class="flex items-center gap-3"><span class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 font-bold text-sm">' + (i + 1) + '</span>' +
+                '<div><p class="font-medium text-gray-800">' + (p.name?.[lang] || p.name?.en || 'Product') + '</p><p class="text-xs text-gray-500">' + p.count + ' orders</p></div></div>' +
+                '<p class="font-semibold text-emerald-600">' + formatPrice(p.revenue) + '</p></div>';
+        }).join('') : '<p class="text-gray-500 text-center py-4">' + t('noOrders') + '</p>';
+
+        var orders = getOrders();
+        var recentHTML = orders.length > 0 ? orders.slice(0, 5).map(function(o) {
+            var statusColors = { pending: 'bg-yellow-100 text-yellow-700', confirmed: 'bg-blue-100 text-blue-700', delivered: 'bg-green-100 text-green-700', cancelled: 'bg-red-100 text-red-700' };
+            return '<div class="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">' +
+                '<div><p class="font-medium text-gray-800">' + (o.customerName || 'N/A') + '</p><p class="text-xs text-gray-500">' + formatDate(o.createdAt) + '</p></div>' +
+                '<div class="text-right"><p class="font-semibold text-emerald-600">' + formatPrice(o.total) + '</p>' +
+                '<span class="text-xs px-2 py-1 rounded-full ' + (statusColors[o.status] || 'bg-gray-100') + '">' + t('status' + o.status.charAt(0).toUpperCase() + o.status.slice(1)) + '</span></div></div>';
+        }).join('') : '<p class="text-gray-500 text-center py-4">' + t('noOrders') + '</p>';
+
+        return '<div class="space-y-6">' +
+            '<div class="grid grid-cols-1 md:grid-cols-3 gap-4">' +
+            '<div class="bg-white rounded-xl p-4 border border-gray-200"><p class="text-sm text-gray-500">' + t('todayRevenue') + '</p><p class="text-2xl font-bold text-emerald-600 mt-1">' + formatPrice(stats.todayRevenue) + '</p><p class="text-xs text-gray-400 mt-2">' + stats.todayCount + ' orders</p></div>' +
+            '<div class="bg-white rounded-xl p-4 border border-gray-200"><p class="text-sm text-gray-500">' + t('weekRevenue') + '</p><p class="text-2xl font-bold text-blue-600 mt-1">' + formatPrice(stats.weekRevenue) + '</p><p class="text-xs text-gray-400 mt-2">' + stats.weekCount + ' orders</p></div>' +
+            '<div class="bg-white rounded-xl p-4 border border-gray-200"><p class="text-sm text-gray-500">' + t('monthRevenue') + '</p><p class="text-2xl font-bold text-purple-600 mt-1">' + formatPrice(stats.monthRevenue) + '</p><p class="text-xs text-gray-400 mt-2">' + stats.monthCount + ' orders</p></div>' +
+            '</div>' +
+            '<div class="bg-white rounded-xl p-4 border border-gray-200"><h3 class="font-semibold text-gray-800 mb-4">' + t('topProducts') + '</h3>' + topHTML + '</div>' +
+            '<div class="bg-white rounded-xl p-4 border border-gray-200"><h3 class="font-semibold text-gray-800 mb-4">' + t('orders') + '</h3>' + recentHTML + '</div></div>';
+    }
+
+    // ===================== Products Tab =====================
+    function renderProductsTab() {
+        var ps = getProducts();
+        var lang = currentLang;
+        var placeholderSvg = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Crect width='80' height='80' fill='%23f3f4f6'/%3E%3Crect x='22' y='18' width='36' height='28' rx='4' stroke='%239ca3af' stroke-width='2' fill='none'/%3E%3Ccircle cx='30' cy='28' r='3' fill='%239ca3af'/%3E%3C/svg%3E";
+
+        var cards = ps.length > 0 ? ps.map(function(p) {
+            var name = p.name[lang] || p.name.en || 'Product';
+            var img = p.image || placeholderSvg;
+            return '<div class="bg-white rounded-xl p-4 border border-gray-200 ' + (!p.visible ? 'opacity-60' : '') + '">' +
+                '<div class="flex items-start gap-4"><img src="' + img + '" class="w-16 h-16 rounded-lg object-cover bg-gray-100" onerror="this.src=\'' + placeholderSvg + '\'">' +
+                '<div class="flex-1 min-w-0"><h3 class="font-semibold text-gray-800 truncate">' + name + '</h3><p class="text-emerald-600 font-bold">' + formatPrice(p.price) + '</p>' +
+                '<span class="text-xs px-2 py-1 rounded-full mt-2 inline-block ' + (p.visible ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 text-gray-500') + '">' + (p.visible ? 'Active' : 'Hidden') + '</span></div></div>' +
+                '<div class="flex gap-2 mt-4">' +
+                '<button class="edit-btn flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-3 rounded-lg text-sm transition-colors" data-id="' + p.id + '">' + t('edit') + '</button>' +
+                '<button class="toggle-btn bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-3 rounded-lg text-sm transition-colors" data-id="' + p.id + '">' + (p.visible ? 'Hide' : 'Show') + '</button>' +
+                '<button class="del-btn bg-red-50 hover:bg-red-100 text-red-600 font-medium py-2 px-3 rounded-lg text-sm transition-colors" data-id="' + p.id + '">' + t('delete') + '</button></div></div>';
+        }).join('') : '<div class="col-span-full bg-white rounded-xl p-8 border border-gray-200 text-center">' +
+            '<h3 class="text-lg font-semibold text-gray-600 mb-2">' + t('noProducts') + '</h3></div>';
+
+        return '<div class="space-y-6">' +
+            '<div class="flex items-center justify-between"><h2 class="text-xl font-bold text-gray-800">' + t('products') + '</h2>' +
+            '<button id="add-product-btn" class="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center gap-2">' +
+            '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>' + t('addProduct') + '</button></div>' +
+            '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">' + cards + '</div>' +
+            // Product modal
+            '<div id="product-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4"><div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">' +
+            '<div class="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 rounded-t-2xl flex items-center justify-between">' +
+            '<h2 id="modal-title" class="text-lg font-bold text-gray-800">' + t('addProduct') + '</h2>' +
+            '<button id="close-modal" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button></div>' +
+            '<div class="p-6"><form id="product-form" class="space-y-4">' +
+            '<input type="hidden" id="p-id">' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('productNameEn') + '</label><input type="text" id="p-name-en" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div>' +
+            '<div class="grid grid-cols-2 gap-4">' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('productNameFa') + '</label><input type="text" id="p-name-fa" required dir="rtl" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div>' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('productNamePs') + '</label><input type="text" id="p-name-ps" required dir="rtl" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div></div>' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('productPrice') + '</label><div class="relative"><input type="number" id="p-price" required min="1" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 pr-16"><span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium">AFN</span></div></div>' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('productImage') + '</label>' +
+            '<label class="cursor-pointer"><div id="upload-area" class="border-2 border-dashed border-gray-300 rounded-xl p-4 text-center hover:border-emerald-400 transition-colors">' +
+            '<svg class="w-8 h-8 text-gray-400 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>' +
+            '<p class="text-sm text-gray-500">' + t('uploadImage') + '</p></div>' +
+            '<input type="file" id="p-image" accept="image/*" class="hidden"></label>' +
+            '<div id="img-preview" class="hidden mt-2 relative"><img id="preview-img" class="w-20 h-20 rounded-xl object-cover"><button type="button" id="remove-img" class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full text-xs flex items-center justify-center">&times;</button></div></div>' +
+            '<div class="flex items-center gap-3"><input type="checkbox" id="p-visible" checked class="w-5 h-5 text-emerald-600 rounded"><label for="p-visible" class="text-sm font-medium text-gray-700">' + t('productVisible') + '</label></div>' +
+            '<div class="flex gap-3 pt-2">' +
+            '<button type="button" id="cancel-product" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-4 rounded-xl">' + t('cancel') + '</button>' +
+            '<button type="submit" class="flex-1 bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-semibold py-3 px-4 rounded-xl shadow-md">' + t('save') + '</button></div></form></div></div></div></div>';
+    }
+
+    function attachProductEvents() {
+        document.getElementById('add-product-btn')?.addEventListener('click', function() { openProductModal(); });
+        document.querySelectorAll('.edit-btn').forEach(function(b) { b.addEventListener('click', function() { var p = getProducts().find(function(x) { return x.id === b.getAttribute('data-id'); }); if (p) openProductModal(p); }); });
+        document.querySelectorAll('.del-btn').forEach(function(b) { b.addEventListener('click', function() { if (confirm(t('confirmDelete'))) { deleteProduct(b.getAttribute('data-id')); renderTab(); } }); });
+        document.querySelectorAll('.toggle-btn').forEach(function(b) { b.addEventListener('click', function() { toggleVisibility(b.getAttribute('data-id')); renderTab(); }); });
+        document.getElementById('close-modal')?.addEventListener('click', closeProductModal);
+        document.getElementById('cancel-product')?.addEventListener('click', closeProductModal);
+        document.getElementById('p-image')?.addEventListener('change', handleImageUpload);
+        document.getElementById('remove-img')?.addEventListener('click', function() { document.getElementById('img-preview').classList.add('hidden'); document.getElementById('preview-img').src = ''; document.getElementById('p-image').value = ''; });
+        document.getElementById('product-form')?.addEventListener('submit', handleProductSave);
+    }
+
+    var currentProductImage = '';
+    function openProductModal(p) {
+        editingProduct = p || null;
+        document.getElementById('modal-title').textContent = p ? t('editProduct') : t('addProduct');
+        document.getElementById('p-id').value = p?.id || 'prod_' + Date.now();
+        document.getElementById('p-name-en').value = p?.name?.en || '';
+        document.getElementById('p-name-fa').value = p?.name?.fa || '';
+        document.getElementById('p-name-ps').value = p?.name?.ps || '';
+        document.getElementById('p-price').value = p?.price || '';
+        document.getElementById('p-visible').checked = p ? p.visible !== false : true;
+        currentProductImage = p?.image || '';
+        if (p?.image) { document.getElementById('img-preview').classList.remove('hidden'); document.getElementById('preview-img').src = p.image; }
+        else { document.getElementById('img-preview').classList.add('hidden'); }
+        document.getElementById('product-modal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeProductModal() { document.getElementById('product-modal').classList.add('hidden'); document.body.style.overflow = ''; editingProduct = null; currentProductImage = ''; }
+
+    function handleImageUpload(e) {
+        var file = e.target.files?.[0]; if (!file || !file.type.startsWith('image/')) return;
+        var reader = new FileReader();
+        reader.onload = function(ev) {
+            var img = new Image();
+            img.onload = function() {
+                var canvas = document.createElement('canvas'); var max = 600;
+                var w = img.width, h = img.height;
+                if (w > h && w > max) { h = h * max / w; w = max; } else if (h > max) { w = w * max / h; h = max; }
+                canvas.width = w; canvas.height = h;
+                canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                currentProductImage = canvas.toDataURL('image/jpeg', 0.7);
+                document.getElementById('preview-img').src = currentProductImage;
+                document.getElementById('img-preview').classList.remove('hidden');
+            };
+            img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function handleProductSave(e) {
+        e.preventDefault();
+        var p = {
+            id: document.getElementById('p-id').value,
+            name: { en: document.getElementById('p-name-en').value.trim(), fa: document.getElementById('p-name-fa').value.trim(), ps: document.getElementById('p-name-ps').value.trim() },
+            price: parseInt(document.getElementById('p-price').value, 10),
+            image: currentProductImage || null,
+            visible: document.getElementById('p-visible').checked
+        };
+        saveProduct(p); closeProductModal(); renderTab();
+    }
+
+    // ===================== Orders Tab =====================
+    function renderOrdersTab() {
+        var orders = getOrders();
+        var lang = currentLang;
+        if (orders.length === 0) return '<div class="bg-white rounded-xl p-8 border border-gray-200 text-center"><h3 class="text-lg font-semibold text-gray-600">' + t('noOrders') + '</h3></div>';
+        var rows = orders.map(function(o) {
+            var stCols = { pending: 'bg-yellow-100 text-yellow-700', confirmed: 'bg-blue-100 text-blue-700', delivered: 'bg-green-100 text-green-700', cancelled: 'bg-red-100 text-red-700' };
+            var itemNames = (o.items || []).map(function(i) { return i.name?.[lang] || i.name?.en || ''; }).join(', ');
+            return '<tr class="hover:bg-gray-50">' +
+                '<td class="px-4 py-3 text-sm text-gray-600">' + formatDate(o.createdAt) + '</td>' +
+                '<td class="px-4 py-3"><p class="text-sm font-medium text-gray-800">' + (o.customerName || 'N/A') + '</p><p class="text-xs text-gray-500">' + (o.customerPhone || '') + '</p></td>' +
+                '<td class="px-4 py-3"><p class="text-sm text-gray-600">' + (o.items?.length || 0) + ' items</p><p class="text-xs text-gray-500 truncate max-w-[150px]">' + itemNames + '</p></td>' +
+                '<td class="px-4 py-3 text-sm font-semibold text-emerald-600">' + formatPrice(o.total) + '</td>' +
+                '<td class="px-4 py-3"><span class="text-xs px-2 py-1 rounded-full ' + (stCols[o.status] || 'bg-gray-100') + '">' + t('status' + o.status.charAt(0).toUpperCase() + o.status.slice(1)) + '</span></td>' +
+                '<td class="px-4 py-3"><select class="status-sel text-xs border border-gray-300 rounded-lg px-2 py-1" data-id="' + o.id + '">' +
+                ['pending','confirmed','delivered','cancelled'].map(function(s) { return '<option value="' + s + '"' + (o.status === s ? ' selected' : '') + '>' + t('status' + s.charAt(0).toUpperCase() + s.slice(1)) + '</option>'; }).join('') +
+                '</select></td></tr>';
+        }).join('');
+        return '<div class="space-y-6"><h2 class="text-xl font-bold text-gray-800">' + t('orders') + '</h2>' +
+            '<div class="bg-white rounded-xl border border-gray-200 overflow-hidden"><div class="overflow-x-auto"><table class="w-full"><thead class="bg-gray-50 border-b border-gray-200"><tr>' +
+            '<th class="px-4 py-3 text-left text-sm font-semibold text-gray-600">' + t('orderDate') + '</th>' +
+            '<th class="px-4 py-3 text-left text-sm font-semibold text-gray-600">' + t('orderCustomer') + '</th>' +
+            '<th class="px-4 py-3 text-left text-sm font-semibold text-gray-600">Items</th>' +
+            '<th class="px-4 py-3 text-left text-sm font-semibold text-gray-600">' + t('orderTotal') + '</th>' +
+            '<th class="px-4 py-3 text-left text-sm font-semibold text-gray-600">' + t('orderStatus') + '</th>' +
+            '<th class="px-4 py-3 text-left text-sm font-semibold text-gray-600">Action</th>' +
+            '</tr></thead><tbody class="divide-y divide-gray-100">' + rows + '</tbody></table></div></div></div>';
+    }
+
+    function attachOrderEvents() {
+        document.querySelectorAll('.status-sel').forEach(function(sel) {
+            sel.addEventListener('change', function() { updateOrderStatus(sel.getAttribute('data-id'), sel.value); renderTab(); });
+        });
+    }
+
+    // ===================== Settings Tab =====================
+    function renderSettingsTab() {
+        var s = getSettings();
+        return '<div class="space-y-6"><h2 class="text-xl font-bold text-gray-800">' + t('settings') + '</h2>' +
+            '<div class="bg-white rounded-xl p-6 border border-gray-200"><h3 class="font-semibold text-gray-800 mb-4">' + t('shopSettings') + '</h3>' +
+            '<form id="settings-form" class="space-y-4">' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('shopNameEn') + '</label><input type="text" id="s-name-en" value="' + (s.shopName?.en || '') + '" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div>' +
+            '<div class="grid grid-cols-2 gap-4">' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('shopNameFa') + '</label><input type="text" id="s-name-fa" value="' + (s.shopName?.fa || '') + '" dir="rtl" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div>' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('shopNamePs') + '</label><input type="text" id="s-name-ps" value="' + (s.shopName?.ps || '') + '" dir="rtl" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div></div>' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('whatsappNumber') + '</label><input type="text" id="s-whatsapp" value="' + (s.whatsappNumber || '') + '" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500" placeholder="' + t('whatsappNumberHint') + '"></div>' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('defaultLanguage') + '</label>' +
+            '<select id="s-lang" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500">' +
+            '<option value="en"' + (s.defaultLanguage === 'en' ? ' selected' : '') + '>English</option>' +
+            '<option value="fa"' + (s.defaultLanguage === 'fa' ? ' selected' : '') + '>Dari (دری)</option>' +
+            '<option value="ps"' + (s.defaultLanguage === 'ps' ? ' selected' : '') + '>Pashto (پښتو)</option></select></div>' +
+            '<button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 px-4 rounded-xl">' + t('save') + '</button></form></div>' +
+            // Change PIN
+            '<div class="bg-white rounded-xl p-6 border border-gray-200"><h3 class="font-semibold text-gray-800 mb-4">' + t('changePin') + '</h3>' +
+            '<form id="pin-form" class="space-y-4">' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('currentPin') + '</label><input type="password" id="cp-current" maxlength="6" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div>' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('newPin') + '</label><input type="password" id="cp-new" maxlength="6" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div>' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('confirmNewPin') + '</label><input type="password" id="cp-confirm" maxlength="6" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div>' +
+            '<div id="pin-err" class="hidden text-red-500 text-sm"></div>' +
+            '<button type="submit" class="w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 px-4 rounded-xl">' + t('changePin') + '</button></form></div>' +
+            // Data management
+            '<div class="bg-white rounded-xl p-6 border border-gray-200"><h3 class="font-semibold text-gray-800 mb-4">Data Management</h3>' +
+            '<div class="flex gap-4">' +
+            '<button id="export-btn" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2">' +
+            '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>' + t('exportData') + '</button>' +
+            '<label class="flex-1 bg-purple-500 hover:bg-purple-600 text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 cursor-pointer">' +
+            '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>' + t('importData') +
+            '<input type="file" id="import-file" accept=".json" class="hidden"></label></div></div></div>';
+    }
+
+    function attachSettingsEvents() {
+        document.getElementById('settings-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            saveSettings({
+                shopName: { en: document.getElementById('s-name-en').value.trim(), fa: document.getElementById('s-name-fa').value.trim(), ps: document.getElementById('s-name-ps').value.trim() },
+                whatsappNumber: document.getElementById('s-whatsapp').value.trim(),
+                defaultLanguage: document.getElementById('s-lang').value
+            });
+            alert(t('productSaved'));
+        });
+        document.getElementById('pin-form')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            var cur = document.getElementById('cp-current').value;
+            var nw = document.getElementById('cp-new').value;
+            var cf = document.getElementById('cp-confirm').value;
+            var err = document.getElementById('pin-err');
+            if (nw !== cf) { err.textContent = t('pinMismatch'); err.classList.remove('hidden'); return; }
+            if (nw.length < 4 || nw.length > 6) { err.textContent = t('pinTooShort'); err.classList.remove('hidden'); return; }
+            try {
+                await verifyPin(cur);
+                await setPin(nw);
+                alert(t('pinChanged'));
+                document.getElementById('pin-form').reset();
+                err.classList.add('hidden');
+            } catch(e2) {
+                err.textContent = e2.message.includes('invalid') || e2.message.includes('locked') ? t('currentPinWrong') : t('pinInvalid');
+                err.classList.remove('hidden');
+            }
+        });
+        document.getElementById('export-btn')?.addEventListener('click', function() {
+            var data = exportData();
+            var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a'); a.href = url; a.download = 'hakeemi-backup-' + new Date().toISOString().split('T')[0] + '.json'; a.click();
+            URL.revokeObjectURL(url);
+        });
+        document.getElementById('import-file')?.addEventListener('change', function(e) {
+            var file = e.target.files?.[0]; if (!file) return;
+            var reader = new FileReader();
+            reader.onload = function(ev) {
+                try { var data = JSON.parse(ev.target.result); importData(data); alert(t('importSuccess')); renderTab(); }
+                catch { alert(t('importError')); }
+            };
+            reader.readAsText(file);
+        });
+    }
+
+})();
+</script>
 </body>
 </html>
