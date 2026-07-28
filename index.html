@@ -225,28 +225,6 @@
 
     // ===================== i18n =====================
     const I18N = {
-        en: {
-            dir: 'ltr', lang: 'en',
-            labels: {
-                appName: 'Hakeemi Grocery Store', shopName: 'Hakeemi Grocery Store',
-                offline: "You're offline — showing saved products.",
-                noResults: 'No products found',
-                noProducts: 'No products added yet',
-                noProductsDesc: 'Products will appear here once the shopkeeper adds them.',
-                orderWhatsApp: 'Order via WhatsApp',
-                orderTitle: 'Place Your Order', customerName: 'Your Name',
-                customerPhone: 'Phone Number (optional)', customerNotes: 'Any special requests?',
-                placeOrder: 'Send Order', nameRequired: 'Please enter your name',
-                phoneInvalid: 'Please enter a valid phone number', cancel: 'Cancel', close: 'Close',
-                adminTitle: 'Admin', priceAFN: 'AFN',
-                langEnglish: 'English', langDari: 'Dari (دری)', langPashto: 'Pashto (پښتو)',
-                currencyAFN: 'AFN',
-                tagline: 'Fresh groceries from Panjshir',
-                footerLocation: 'Anaba District, Panjshir Province',
-                footerMadeWith: 'Made with',
-                footerForCommunity: 'for our community',
-            }
-        },
         fa: {
             dir: 'rtl', lang: 'fa',
             labels: {
@@ -261,12 +239,14 @@
                 placeOrder: 'ارسال سفارش', nameRequired: 'لطفاً نام خود را وارد کنید',
                 phoneInvalid: 'لطفاً شماره تلفن معتبر وارد کنید', cancel: 'لغو', close: 'بستن',
                 adminTitle: 'پنل مدیریت', priceAFN: 'افغانی',
-                langEnglish: 'English', langDari: 'دری', langPashto: 'پښتو',
+                langDari: 'دری', langPashto: 'پښتو',
                 currencyAFN: 'افغانی',
                 tagline: 'مواد غذایی تازه از پنجشیر',
                 footerLocation: 'ولسوالی اناب، پنجشیر',
                 footerMadeWith: 'ساخته شده با',
                 footerForCommunity: 'برای جامعه ما',
+                weightKg: 'وزن (کیلوگرام)',
+                perKg: 'فی کیلو',
             }
         },
         ps: {
@@ -283,21 +263,24 @@
                 placeOrder: 'سفارش ولېږئ', nameRequired: 'مهرباني وکړئ خپل نوم ولیکئ',
                 phoneInvalid: 'مهرباني وکړئ معتبر تلیفون نومر ولیکئ', cancel: 'لغو کول', close: 'بند کول',
                 adminTitle: 'مدیریت', priceAFN: 'افغانی',
-                langEnglish: 'English', langDari: 'دری', langPashto: 'پښتو',
+                langDari: 'دری', langPashto: 'پښتو',
                 currencyAFN: 'افغانی',
                 tagline: 'د پنجشیر تازه خوراکي توکي',
                 footerLocation: 'د اناب ولسوالۍ، پنجشیر',
                 footerMadeWith: 'جوړ شوی د',
                 footerForCommunity: 'سره زموږ ټولنې لپاره',
+                weightKg: 'وزن (کیلوګرام)',
+                perKg: 'فی کیلو',
             }
         }
     };
 
-    let currentLang = localStorage.getItem('grocery_lang') || 'fa';
+    let currentLang = localStorage.getItem('grocery_lang');
+    if (currentLang === 'en' || !currentLang) currentLang = 'fa';
 
     function t(key) {
         const labels = I18N[currentLang]?.labels || I18N.fa.labels;
-        return labels[key] || I18N.en.labels[key] || key;
+        return labels[key] || I18N.fa.labels[key] || key;
     }
 
     function applyLanguage(lang) {
@@ -311,7 +294,7 @@
 
     function formatPrice(amount) {
         const num = Number(amount).toLocaleString('en-US');
-        return currentLang === 'en' ? t('priceAFN') + ' ' + num : num + ' ' + t('priceAFN');
+        return num + ' ' + t('priceAFN');
     }
 
     // ===================== Store =====================
@@ -324,14 +307,14 @@
     };
 
     const DEFAULT_PRODUCTS = [
-        { id: 'prod_1', name: { en: 'Premium Wheat Flour (10kg)', fa: 'آرد گندم ممتاز (۱۰ کیلو)', ps: 'لوی ګندم آرد (۱۰ کګ)' }, price: 450, image: null, visible: true },
-        { id: 'prod_2', name: { en: 'Sunflower Oil (5L)', fa: 'روغن آفتابگردان (۵ لیتر)', ps: 'د لمری روغن (۵ لتر)' }, price: 680, image: null, visible: true },
-        { id: 'prod_3', name: { en: 'Red Kidney Beans (1kg)', fa: 'لوبیا قرمز (۱ کیلو)', ps: 'سور لوبیا (۱ کګ)' }, price: 320, image: null, visible: true },
-        { id: 'prod_4', name: { en: 'Basmati Rice (10kg)', fa: 'برنج بسمتی (۱۰ کیلو)', ps: 'بسمتي برنج (۱۰ کګ)' }, price: 1200, image: null, visible: true },
-        { id: 'prod_5', name: { en: 'Granulated Sugar (1kg)', fa: 'شکر قندی (۱ کیلو)', ps: 'شکر (۱ کګ)' }, price: 95, image: null, visible: true },
-        { id: 'prod_6', name: { en: 'Green Tea Box (250g)', fa: 'چای سبز جعبه‌دار (۲۵۰ گرم)', ps: 'سبز چای بکس (۲۵۰ ګرام)' }, price: 280, image: null, visible: true },
-        { id: 'prod_7', name: { en: 'Chickpeas (1kg)', fa: 'نخود (۱ کیلو)', ps: 'نخود (۱ کګ)' }, price: 140, image: null, visible: true },
-        { id: 'prod_8', name: { en: 'White Lentils (1kg)', fa: 'عدس سفید (۱ کیلو)', ps: 'سپین عدس (۱ کګ)' }, price: 180, image: null, visible: true },
+        { id: 'prod_1', name: { fa: 'آرد گندم ممتاز' }, price: 45, image: null, visible: true },
+        { id: 'prod_2', name: { fa: 'روغن آفتابگردان' }, price: 136, image: null, visible: true },
+        { id: 'prod_3', name: { fa: 'لوبیا قرمز' }, price: 320, image: null, visible: true },
+        { id: 'prod_4', name: { fa: 'برنج بسمتی' }, price: 120, image: null, visible: true },
+        { id: 'prod_5', name: { fa: 'شکر قندی' }, price: 95, image: null, visible: true },
+        { id: 'prod_6', name: { fa: 'چای سبز' }, price: 280, image: null, visible: true },
+        { id: 'prod_7', name: { fa: 'نخود' }, price: 140, image: null, visible: true },
+        { id: 'prod_8', name: { fa: 'عدس سفید' }, price: 180, image: null, visible: true },
     ];
 
     function get(key, def) {
@@ -355,8 +338,8 @@
     function buildOrderMessage(order) {
         var shopName = getShopName(currentLang);
         var itemsText = order.items.map(function(item, i) {
-            var name = item.name[currentLang] || item.name.en || '';
-            return (i + 1) + '. ' + name + ' = ' + formatPrice(item.price);
+            var name = item.name.fa || item.name || '';
+            return (i + 1) + '. ' + name + ' (' + item.weight + ' kg) = ' + formatPrice(item.price * item.weight);
         }).join('\n');
         var tpl = getOrderTemplate();
         return tpl.replace(/\{\{shopName\}\}/g, shopName)
@@ -392,7 +375,6 @@
         document.title = shopName;
 
         var langButtons = [
-            { code: 'en', label: 'English', flag: '🇬🇧' },
             { code: 'fa', label: 'دری', flag: '🇦🇫' },
             { code: 'ps', label: 'پښتو', flag: '🇦🇫' }
         ];
@@ -417,8 +399,8 @@
 
         // Product cards
         var productCards = products.length > 0 ? products.map(function(product) {
-            var name = product.name[lang] || product.name.en || 'Product';
-            var price = formatPrice(product.price);
+            var name = product.name.fa || product.name || 'Product';
+            var price = formatPrice(product.price) + ' / ' + t('kg', 'kg');
             var img = product.image || placeholderSvg;
             return '<div class="product-card bg-white rounded-[20px] card-shadow overflow-hidden border border-stone-100 hover:card-shadow-hover">' +
                 '<div class="relative overflow-hidden bg-amber-50" style="padding-top:85%;">' +
@@ -498,6 +480,12 @@
             '<div>' +
             '<label class="block text-sm font-semibold text-stone-700 mb-1.5">' + t('customerName') + ' <span class="text-amber-500">*</span></label>' +
             '<input type="text" id="customer-name" required class="w-full px-4 py-3 border-2 border-stone-200 rounded-2xl bg-stone-50 text-stone-800 placeholder-stone-400 text-sm" autocomplete="name">' +
+            '</div>' +
+            
+            // Weight field
+            '<div>' +
+            '<label class="block text-sm font-semibold text-stone-700 mb-1.5">' + t('weightKg') + ' <span class="text-amber-500">*</span></label>' +
+            '<input type="number" id="order-weight" min="1" step="0.5" value="1" required class="w-full px-4 py-3 border-2 border-stone-200 rounded-2xl bg-stone-50 text-stone-800 text-sm">' +
             '</div>' +
 
             // Phone field
@@ -591,10 +579,21 @@
         }
     });
 
+    // Dynamic price calculation
+    document.addEventListener('input', function(e) {
+        if (e.target.id === 'order-weight') {
+            var weight = parseFloat(e.target.value) || 1;
+            var priceEl = document.getElementById('order-dynamic-price');
+            if (priceEl) {
+                var basePrice = parseFloat(priceEl.getAttribute('data-base-price')) || 0;
+                priceEl.textContent = formatPrice(basePrice * weight);
+            }
+        }
+    });
+
     function openOrderModal(product) {
         selectedProduct = product;
-        var lang = currentLang;
-        var name = product.name[lang] || product.name.en;
+        var name = product.name.fa || product.name;
         var price = formatPrice(product.price);
         var img = product.image || placeholderSvg;
 
@@ -603,7 +602,7 @@
             '<img src="' + img + '" alt="' + name + '" class="w-14 h-14 rounded-xl object-cover bg-amber-100 flex-shrink-0" onerror="this.src=\'' + placeholderSvg + '\'">' +
             '<div class="min-w-0">' +
             '<h3 class="font-heading font-semibold text-stone-800 text-sm leading-snug">' + name + '</h3>' +
-            '<p class="text-amber-600 font-bold font-heading text-sm mt-0.5">' + price + '</p>' +
+            '<p id="order-dynamic-price" class="text-amber-600 font-bold font-heading text-sm mt-0.5" data-base-price="' + product.price + '">' + price + '</p>' +
             '</div></div>';
 
         document.getElementById('order-modal').classList.remove('hidden');
@@ -629,10 +628,12 @@
         if (!name) { alert(t('nameRequired')); return; }
         if (phone && !validatePhone(phone)) { alert(t('phoneInvalid')); return; }
 
+        var weight = parseFloat(document.getElementById('order-weight').value) || 1;
+
         var order = {
             id: 'order_' + Date.now(),
-            items: [{ id: selectedProduct.id, name: selectedProduct.name, price: selectedProduct.price, quantity: 1 }],
-            total: selectedProduct.price,
+            items: [{ id: selectedProduct.id, name: selectedProduct.name, price: selectedProduct.price, quantity: 1, weight: weight }],
+            total: selectedProduct.price * weight,
             customerName: name,
             customerPhone: phone,
             customerNotes: notes,

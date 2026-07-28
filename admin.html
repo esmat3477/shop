@@ -63,51 +63,6 @@
 
     // ===================== i18n =====================
     var I18N = {
-        en: {
-            dir: 'ltr', lang: 'en',
-            labels: {
-                adminTitle: 'Admin Dashboard', shopName: 'Hakeemi Grocery Store',
-                setPinTitle: 'Set Admin PIN', setPinDesc: 'Create a 4-6 digit PIN',
-                enterPinTitle: 'Enter Admin PIN', enterPinDesc: 'Enter your PIN to access dashboard',
-                pinPlaceholder: 'Enter PIN', confirmPinPlaceholder: 'Confirm PIN',
-                setPinBtn: 'Set PIN', loginBtn: 'Login', pinMismatch: 'PINs do not match',
-                pinTooShort: 'PIN must be 4-6 digits', pinInvalid: 'Invalid PIN',
-                pinLocked: 'Too many attempts. Try again in 5 minutes.',
-                forgotPin: 'Forgot PIN?', resetPin: 'Reset PIN',
-                resetConfirm: 'This will delete ALL data. Are you sure?',
-                dashboard: 'Dashboard', products: 'Products', orders: 'Orders', settings: 'Settings', logout: 'Logout',
-                todayRevenue: "Today's Revenue", weekRevenue: 'This Week', monthRevenue: 'This Month',
-                totalOrders: 'Total Orders', topProducts: 'Top Products', noOrders: 'No orders yet', noProducts: 'No products added yet',
-                addProduct: 'Add Product', editProduct: 'Edit Product', productNameEn: 'Name (English)',
-                productNameFa: 'Name (Dari)', productNamePs: 'Name (Pashto)', productPrice: 'Price (AFN)',
-                productImage: 'Product Image', uploadImage: 'Upload Image', removeImage: 'Remove Image',
-                productVisible: 'Visible in Catalog', saving: 'Saving...', productSaved: 'Product saved successfully',
-                confirmDelete: 'Are you sure you want to delete this item?', delete: 'Delete', edit: 'Edit',
-                orderDate: 'Date', orderCustomer: 'Customer', orderTotal: 'Total', orderStatus: 'Status',
-                statusPending: 'Pending', statusConfirmed: 'Confirmed', statusDelivered: 'Delivered', statusCancelled: 'Cancelled',
-                shopSettings: 'Shop Settings', shopNameEn: 'Shop Name (English)', shopNameFa: 'Shop Name (Dari)',
-                shopNamePs: 'Shop Name (Pashto)', whatsappNumber: 'WhatsApp Number',
-                whatsappNumberHint: 'Format: 937xxxxxxxxx', defaultLanguage: 'Default Language',
-                changePin: 'Change PIN', currentPin: 'Current PIN', newPin: 'New PIN', confirmNewPin: 'Confirm New PIN',
-                pinChanged: 'PIN changed successfully', currentPinWrong: 'Current PIN is incorrect',
-                exportData: 'Export Data', importData: 'Import Data', importSuccess: 'Data imported', importError: 'Invalid data',
-                save: 'Save', cancel: 'Cancel', yes: 'Yes', no: 'No',
-                currencyAFN: 'AFN', priceAFN: 'AFN',
-                costPrice: 'Cost Price (Buy)', sellingPrice: 'Selling Price',
-                purchases: 'Stock Purchases', addPurchase: 'Add Purchase',
-                supplier: 'Supplier Name', supplierHint: 'e.g. Khan Wholesale',
-                purchaseDate: 'Date', purchaseQty: 'Quantity', purchaseCost: 'Total Cost',
-                purchasePerUnit: 'Cost per Unit (AFN)',
-                noPurchases: 'No purchases recorded yet',
-                totalSpent: 'Total Spent', totalProfit: 'Profit', totalLoss: 'Loss',
-                revenue: 'Revenue (Sold)', costOfGoods: 'Cost (Bought)',
-                profitMargin: 'Profit Margin', inventoryValue: 'Inventory Value',
-                todayProfit: "Today's Profit", weekProfit: 'This Week Profit', monthProfit: 'This Month Profit',
-                todaySpent: "Today's Spending", weekSpent: 'This Week Spent', monthSpent: 'This Month Spent',
-                confirmDeletePurchase: 'Delete this purchase record?',
-                profit: 'Profit', loss: 'Loss',
-            }
-        },
         fa: {
             dir: 'rtl', lang: 'fa',
             labels: {
@@ -123,16 +78,15 @@
                 dashboard: 'داشبورد', products: 'محصولات', orders: 'سفارشات', settings: 'تنظیمات', logout: 'خروج',
                 todayRevenue: 'درآمد امروز', weekRevenue: 'این هفته', monthRevenue: 'این ماه',
                 totalOrders: 'کل سفارشات', topProducts: 'پرفروش‌ترین محصولات', noOrders: 'هنوز سفارشی ثبت نشده', noProducts: 'هنوز محصولی اضافه نشده',
-                addProduct: 'افزودن محصول', editProduct: 'ویرایش محصول', productNameEn: 'نام (انگلیسی)',
-                productNameFa: 'نام (دری)', productNamePs: 'نام (پښتو)', productPrice: 'قیمت (افغانی)',
+                addProduct: 'افزودن محصول', editProduct: 'ویرایش محصول',
+                productNameFa: 'نام محصول (دری)', productPrice: 'قیمت (افغانی)',
                 productImage: 'تصویر محصول', uploadImage: 'آپلود تصویر', removeImage: 'حذف تصویر',
                 productVisible: 'نمایش در کاتالوگ', saving: 'در حال ذخیره...', productSaved: 'محصول ذخیره شد',
                 confirmDelete: 'آیا از حذف این مورد مطمئن هستید؟', delete: 'حذف', edit: 'ویرایش',
                 orderDate: 'تاریخ', orderCustomer: 'مشتری', orderTotal: 'مجموع', orderStatus: 'وضعیت',
                 statusPending: 'در انتظار', statusConfirmed: 'تأیید شده', statusDelivered: 'تحویل شده', statusCancelled: 'لغو شده',
-                shopSettings: 'تنظیمات فروشگاه', shopNameEn: 'نام فروشگاه (انگلیسی)', shopNameFa: 'نام فروشگاه (دری)',
-                shopNamePs: 'نام فروشگاه (پښتو)', whatsappNumber: 'شماره واتس‌اپ',
-                whatsappNumberHint: 'فرمت: 937xxxxxxxxx', defaultLanguage: 'زبان پیش‌فرض',
+                shopSettings: 'تنظیمات فروشگاه', shopNameFa: 'نام فروشگاه (دری)', shopNamePs: 'نام فروشگاه (پښتو)',
+                whatsappNumber: 'شماره واتس‌اپ', whatsappNumberHint: 'فرمت: 937xxxxxxxxx', defaultLanguage: 'زبان پیش‌فرض',
                 changePin: 'تغییر رمز', currentPin: 'رمز فعلی', newPin: 'رمز جدید', confirmNewPin: 'تأیید رمز جدید',
                 pinChanged: 'رمز تغییر کرد', currentPinWrong: 'رمز فعلی نادرست است',
                 exportData: 'صادر کردن داده‌ها', importData: 'وارد کردن داده‌ها', importSuccess: 'داده‌ها وارد شد', importError: 'فایل نامعتبر',
@@ -168,16 +122,15 @@
                 dashboard: 'ډیشبورډ', products: 'محصولات', orders: 'ارګونه', settings: 'تنظیمات', logout: 'خروج',
                 todayRevenue: 'نن يو ايصال', weekRevenue: 'د اوسني ہفتې', monthRevenue: 'د اوسني مېشتې',
                 totalOrders: 'ټول ارګونه', topProducts: 'سړی محصولات', noOrders: 'هیڅ ارګونې نه شتون لري', noProducts: 'هیڅ محصول اضافه نه شوی',
-                addProduct: 'محصول اضافه', editProduct: 'محصول سم', productNameEn: 'نوم (انګلیسي)',
-                productNameFa: 'نوم (دری)', productNamePs: 'نوم (پښتو)', productPrice: 'قیمت (افغانی)',
+                addProduct: 'محصول اضافه', editProduct: 'محصول سم',
+                productNameFa: 'نوم (دری)', productPrice: 'قیمت (افغانی)',
                 productImage: 'د محصول انځور', uploadImage: 'انځور اپ لوډ', removeImage: 'انځور وا نیول',
                 productVisible: 'د کاتالوګ کې ښکاره', saving: 'ساتل کیږي...', productSaved: 'محصول ساتل شو',
                 confirmDelete: 'ایا تاسو یقین لارئ؟', delete: 'وا نیول', edit: 'سم کول',
                 orderDate: 'نیته', orderCustomer: 'ست编者', orderTotal: 'ټول', orderStatus: 'סטатוס',
                 statusPending: 'چېکات', statusConfirmed: 'تایید', statusDelivered: 'ورسول', statusCancelled: 'منسوخ',
-                shopSettings: 'د دوکان تنظیمات', shopNameEn: 'د دوکان نوم (انګلیسي)', shopNameFa: 'د دوکان نوم (دری)',
-                shopNamePs: 'د دوکان نوم (پښتو)', whatsappNumber: 'واتس‌اپ نومر',
-                whatsappNumberHint: 'فورمټ: 937xxxxxxxxx', defaultLanguage: 'د ژبه پیش‌فرض',
+                shopSettings: 'د دوکان تنظیمات', shopNameFa: 'د دوکان نوم (دری)', shopNamePs: 'د دوکان نوم (پښتو)',
+                whatsappNumber: 'واتس‌اپ نومر', whatsappNumberHint: 'فورمټ: 937xxxxxxxxx', defaultLanguage: 'د ژبه پیش‌فرض',
                 changePin: 'PIN بدل', currentPin: 'اوسنی PIN', newPin: 'نوی PIN', confirmNewPin: 'نوی PIN تایید',
                 pinChanged: 'PIN بدل شو', currentPinWrong: 'اوسنی PIN ناکام',
                 exportData: 'داتا برونtákول', importData: 'داتا درونtákول', importSuccess: 'داتا درونtákل شو', importError: 'فایل نامعتبر',
@@ -200,10 +153,11 @@
         }
     };
 
-    var currentLang = localStorage.getItem('grocery_lang') || 'fa';
-    function t(key) { var l = I18N[currentLang]?.labels || I18N.fa.labels; return l[key] || I18N.en.labels[key] || key; }
-    function formatPrice(a) { var n = Number(a).toLocaleString('en-US'); return currentLang === 'en' ? t('priceAFN') + ' ' + n : n + ' ' + t('priceAFN'); }
-    function formatDate(d) { return new Date(d).toLocaleDateString(currentLang === 'fa' ? 'fa-AF' : currentLang === 'ps' ? 'ps-AF' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' }); }
+    var currentLang = localStorage.getItem('grocery_lang');
+    if (currentLang === 'en' || !currentLang) currentLang = 'fa';
+    function t(key) { var l = I18N[currentLang]?.labels || I18N.fa.labels; return l[key] || I18N.fa.labels[key] || key; }
+    function formatPrice(a) { var n = Number(a).toLocaleString('en-US'); return n + ' ' + t('priceAFN'); }
+    function formatDate(d) { return new Date(d).toLocaleDateString(currentLang === 'fa' ? 'fa-AF' : 'ps-AF', { year: 'numeric', month: 'short', day: 'numeric' }); }
 
     // ===================== Store =====================
     var DEFAULT_SETTINGS = {
@@ -216,12 +170,12 @@
     function set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) { console.error(e); } }
     function initStore() {
         if (!localStorage.getItem('grocery_products')) set('grocery_products', [
-            { id: 'prod_1', name: { en: 'Premium Wheat Flour (10kg)', fa: 'آرد گندم ممتاز (۱۰ کیلو)', ps: 'لوی ګندم آرد (۱۰ کګ)' }, price: 450, costPrice: 380, image: null, visible: true },
-            { id: 'prod_2', name: { en: 'Sunflower Oil (5L)', fa: 'روغن آفتابگردان (۵ لیتر)', ps: 'د لمری روغن (۵ لتر)' }, price: 680, costPrice: 580, image: null, visible: true },
-            { id: 'prod_3', name: { en: 'Red Kidney Beans (1kg)', fa: 'لوبیا قرمز (۱ کیلو)', ps: 'سور لوبیا (۱ کګ)' }, price: 320, costPrice: 250, image: null, visible: true },
-            { id: 'prod_4', name: { en: 'Basmati Rice (10kg)', fa: 'برنج بسمتی (۱۰ کیلو)', ps: 'بسمتي برنج (۱۰ کګ)' }, price: 1200, costPrice: 1000, image: null, visible: true },
-            { id: 'prod_5', name: { en: 'Granulated Sugar (1kg)', fa: 'شکر قندی (۱ کیلو)', ps: 'شکر (۱ کګ)' }, price: 95, costPrice: 75, image: null, visible: true },
-            { id: 'prod_6', name: { en: 'Green Tea Box (250g)', fa: 'چای سبز جعبه‌دار (۲۵۰ گرم)', ps: 'سبز چای بکس (۲۵۰ ګرام)' }, price: 280, costPrice: 200, image: null, visible: true },
+            { id: 'prod_1', name: { fa: 'آرد گندم ممتاز' }, price: 45, costPrice: 38, image: null, visible: true },
+            { id: 'prod_2', name: { fa: 'روغن آفتابگردان' }, price: 136, costPrice: 116, image: null, visible: true },
+            { id: 'prod_3', name: { fa: 'لوبیا قرمز' }, price: 320, costPrice: 250, image: null, visible: true },
+            { id: 'prod_4', name: { fa: 'برنج بسمتی' }, price: 120, costPrice: 100, image: null, visible: true },
+            { id: 'prod_5', name: { fa: 'شکر قندی' }, price: 95, costPrice: 75, image: null, visible: true },
+            { id: 'prod_6', name: { fa: 'چای سبز' }, price: 280, costPrice: 200, image: null, visible: true },
         ]);
         if (!localStorage.getItem('grocery_orders')) set('grocery_orders', []);
         if (!localStorage.getItem('grocery_purchases')) set('grocery_purchases', []);
@@ -500,7 +454,7 @@
             var margin = p.revenue > 0 ? Math.round(((p.revenue - p.cost) / p.revenue) * 100) : 0;
             return '<div class="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">' +
                 '<div class="flex items-center gap-3"><span class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 font-bold text-sm">' + (i + 1) + '</span>' +
-                '<div><p class="font-medium text-gray-800">' + (p.name?.[lang] || p.name?.en || 'Product') + '</p><p class="text-xs text-gray-500">' + p.count + ' sold · margin ' + margin + '%</p></div></div>' +
+                '<div><p class="font-medium text-gray-800">' + (p.name?.fa || p.name || 'Product') + '</p><p class="text-xs text-gray-500">' + p.count + ' sold · margin ' + margin + '%</p></div></div>' +
                 '<div class="text-right"><p class="font-semibold text-emerald-600">' + formatPrice(p.revenue) + '</p>' +
                 '<p class="text-xs text-gray-400">' + (currentLang === 'fa' ? 'هزینه:' : 'cost:') + ' ' + formatPrice(p.cost) + '</p></div></div>';
         }).join('') : '<p class="text-gray-500 text-center py-4">' + t('noOrders') + '</p>';
@@ -548,7 +502,7 @@
         var placeholderSvg = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Crect width='80' height='80' fill='%23f3f4f6'/%3E%3Crect x='22' y='18' width='36' height='28' rx='4' stroke='%239ca3af' stroke-width='2' fill='none'/%3E%3Ccircle cx='30' cy='28' r='3' fill='%239ca3af'/%3E%3C/svg%3E";
 
         var cards = ps.length > 0 ? ps.map(function(p) {
-            var name = p.name[lang] || p.name.en || 'Product';
+            var name = p.name.fa || p.name || 'Product';
             var img = p.image || placeholderSvg;
             var margin = p.price && p.costPrice ? Math.round(((p.price - p.costPrice) / p.price) * 100) : 0;
             return '<div class="bg-white rounded-xl p-4 border border-gray-200 ' + (!p.visible ? 'opacity-60' : '') + '">' +
@@ -577,10 +531,7 @@
             '<button id="close-modal" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button></div>' +
             '<div class="p-6"><form id="product-form" class="space-y-4">' +
             '<input type="hidden" id="p-id">' +
-            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('productNameEn') + '</label><input type="text" id="p-name-en" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div>' +
-            '<div class="grid grid-cols-2 gap-4">' +
-            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('productNameFa') + '</label><input type="text" id="p-name-fa" required dir="rtl" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div>' +
-            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('productNamePs') + '</label><input type="text" id="p-name-ps" required dir="rtl" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div></div>' +
+            '<div class="mb-4"><label class="block text-sm font-medium text-gray-700 mb-1">' + t('productNameFa') + '</label><input type="text" id="p-name-fa" required dir="rtl" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div>' +
             '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('productPrice') + '</label><div class="relative"><input type="number" id="p-price" required min="1" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 pr-16"><span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium">AFN</span></div></div>' +
             '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('costPrice') + '</label><div class="relative"><input type="number" id="p-cost-price" min="0" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 pr-16" placeholder="0"><span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium">AFN</span></div><p class="text-xs text-gray-400 mt-1">' + (currentLang === 'fa' ? 'هزینه خرید هر واحد از تأمین‌کننده' : currentLang === 'ps' ? 'د هر یونټ د تأمین کوونکی لګښت' : 'Cost per unit from supplier') + '</p></div>' +
             '<div id="p-margin-line" class="hidden"><div class="flex items-center gap-2 bg-gray-50 rounded-xl px-4 py-3"><span class="text-sm text-gray-500">' + t('profitMargin') + ':</span><span id="p-margin-val" class="font-bold"></span></div></div>' +
@@ -632,9 +583,7 @@
         editingProduct = p || null;
         document.getElementById('modal-title').textContent = p ? t('editProduct') : t('addProduct');
         document.getElementById('p-id').value = p?.id || 'prod_' + Date.now();
-        document.getElementById('p-name-en').value = p?.name?.en || '';
-        document.getElementById('p-name-fa').value = p?.name?.fa || '';
-        document.getElementById('p-name-ps').value = p?.name?.ps || '';
+        document.getElementById('p-name-fa').value = p?.name?.fa || p?.name || '';
         document.getElementById('p-price').value = p?.price || '';
         document.getElementById('p-cost-price').value = p?.costPrice || '';
         document.getElementById('p-visible').checked = p ? p.visible !== false : true;
@@ -692,7 +641,7 @@
         e.preventDefault();
         var p = {
             id: document.getElementById('p-id').value,
-            name: { en: document.getElementById('p-name-en').value.trim(), fa: document.getElementById('p-name-fa').value.trim(), ps: document.getElementById('p-name-ps').value.trim() },
+            name: { fa: document.getElementById('p-name-fa').value.trim() },
             price: parseInt(document.getElementById('p-price').value, 10),
             costPrice: parseInt(document.getElementById('p-cost-price').value, 10) || 0,
             image: currentProductImage || null,
@@ -774,7 +723,7 @@
                 '<div class="flex justify-end mt-3"><button class="del-purchase-btn bg-red-50 hover:bg-red-100 text-red-600 font-medium py-1 px-3 rounded-lg text-sm transition-colors" data-id="' + p.id + '">' + t('delete') + '</button></div></div>';
         }).join('') : '<div class="bg-white rounded-xl p-8 border border-gray-200 text-center"><h3 class="text-lg font-semibold text-gray-600">' + t('noPurchases') + '</h3></div>';
 
-        var productOpts = products.map(function(p) { return '<option value="' + p.id + '">' + (p.name[lang] || p.name.en || 'Product') + '</option>'; }).join('');
+        var productOpts = products.map(function(p) { return '<option value="' + p.id + '">' + (p.name.fa || p.name || 'Product') + '</option>'; }).join('');
 
         return '<div class="space-y-6">' +
             '<div class="flex items-center justify-between"><h2 class="text-xl font-bold text-gray-800">' + t('purchases') + '</h2>' +
