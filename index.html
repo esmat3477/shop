@@ -594,7 +594,8 @@
     function openOrderModal(product) {
         selectedProduct = product;
         var name = product.name.fa || product.name;
-        var price = formatPrice(product.price);
+        var defaultWeight = product.weight || 1;
+        var initialPrice = formatPrice(product.price * defaultWeight);
         var img = product.image || placeholderSvg;
 
         document.getElementById('order-product-info').innerHTML =
@@ -602,8 +603,11 @@
             '<img src="' + img + '" alt="' + name + '" class="w-14 h-14 rounded-xl object-cover bg-amber-100 flex-shrink-0" onerror="this.src=\'' + placeholderSvg + '\'">' +
             '<div class="min-w-0">' +
             '<h3 class="font-heading font-semibold text-stone-800 text-sm leading-snug">' + name + '</h3>' +
-            '<p id="order-dynamic-price" class="text-amber-600 font-bold font-heading text-sm mt-0.5" data-base-price="' + product.price + '">' + price + '</p>' +
+            '<p id="order-dynamic-price" class="text-amber-600 font-bold font-heading text-sm mt-0.5" data-base-price="' + product.price + '">' + initialPrice + '</p>' +
             '</div></div>';
+
+        var weightInput = document.getElementById('order-weight');
+        if (weightInput) weightInput.value = defaultWeight;
 
         document.getElementById('order-modal').classList.remove('hidden');
         document.body.style.overflow = 'hidden';

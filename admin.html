@@ -80,6 +80,7 @@
                 totalOrders: 'کل سفارشات', topProducts: 'پرفروش‌ترین محصولات', noOrders: 'هنوز سفارشی ثبت نشده', noProducts: 'هنوز محصولی اضافه نشده',
                 addProduct: 'افزودن محصول', editProduct: 'ویرایش محصول',
                 productNameFa: 'نام محصول (دری)', productPrice: 'قیمت فی کیلو (افغانی)',
+                productWeight: 'وزن پایه (کیلوگرام)', totalPrice: 'قیمت کل',
                 productImage: 'تصویر محصول', uploadImage: 'آپلود تصویر', removeImage: 'حذف تصویر',
                 productVisible: 'نمایش در کاتالوگ', saving: 'در حال ذخیره...', productSaved: 'محصول ذخیره شد',
                 confirmDelete: 'آیا از حذف این مورد مطمئن هستید؟', delete: 'حذف', edit: 'ویرایش',
@@ -124,6 +125,7 @@
                 totalOrders: 'ټول ارګونه', topProducts: 'سړی محصولات', noOrders: 'هیڅ ارګونې نه شتون لري', noProducts: 'هیڅ محصول اضافه نه شوی',
                 addProduct: 'محصول اضافه', editProduct: 'محصول سم',
                 productNameFa: 'نوم (دری)', productPrice: 'د ۱ کیلو قیمت (افغانی)',
+                productWeight: 'اساسی وزن (کیلوګرام)', totalPrice: 'ټول قیمت',
                 productImage: 'د محصول انځور', uploadImage: 'انځور اپ لوډ', removeImage: 'انځور وا نیول',
                 productVisible: 'د کاتالوګ کې ښکاره', saving: 'ساتل کیږي...', productSaved: 'محصول ساتل شو',
                 confirmDelete: 'ایا تاسو یقین لارئ؟', delete: 'وا نیول', edit: 'سم کول',
@@ -532,7 +534,11 @@
             '<div class="p-6"><form id="product-form" class="space-y-4">' +
             '<input type="hidden" id="p-id">' +
             '<div class="mb-4"><label class="block text-sm font-medium text-gray-700 mb-1">' + t('productNameFa') + '</label><input type="text" id="p-name-fa" required dir="rtl" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500"></div>' +
+            '<div class="grid grid-cols-2 gap-4">' +
             '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('productPrice') + '</label><div class="relative"><input type="number" id="p-price" required min="1" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 pr-16"><span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium">AFN</span></div></div>' +
+            '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('productWeight') + '</label><div class="relative"><input type="number" id="p-weight" min="0.1" step="0.1" value="1" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 pr-12"><span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium">kg</span></div></div>' +
+            '</div>' +
+            '<div class="flex items-center gap-2 bg-emerald-50 rounded-xl px-4 py-3 mb-2"><span class="text-sm text-emerald-700">' + t('totalPrice') + ':</span><span id="p-total-price" class="font-bold text-emerald-700">0 AFN</span></div>' +
             '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('costPrice') + '</label><div class="relative"><input type="number" id="p-cost-price" min="0" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 pr-16" placeholder="0"><span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium">AFN</span></div><p class="text-xs text-gray-400 mt-1">' + (currentLang === 'fa' ? 'هزینه خرید هر واحد از تأمین‌کننده' : currentLang === 'ps' ? 'د هر یونټ د تأمین کوونکی لګښت' : 'Cost per unit from supplier') + '</p></div>' +
             '<div id="p-margin-line" class="hidden"><div class="flex items-center gap-2 bg-gray-50 rounded-xl px-4 py-3"><span class="text-sm text-gray-500">' + t('profitMargin') + ':</span><span id="p-margin-val" class="font-bold"></span></div></div>' +
             '<div><label class="block text-sm font-medium text-gray-700 mb-1">' + t('productImage') + '</label>' +
@@ -585,6 +591,7 @@
         document.getElementById('p-id').value = p?.id || 'prod_' + Date.now();
         document.getElementById('p-name-fa').value = p?.name?.fa || p?.name || '';
         document.getElementById('p-price').value = p?.price || '';
+        document.getElementById('p-weight').value = p?.weight || 1;
         document.getElementById('p-cost-price').value = p?.costPrice || '';
         document.getElementById('p-visible').checked = p ? p.visible !== false : true;
         currentProductImage = p?.image || '';
@@ -599,6 +606,14 @@
     function updateMarginPreview() {
         var price = parseFloat(document.getElementById('p-price')?.value) || 0;
         var cost = parseFloat(document.getElementById('p-cost-price')?.value) || 0;
+        var weight = parseFloat(document.getElementById('p-weight')?.value) || 1;
+        
+        // Update Total Price
+        var totalEl = document.getElementById('p-total-price');
+        if (totalEl) {
+            totalEl.textContent = formatPrice(price * weight);
+        }
+
         var line = document.getElementById('p-margin-line');
         var val = document.getElementById('p-margin-val');
         if (!line || !val) return;
@@ -613,8 +628,10 @@
     function attachMarginListeners() {
         var pi = document.getElementById('p-price');
         var ci = document.getElementById('p-cost-price');
+        var wi = document.getElementById('p-weight');
         if (pi) pi.addEventListener('input', updateMarginPreview);
         if (ci) ci.addEventListener('input', updateMarginPreview);
+        if (wi) wi.addEventListener('input', updateMarginPreview);
     }
 
     function handleImageUpload(e) {
@@ -643,6 +660,7 @@
             id: document.getElementById('p-id').value,
             name: { fa: document.getElementById('p-name-fa').value.trim() },
             price: parseInt(document.getElementById('p-price').value, 10),
+            weight: parseFloat(document.getElementById('p-weight').value) || 1,
             costPrice: parseInt(document.getElementById('p-cost-price').value, 10) || 0,
             image: currentProductImage || null,
             visible: document.getElementById('p-visible').checked
