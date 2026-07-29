@@ -3,8 +3,8 @@
  * Cache-first strategy for static assets, offline support
  */
 
-const CACHE_NAME = 'hakeemi-grocery-v1';
-const STATIC_CACHE = 'hakeemi-static-v1';
+const CACHE_NAME = 'hakeemi-grocery-v2';
+const STATIC_CACHE = 'hakeemi-static-v2';
 
 // Assets to cache on install
 const STATIC_ASSETS = [
@@ -18,7 +18,8 @@ const STATIC_ASSETS = [
     '/assets/store.js',
     '/assets/whatsapp.js',
     '/assets/placeholder.svg',
-    '/assets/manifest.json'
+    '/assets/manifest.json',
+    '/assets/img/panjshir-bg.jpg'
 ];
 
 // Install event - cache static assets
@@ -53,9 +54,6 @@ self.addEventListener('fetch', (event) => {
     // Skip non-GET requests
     if (request.method !== 'GET') return;
     
-    // Skip external requests (CDN, fonts, etc.)
-    if (!request.url.startsWith(self.location.origin)) return;
-    
     event.respondWith(
         caches.match(request)
             .then(cachedResponse => {
@@ -64,7 +62,7 @@ self.addEventListener('fetch', (event) => {
                     event.waitUntil(
                         fetch(request)
                             .then(networkResponse => {
-                                if (networkResponse && networkResponse.status === 200) {
+                                if (networkResponse && (networkResponse.status === 200 || networkResponse.type === 'opaque')) {
                                     caches.open(STATIC_CACHE)
                                         .then(cache => cache.put(request, networkResponse.clone()));
                                 }
@@ -78,7 +76,7 @@ self.addEventListener('fetch', (event) => {
                 return fetch(request)
                     .then(networkResponse => {
                         // Cache successful responses
-                        if (networkResponse && networkResponse.status === 200) {
+                        if (networkResponse && (networkResponse.status === 200 || networkResponse.type === 'opaque')) {
                             const responseClone = networkResponse.clone();
                             caches.open(STATIC_CACHE)
                                 .then(cache => cache.put(request, responseClone));
@@ -87,7 +85,7 @@ self.addEventListener('fetch', (event) => {
                     })
                     .catch(() => {
                         // Offline fallback for HTML requests
-                        if (request.headers.get('accept').includes('text/html')) {
+                        if (request.headers.get('accept') && request.headers.get('accept').includes('text/html')) {
                             return caches.match('/index.html');
                         }
                     });
