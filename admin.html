@@ -34,7 +34,14 @@
             --font-heading: 'Rubik', 'Noto Sans Arabic', system-ui, sans-serif;
             --font-body: 'Nunito Sans', 'Noto Sans Arabic', system-ui, sans-serif;
         }
-        body { font-family: var(--font-body); background-color: var(--color-bg); -webkit-font-smoothing: antialiased; }
+        body { 
+            font-family: var(--font-body); 
+            background-image: linear-gradient(rgba(254, 252, 232, 0.85), rgba(254, 252, 232, 0.95)), url('assets/img/panjshir-bg.jpg'); 
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed; 
+            -webkit-font-smoothing: antialiased; 
+        }
         .font-heading { font-family: var(--font-heading); }
         input:focus, textarea:focus, select:focus {
             outline: none;
@@ -44,7 +51,7 @@
         .header-strip { height: 3px; background: linear-gradient(90deg, #059669, #D97706, #059669); }
     </style>
 </head>
-<body class="antialiased" style="background-color: var(--color-bg);">
+<body class="antialiased">
 
 <div id="app">
     <div class="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -294,7 +301,7 @@
                         currentLang === 'ps' ? 'د پنل ته د داخلیدو لپاره خپله PIN ورکړئ' : 'Enter your PIN to access the admin dashboard';
 
         document.getElementById('app').innerHTML =
-            '<div class="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 flex items-center justify-center p-4">' +
+            '<div class="min-h-screen bg-transparent flex items-center justify-center p-4">' +
             '<div class="w-full max-w-md">' +
             // Logo and title
             '<div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">' +
@@ -395,8 +402,8 @@
         var lang = currentLang;
         var shopName = getShopName(lang);
         document.getElementById('app').innerHTML =
-            '<div class="min-h-screen bg-gray-50">' +
-            '<header class="bg-white border-b border-gray-200 sticky top-0 z-40"><div class="max-w-7xl mx-auto px-4 py-3">' +
+            '<div class="min-h-screen bg-transparent">' +
+            '<header class="bg-white/90 backdrop-blur-md border-b border-gray-200 sticky top-0 z-40"><div class="max-w-7xl mx-auto px-4 py-3">' +
             '<div class="flex items-center justify-between"><div class="flex items-center gap-3">' +
             '<div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center"><svg class="w-6 h-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></div>' +
             '<div><h1 class="font-heading text-lg font-bold text-stone-800">' + t('adminTitle') + '</h1><p class="text-xs text-stone-500">' + shopName + '</p></div></div>' +
